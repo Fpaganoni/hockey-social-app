@@ -3,9 +3,11 @@
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
+/* :root {
   --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --foreground: oklch(
+    0.17498328350602074 0.010732477863486687 196.21314235978903
+  );
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -37,9 +39,69 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+} */
+
+:root {
+  /* Fondo y Primer Plano */
+  --background: oklch(0.98 0.02 80); /* Casi blanco, un toque cálido */
+  --foreground: oklch(0.2 0.05 70); /* Texto oscuro, cálido y legible */
+  --card: oklch(1 0 0);
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+
+  /* Colores Principales (Énfasis Cálido y Vivo) */
+  --primary: oklch(0.55 0.2 65); /* Naranja/Oro vibrante para botones */
+  --primary-contrast: oklch(0.8 0.1 65);
+  --primary-foreground: oklch(0.95 0.05 60); /* Texto muy claro y cálido */
+  --turf: oklch(0.65 0.2 130);
+  --secondary: oklch(0.9 0.08 75); /* Fondo secundario suave */
+  --secondary-foreground: var(--foreground);
+
+  /* grises */
+  --gray-light-1: oklch(0.2 0.03 215);
+  --gray-light-2: oklch(0.4 0.04 210);
+  --gray-light-3: oklch(0.3 0.05 220);
+  --gray-dark-1: oklch(0.95 0.02 210);
+  --gray-dark-2: oklch(0.9 0.03 215);
+  --gray-dark-3: oklch(0.8 0.04 220);
+
+  /* Estados Muted y Accent */
+  --muted: oklch(0.95 0.03 85);
+  --muted-foreground: oklch(0.45 0.08 70); /* Gris-marrón sutil */
+  --accent: oklch(0.9 0.08 75);
+  --accent-foreground: var(--primary);
+
+  /* Alertas (Tonos más fríos para contraste de significado) */
+  --destructive: oklch(0.6 0.2 25); /* Rojo */
+  --destructive-foreground: oklch(1 0 0);
+
+  /* Borde e Input */
+  --border: oklch(0.85 0.05 80);
+  --input: oklch(0.85 0.05 80);
+  --ring: oklch(0.6 0.15 70); /* Anillo de enfoque cálido */
+
+  /* Colores de Gráficos (Ajustados para calidez) */
+  --chart-1: oklch(0.65 0.2 60); /* Naranja */
+  --chart-2: oklch(0.55 0.15 90); /* Amarillo-Verdoso cálido */
+  --chart-3: oklch(0.4 0.1 30); /* Terracota oscuro */
+  --chart-4: oklch(0.7 0.18 50); /* Melocotón */
+  --chart-5: oklch(0.5 0.25 40); /* Rojo-Naranja profundo */
+
+  /* Sidebar (Separado para estructura) */
+  --sidebar: oklch(0.95 0.03 85);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+
+  --radius: 0.625rem;
 }
 
-.dark {
+/* .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.145 0 0);
@@ -72,13 +134,72 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+} */
+
+.dark {
+  /* Fondo y Primer Plano */
+  --background: oklch(0.18 0.03 70); /* Fondo muy oscuro y cálido */
+  --foreground: oklch(0.9 0.03 80); /* Texto claro, ligeramente cálido */
+  --card: oklch(0.25 0.03 70);
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+
+  /* Colores Principales (Énfasis Cálido y Sutil) */
+  --primary: oklch(0.8 0.1 65); /* Color primario claro y cálido */
+  --primary-contrast: oklch(0.55 0.2 65);
+  --primary-foreground: oklch(0.15 0.05 70); /* Texto oscuro para contraste */
+  --turf: oklch(0.35 0.1 130);
+  --secondary: oklch(0.3 0.04 70); /* Fondo secundario oscuro y sutil */
+  --secondary-foreground: var(--foreground);
+
+  /* grises */
+  --dark-gray-1: oklch(0.2 0.03 215);
+  --dark-gray-2: oklch(0.4 0.04 210);
+  --dark-gray-3: oklch(0.3 0.05 220);
+  --gray-light-1: oklch(0.95 0.02 210);
+  --gray-light-2: oklch(0.9 0.03 215);
+  --gray-light-3: oklch(0.8 0.04 220);
+
+  /* Estados Muted y Accent */
+  --muted: oklch(0.3 0.04 70);
+  --muted-foreground: oklch(0.7 0.08 75); /* Texto gris claro, cálido */
+  --accent: oklch(0.3 0.04 70);
+  --accent-foreground: var(--primary);
+
+  /* Alertas (Tonos oscuros, menos brillantes) */
+  --destructive: oklch(0.5 0.15 25);
+  --destructive-foreground: oklch(0.9 0.05 70);
+
+  /* Borde e Input */
+  --border: oklch(0.35 0.05 70);
+  --input: oklch(0.3 0.04 70);
+  --ring: oklch(0.5 0.1 70); /* Anillo de enfoque sutil */
+
+  /* Colores de Gráficos (Oscuros y armoniosos) */
+  --chart-1: oklch(0.4 0.15 60);
+  --chart-2: oklch(0.35 0.1 90);
+  --chart-3: oklch(0.55 0.08 30);
+  --chart-4: oklch(0.45 0.12 50);
+  --chart-5: oklch(0.3 0.18 40);
+
+  /* Sidebar */
+  --sidebar: oklch(0.2 0.03 75);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
 }
 
 @theme inline {
   --color-primary: #18283e;
+
   --color-primary-light: #1f3a52;
   --color-accent: #4caf50;
-  --color-accent-bright: #69f0ae;
+  --color-accent-bright: #b1e4e4;
   --color-accent-dark: #2e7d32;
   --color-background: #18283e;
   --color-surface: #1f3a52;
@@ -93,6 +214,16 @@
   --color-pending: #ff6f00;
   --radius: 0.5rem;
 
+  /* Alias para Grises Claros */
+  --color-gray-light-1: var(--gray-light-1);
+  --color-gray-light-2: var(--gray-light-2);
+  --color-gray-light-3: var(--gray-light-3);
+
+  /* Alias para Grises Oscuros */
+  --color-gray-dark-1: var(--gray-dark-1);
+  --color-gray-dark-2: var(--gray-dark-2);
+  --color-gray-dark-3: var(--gray-dark-3);
+
   --font-sans: "Inter", "Roboto", system-ui, sans-serif;
   --font-mono: "Monaco", monospace;
 
@@ -103,6 +234,7 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
+  --color-primary-contrast: var(--color-primary-contrast);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -132,6 +264,7 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-turf: var(--turf);
 }
 
 @layer base {
@@ -148,7 +281,8 @@
   @apply transition-all duration-300 ease-in-out;
 }
 
-button, a {
+button,
+a {
   @apply cursor-pointer;
 }
 
