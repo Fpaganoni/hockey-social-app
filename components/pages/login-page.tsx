@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Moon, Sun } from 'lucide-react';
 
 const DEMO_CREDENTIALS = {
   player: {
@@ -57,11 +58,11 @@ export function LoginPage({ onLogin }: LoginPageProps) {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-accent-bright rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <span className="text-3xl">🏑</span>
+          <div className="w-20 h-20 bg-transparent flex items-center justify-center mx-auto mb-4 ">
+            <img src="/hockeyXticks.svg" alt="Hockey X Ticks" />
           </div>
-          <h1 className="text-3xl font-bold text-text mb-2">FieldLink</h1>
-          <p className="text-primary">Field Hockey Community Network</p>
+          <h1 className="text-3xl font-bold text-primary mb-2">HockeyConnect</h1>
+          <p className="text-primary-foreground/85">Field Hockey Community Network</p>
         </div>
 
         {/* Login Card */}
@@ -156,11 +157,11 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           {/* Social Login */}
           <div className="space-y-2">
             <button className="w-full py-2.5 border border-border rounded-lg text-background hover:bg-gray-light-3 transition-colors cursor-pointer flex items-center justify-center gap-2">
-              <span>👤</span>
+              <img src={"/google-icon.svg"} alt="Google" width={24} height={24}/>
               Continue with Google
             </button>
             <button className="w-full py-2.5 border border-border rounded-lg text-background hover:bg-gray-light-3 transition-colors cursor-pointer flex items-center justify-center gap-2">
-              <span>🍎</span>
+              <img src={"/apple-icon.svg"} alt="Apple" width={26} height={26}/>
               Continue with Apple
             </button>
           </div>
@@ -168,7 +169,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           {/* Footer */}
           <p className="text-xs text-background text-center mt-6">
             Don't have an account?{" "}
-            <button className="text-gay-light-1/80 hover:text-accent cursor-pointer transition-colors">
+            <button className="text-primary-foreground hover:text-accent cursor-pointer transition-colors">
               Sign up
             </button>
           </p>
