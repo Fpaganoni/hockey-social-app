@@ -4,17 +4,26 @@ import { useEffect, useState } from "react"
 import { ThemeToggleButton, useThemeTransition } from "./toggleThemeRight"
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<"light" | "dark" | null>(null)
+  const [theme, setTheme] = useState<"light" | "dark">("light")
   const [mounted, setMounted] = useState(false)
   const { startTransition } = useThemeTransition()
 
   useEffect(() => {
     setMounted(true)
     
-    // Read the theme if there is one saved in localStorage 
-    const isThereTheme = localStorage.getItem("theme");
-    const initialTheme = isThereTheme === "light" ? "light" : "dark";
-    setTheme(initialTheme)
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark";
+    if (!savedTheme) {
+      localStorage.setItem("theme", "light");
+      setTheme("light");
+      document.documentElement.classList.remove("dark");
+    } else {
+      setTheme(savedTheme);
+      if (savedTheme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    }
   }, [])
 
   const toggleTheme = () => {
@@ -22,9 +31,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       const newTheme = theme === "dark" ? "light" : "dark"
       setTheme(newTheme)
       localStorage.setItem("theme", newTheme)
-      // document.documentElement.classList.toggle("dark", newTheme === "dark")
+      
+      if (newTheme === "dark") {
+        document.documentElement.classList.add("dark")
+      } else {
+        document.documentElement.classList.remove("dark")
+      }
     })
-  }
+  } 
 
   if (!mounted) return <>{children}</>
 
@@ -44,7 +58,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
           variant="circle-blur"
           start="top-right"
           onClick={toggleTheme}
-          className="w-12 h-12 rounded-full bg-primary dark:bg-primary dark:hover:bg-red-500 text-primary-foreground dark:text-primary-foreground shadow-lg"
+          className="w-12 h-12 rounded-full bg-primary hover:bg-primary text-primary-foreground shadow-lg"
         />
       </div>
     </>

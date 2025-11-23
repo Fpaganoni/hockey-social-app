@@ -26,12 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.className} bg-background text-foreground min-h-screen`}
+        className={`${inter.className} min-h-screen`}
       >
         <ThemeProvider>
-          <div className="flex flex-col h-screen bg-background">
-            <div className="flex-1 overflow-y-auto">{children}</div>
-          </div>
+           {children}
         </ThemeProvider>
       </body>
     </html>

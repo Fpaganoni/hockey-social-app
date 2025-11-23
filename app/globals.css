@@ -1,10 +1,15 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 :root {
   /* Fondo y Primer Plano */
+  /* Gradiente para tema CLARO: tonos claros/pasteles */
+  --background-gradient: linear-gradient(
+    to bottom right, 
+    oklch(0.95 0.02 210),  /* Azul muy claro */
+    oklch(0.8 0.04 220),  /* Azul claro medio */
+    oklch(0.95 0.02 210)   /* Cian claro */
+  );
   --background: oklch(0.98 0.02 80); /* Casi blanco, un toque cálido */
   --foreground: oklch(0.2 0.05 70); /* Texto oscuro, cálido y legible */
   --card: oklch(1 0 0);
@@ -17,6 +22,7 @@
   --primary-contrast: oklch(0.8 0.1 65);
   --primary-foreground: oklch(0.95 0.05 60); /* Texto muy claro y cálido */
   --turf: oklch(0.65 0.2 130);
+  
   --secondary: oklch(0.9 0.08 75); /* Fondo secundario suave */
   --secondary-foreground: var(--foreground);
 
@@ -24,9 +30,9 @@
   --gray-light-1: oklch(0.2 0.03 215);
   --gray-light-2: oklch(0.4 0.04 210);
   --gray-light-3: oklch(0.3 0.05 220);
-  --gray-dark-1: oklch(0.95 0.02 210);
-  --gray-dark-2: oklch(0.9 0.03 215);
-  --gray-dark-3: oklch(0.8 0.04 220);
+  --dark-gray-1: oklch(0.95 0.02 210);
+  --dark-gray-2: oklch(0.9 0.03 215);
+  --dark-gray-3: oklch(0.8 0.04 220);
 
   /* Estados Muted y Accent */
   --muted: oklch(0.95 0.03 85);
@@ -65,6 +71,19 @@
 
 .dark {
   /* Fondo y Primer Plano */
+  /* Gradiente para tema OSCURO: tonos oscuros profundos */
+  --background-gradient: linear-gradient(
+    to top left,
+    oklch(0.3 0.05 220),  /* Cian oscuro */
+    oklch(0.4 0.04 210),  /* Azul muy oscuro */
+    oklch(0.3 0.05 220)  /* Azul oscuro medio */
+  );
+
+
+  /* --gray-light-1: oklch(0.2 0.03 215);
+  --gray-light-2: oklch(0.4 0.04 210);
+  --gray-light-3: oklch(0.3 0.05 220); */
+
   --background: oklch(0.18 0.03 70); /* Fondo muy oscuro y cálido */
   --foreground: oklch(0.9 0.03 80); /* Texto claro, ligeramente cálido */
   --card: oklch(0.25 0.03 70);
@@ -87,6 +106,8 @@
   --gray-light-1: oklch(0.95 0.02 210);
   --gray-light-2: oklch(0.9 0.03 215);
   --gray-light-3: oklch(0.8 0.04 220);
+
+    
 
   /* Estados Muted y Accent */
   --muted: oklch(0.3 0.04 70);
@@ -122,7 +143,7 @@
 }
 
 @theme inline {
-  /* --color-primary: #18283e;
+  --color-primary: #18283e;
 
   --color-primary-light: #1f3a52;
   --color-accent: #4caf50;
@@ -139,7 +160,7 @@
   --color-warning: #ff9800;
   --color-info: #2196f3;
   --color-pending: #ff6f00;
-  --radius: 0.5rem; */
+  --radius: 0.5rem;
 
   /* Alias para Grises Claros */
   --color-gray-light-1: var(--gray-light-1);
@@ -147,21 +168,22 @@
   --color-gray-light-3: var(--gray-light-3);
 
   /* Alias para Grises Oscuros */
-  --color-gray-dark-1: var(--gray-dark-1);
-  --color-gray-dark-2: var(--gray-dark-2);
-  --color-gray-dark-3: var(--gray-dark-3);
+  --color-dark-gray-1: var(--dark-gray-1);
+  --color-dark-gray-2: var(--dark-gray-2);
+  --color-dark-gray-3: var(--dark-gray-3);
 
   --font-sans: "Inter", "Roboto", system-ui, sans-serif;
   --font-mono: "Monaco", monospace;
 
   --color-background: var(--background);
+  --color-background-gradient: var(--background-gradient);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
-  --color-primary-contrast: var(--color-primary-contrast);
+  --color-primary-contrast: var(--primary-contrast);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -199,7 +221,14 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    background: var(--background-gradient);
+    color: var(--foreground);
+  }
+}
+
+@layer utilities {
+  .bg-gradient-theme {
+    background: var(--background-gradient);
   }
 }
 

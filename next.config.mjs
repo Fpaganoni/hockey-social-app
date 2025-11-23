@@ -6,6 +6,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  turbopack: {
+    root: process.cwd(), // Usa el directorio actual como raíz
+  },
 }
 
 export default nextConfig

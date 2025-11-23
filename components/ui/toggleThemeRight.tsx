@@ -19,7 +19,7 @@ type StartPosition =
   | 'bottom-right';
 
 export interface ThemeToggleButtonProps {
-  theme?: 'light' | 'dark';
+  theme?: 'light' | 'dark' | undefined;
   showLabel?: boolean;
   variant?: AnimationVariant;
   start?: StartPosition;
@@ -180,9 +180,11 @@ export const ThemeToggleButton = ({
     // Call the onClick handler if provided
     onClick?.();
   }, [onClick, variant, start, url, theme]);
+
+
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size={showLabel ? 'default' : 'icon'}
       onClick={handleClick}
       className={cn(
@@ -199,7 +201,7 @@ export const ThemeToggleButton = ({
       )}
       {showLabel && (
         <span className="text-sm">
-          {theme === 'light' ? 'Light' : 'Dark'}
+          {theme === 'light' ? 'Dark' : 'Light'}
         </span>
       )}
     </Button>

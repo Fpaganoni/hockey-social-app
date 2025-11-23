@@ -54,20 +54,20 @@ export function LoginPage({ onLogin }: LoginPageProps) {
   };
 
   return (
-    <main className="min-h-screen bg-linear-to-br from-gray-light-1 via-gray-light-2 to-gray-light-3 flex items-center justify-center px-4 pb-32 pt-16">
-      <div className="w-full max-w-md">
+    <main className="min-h-screen  flex items-center justify-center px-4 pb-32 pt-16">
+      <div className="w-full  max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="w-20 h-20 bg-transparent flex items-center justify-center mx-auto mb-4 ">
             <img src="/hockeyXticks.svg" alt="Hockey X Ticks" />
           </div>
-          <h1 className="text-3xl font-bold text-primary mb-2">HockeyConnect</h1>
-          <p className="text-primary-foreground/85">Field Hockey Community Network</p>
+          <h1 className="text-3xl font-bold text-primary mb-2">Hockey Connect</h1>
+          <p className="text-primary-primary/85">Field Hockey Community Network</p>
         </div>
 
         {/* Login Card */}
-        <div className="bg-gray-light-1 rounded-2xl border border-border p-6 shadow-xl">
-          <h2 className="text-xl font-bold text-background mb-6">Welcome</h2>
+        <div className="rounded-2xl border border-primary bg-dark-gray-1 p-6 shadow-xl">
+          <h2 className="text-xl font-bold text-foreground mb-6">Welcome</h2>
 
           {error && (
             <div className="mb-4 p-3 bg-error/10 border border-error/30 rounded-lg">
@@ -79,13 +79,13 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           <div className="mb-4">
             <label
               id="email"
-              className="block text-sm font-medium text-background mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Email
             </label>
             <div className="relative">
               <Mail
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-background"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
                 size={18}
               />
               <input
@@ -94,7 +94,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="w-full pl-10 pr-4 py-2.5 bg-foreground border border-border rounded-lg text-background focus:outline-none focus:border-primary transition-colors cursor-text"
+                className="w-full pl-10 pr-4 py-2.5 bg-background border border-foreground rounded-lg text-foreground focus:outline-none focus:border-primary transition-colors cursor-text"
               />
             </div>
           </div>
@@ -103,13 +103,13 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           <div className="mb-6">
             <label
               id="password"
-              className="block text-sm font-medium text-background mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Password
             </label>
             <div className="relative">
               <Lock
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-background"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
                 size={18}
               />
               <input
@@ -118,11 +118,11 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-10 py-2.5 bg-foreground border border-border rounded-lg text-background placeholder-text-secondary focus:outline-none focus:border-accent-bright transition-colors cursor-text"
+                className="w-full pl-10 pr-10 py-2.5 bg-background border border-foreground rounded-lg text-foreground placeholder-text-secondary focus:outline-none focus:border-accent-bright transition-colors cursor-text"
               />
               <button
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-background hover:text-background/85 transition-colors cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground hover:text-background/85 transition-colors cursor-pointer"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -134,14 +134,14 @@ export function LoginPage({ onLogin }: LoginPageProps) {
             <button
               onClick={() => handleDemoLogin("player")}
               disabled={isLoading}
-              className="w-full py-2.5 bg-background text-primary font-semibold rounded-lg hover:bg-accent transition-all duration-300 cursor-pointer disabled:opacity-50"
+              className="w-full py-2.5 bg-foreground/80 text-primary-contrast/80 font-semibold rounded-lg hover:text-primary-contrast hover:bg-foreground transition-all duration-300 cursor-pointer disabled:opacity-50"
             >
               {isLoading ? "Logging in..." : "Demo: Player"}
             </button>
             <button
               onClick={() => handleDemoLogin("club")}
               disabled={isLoading}
-              className="w-full py-2.5 bg-accent/90 text-primary font-semibold rounded-lg hover:bg-primary-foreground hover:text-primary transition-all duration-300 cursor-pointer disabled:opacity-50"
+              className="w-full py-2.5 bg-primary/80 text-primary-contrast/80 font-semibold rounded-lg hover:bg-primary hover:text-primary-contrast transition-all duration-300 cursor-pointer disabled:opacity-50"
             >
               {isLoading ? "Logging in..." : "Demo: Club"}
             </button>
@@ -149,27 +149,27 @@ export function LoginPage({ onLogin }: LoginPageProps) {
 
           {/* Divider */}
           <div className="flex items-center gap-3 mb-6">
-            <div className="flex-1 h-px bg-border"></div>
-            <span className="text-md text-background">or</span>
-            <div className="flex-1 h-px bg-border"></div>
+            <div className="flex-1 h-px bg-foreground/80"></div>
+            <span className="text-md text-foreground/85">or</span>
+            <div className="flex-1 h-px bg-foreground/80"></div>
           </div>
 
           {/* Social Login */}
           <div className="space-y-2">
-            <button className="w-full py-2.5 border border-border rounded-lg text-background hover:bg-gray-light-3 transition-colors cursor-pointer flex items-center justify-center gap-2">
+            <button className="w-full h-12 py-2.5 border border-primary rounded-lg text-foreground bg-dark-gray-1/80 hover:bg-dark-gray-2 transition-colors cursor-pointer flex items-center justify-center gap-2">
               <img src={"/google-icon.svg"} alt="Google" width={24} height={24}/>
               Continue with Google
             </button>
-            <button className="w-full py-2.5 border border-border rounded-lg text-background hover:bg-gray-light-3 transition-colors cursor-pointer flex items-center justify-center gap-2">
-              <img src={"/apple-icon.svg"} alt="Apple" width={26} height={26}/>
+            <button className="w-full h-12 py-2.5 border border-primary   rounded-lg text-foreground bg-dark-gray-1/80 hover:bg-dark-gray-2 transition-colors cursor-pointer flex items-center justify-center gap-2">
+              <img src={"/apple-icon.svg"} alt="Apple" width={30} height={30}/>
               Continue with Apple
             </button>
           </div>
 
           {/* Footer */}
-          <p className="text-xs text-background text-center mt-6">
+          <p className="text-xs text-foreground/90 text-center mt-6">
             Don't have an account?{" "}
-            <button className="text-primary-foreground hover:text-accent cursor-pointer transition-colors">
+            <button className="text-foreground/75 hover:text-foreground cursor-pointer transition-colors">
               Sign up
             </button>
           </p>
