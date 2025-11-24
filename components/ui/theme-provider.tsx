@@ -48,7 +48,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       <div
         style={{
           position: "fixed",
-          top: "100px",
+          top: "120px",
           right: "20px",
           zIndex: 50,
         }}
@@ -58,7 +58,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
           variant="circle-blur"
           start="top-right"
           onClick={toggleTheme}
-          className="w-12 h-12 rounded-full bg-primary hover:bg-primary text-primary-foreground shadow-lg"
+          className="w-12 h-12 rounded-full bg-dark-gray-2 border border-2 border-primary hover:border-primary text-foreground text-sm hover:bg-primary hover:text-background shadow-lg"
         />
       </div>
     </>

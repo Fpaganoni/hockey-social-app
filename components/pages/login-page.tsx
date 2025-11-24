@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { Moon, Sun } from 'lucide-react';
+import { HockeyXTicks } from "../ui/hockey-xtick";
+
 
 const DEMO_CREDENTIALS = {
   player: {
@@ -58,8 +59,8 @@ export function LoginPage({ onLogin }: LoginPageProps) {
       <div className="w-full  max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="w-20 h-20 bg-transparent flex items-center justify-center mx-auto mb-4 ">
-            <img src="/hockeyXticks.svg" alt="Hockey X Ticks" />
+          <div className="w-26 h-26 flex items-center justify-center mx-auto mb-4 ">
+            <HockeyXTicks size={200} className="text-primary"/>
           </div>
           <h1 className="text-3xl font-bold text-primary mb-2">Hockey Connect</h1>
           <p className="text-primary-primary/85">Field Hockey Community Network</p>
