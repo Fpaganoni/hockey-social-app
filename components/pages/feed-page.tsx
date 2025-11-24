@@ -59,7 +59,7 @@ export function FeedPage({ userType }: FeedPageProps) {
       </div>
 
       {/* Floating Action Button */}
-      <button className="fixed bottom-24 right-4 w-16 h-16 bg-accent-bright hover:bg-accent active:scale-95 text-primary font-bold rounded-full flex items-center justify-center shadow-lg transition-all duration-300 z-30 cursor-pointer hover:scale-110">
+      <button className="fixed bottom-24 right-4 w-16 h-16 border-2 border-primary hover:bg-primary active:scale-95 text-foreground hover:text-background font-bold rounded-full flex items-center justify-center shadow-lg transition-all duration-300 z-30 cursor-pointer ">
         <Plus size={32} />
       </button>
     </main>
