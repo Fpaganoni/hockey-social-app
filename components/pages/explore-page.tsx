@@ -54,19 +54,19 @@ export function ExplorePage() {
 
   return (
     <main className="max-w-2xl mx-auto pb-4">
-      <div className="sticky top-16 bg-background dark:bg-primary z-20 px-4 py-4 border-b border-border space-y-4 backdrop-blur-sm">
+      <div className="sticky top-16 bg-dark-gray-1 z-20 px-4 py-4 border-b border-primary space-y-4 backdrop-blur-sm">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" size={20} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground" size={20} />
           <input
             type="text"
             placeholder="Search by name, club, city..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 bg-surface border border-border rounded-lg text-text placeholder-text-secondary focus:outline-none focus:border-accent-bright focus:ring-2 focus:ring-accent-bright/20 transition-all duration-300 cursor-text"
+            className="w-full pl-10 pr-4 py-3 bg-background border border-primary rounded-lg text-foreground placeholder-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 cursor-text"
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-4 gap-0">
           <FilterButton label="Role" />
           <FilterButton label="Country" />
           <FilterButton label="Level" />
@@ -82,7 +82,7 @@ export function ExplorePage() {
               .filter((p) => p.name.toLowerCase().includes(searchQuery.toLowerCase()))
               .map((profile) => <ProfileCard key={profile.id} {...profile} />)
           ) : (
-            <p className="text-center text-text-secondary py-8">No results for "{searchQuery}"</p>
+            <p className="text-center text-foreground py-8">No results for "{searchQuery}"</p>
           )
         ) : (
           profiles.map((profile) => <ProfileCard key={profile.id} {...profile} />)

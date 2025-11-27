@@ -26,14 +26,14 @@ export function FilterButton({ label, options = [], onSelect }: FilterButtonProp
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2.5 bg-surface border border-border hover:border-accent-bright rounded-lg text-text-secondary hover:text-text transition-all duration-300 text-sm font-medium cursor-pointer hover:scale-105 active:scale-95"
+        className="flex items-center gap-2 px-4 py-2.5 bg-dark-gray-2 border border-primary rounded-lg text-foreground transition-all duration-300 text-sm font-medium cursor-pointer hover:scale-105 active:scale-95"
       >
         {label}
         <ChevronDown size={16} className={`transition-transform ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-48 bg-surface border border-border rounded-lg shadow-lg z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="absolute top-full left-0 mt-2 w-48 bg-dark-gray-1 border border-primary rounded-lg shadow-lg z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
           {items.map((item) => (
             <button
               key={item}
@@ -41,7 +41,7 @@ export function FilterButton({ label, options = [], onSelect }: FilterButtonProp
                 onSelect?.(item)
                 setIsOpen(false)
               }}
-              className="w-full text-left px-4 py-2.5 hover:bg-surface-light text-text text-sm transition-colors cursor-pointer border-b border-border last:border-b-0"
+              className="w-full text-left px-4 py-2.5 hover:bg-dark-gray-2 text-foreground text-sm transition-colors cursor-pointer border-b border-primary last:border-b-0"
             >
               {item}
             </button>

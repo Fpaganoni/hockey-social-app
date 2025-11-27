@@ -15,9 +15,9 @@ export interface ProfileCardProps {
 
 export function ProfileCard({ id, name, role, position, location, country, level, bio }: ProfileCardProps) {
   const roleColors: Record<string, { bg: string; text: string; badge: string }> = {
-    Player: { bg: "bg-info/10", text: "text-info", badge: "bg-info/20 text-info border-info/30" },
-    Coach: { bg: "bg-warning/10", text: "text-warning", badge: "bg-warning/20 text-warning border-warning/30" },
-    Club: { bg: "bg-success/10", text: "text-success", badge: "bg-success/20 text-success border-success/30" },
+    Player: { bg: "bg-info/20", text: "text-info", badge: "bg-foreground/50 text-info border-info/50" },
+    Coach: { bg: "bg-warning/20", text: "text-warning", badge: "bg-foreground/50 text-warning border-warning/50" },
+    Club: { bg: "bg-success/20", text: "text-success", badge: "bg-foreground/50 text-success border-success/50" },
   }
 
   const colors = roleColors[role] || roleColors.Player
@@ -30,7 +30,7 @@ export function ProfileCard({ id, name, role, position, location, country, level
           <img
             src={`/ceholder-svg-key-prof.jpg?key=prof${id}&height=56&width=56&query=profile-${name}`}
             alt={name}
-            className="w-14 h-14 rounded-full object-cover cursor-pointer flex-shrink-0 hover:scale-110 transition-transform group-hover:ring-2 group-hover:ring-accent-bright"
+            className="w-14 h-14 rounded-full object-cover cursor-pointer flex-shrink-0 hover:scale-110 transition-transform group-hover:ring-2 group-hover:ring-dark-gray-1"
           />
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
