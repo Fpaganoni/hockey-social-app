@@ -55,7 +55,7 @@ export function ExplorePage() {
   return (
     <main className="max-w-2xl mx-auto pb-4">
       <div className="sticky top-16 bg-dark-gray-1 z-20 px-4 py-4 border-b border-primary space-y-4 backdrop-blur-sm">
-        <div className="relative">
+        <div className="relative ">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground" size={20} />
           <input
             type="text"
@@ -75,7 +75,7 @@ export function ExplorePage() {
       </div>
 
       {/* Results */}
-      <div className="px-4 py-6 space-y-3">
+      <div className="px-4 mt-8 mb-28">
         {searchQuery ? (
           profiles.filter((p) => p.name.toLowerCase().includes(searchQuery.toLowerCase())).length > 0 ? (
             profiles

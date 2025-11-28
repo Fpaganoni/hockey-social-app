@@ -246,14 +246,14 @@ a {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-surface);
+  background: var(--color-background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
+  background: var(--color-primary);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-secondary);
+  background: var(--color-primary);
 }

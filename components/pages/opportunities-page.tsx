@@ -44,12 +44,12 @@ export function OpportunitiesPage() {
   ]
 
   return (
-    <main className="max-w-2xl mx-auto pb-4">
-      <div className="sticky top-16 bg-surface border-b border-border px-4 py-4 z-20 flex items-center justify-between gap-3">
-        <h2 className="text-lg font-bold text-text">Available Positions</h2>
+    <main className="max-w-2xl mx-auto pb-4 mb-22">
+      <div className="sticky top-16 bg-dark-gray-1 border-b border-primary rounded-b-lg shadow-md px-4 py-4 z-20 flex items-center justify-between gap-3">
+        <h2 className="text-lg font-bold text-foreground">Available Positions</h2>
         <button 
           onClick={() => setShowFilters(!showFilters)}
-          className="p-2 hover:bg-surface-light rounded-lg transition-all duration-300 cursor-pointer hover:scale-110 active:scale-95 text-text-secondary hover:text-text"
+          className="p-2 hover:bg-dark-gray-2 rounded-lg transition-all duration-300 cursor-pointer hover:scale-110 active:scale-95 text-foreground"
         >
           <Filter size={24} />
         </button>
@@ -57,11 +57,11 @@ export function OpportunitiesPage() {
 
       {/* Filter panel */}
       {showFilters && (
-        <div className="bg-surface border-b border-border px-4 py-4 grid grid-cols-2 gap-2">
+        <div className="group relative pt-16 -top-12 bg-dark-gray-1 border-b border-primary px-4 py-4 grid grid-cols-2 gap-2 animate-slide-in">
           {["Experience", "Location", "Contract", "Salary"].map((filter) => (
             <button 
               key={filter}
-              className="px-3 py-2 bg-surface-light border border-border rounded-lg text-text-secondary hover:text-text hover:border-accent-bright transition-all duration-300 cursor-pointer text-sm font-medium"
+              className="px-3 py-2 bg-dark-gray-2 border border-primary rounded-lg text-foreground  group-hover:opacity-40 hover:!opacity-100 transition-all duration-300 cursor-pointer text-sm font-medium"
             >
               {filter}
             </button>
@@ -73,7 +73,7 @@ export function OpportunitiesPage() {
         {opportunities.length > 0 ? (
           opportunities.map((opp) => <OpportunityListCard key={opp.id} {...opp} />)
         ) : (
-          <p className="text-center text-text-secondary py-12">No opportunities available at the moment.</p>
+          <p className="text-center text-foreground py-12">No opportunities available at the moment.</p>
         )}
       </div>
     </main>
