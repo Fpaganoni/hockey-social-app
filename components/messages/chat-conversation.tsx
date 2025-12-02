@@ -54,13 +54,13 @@ export function ChatConversation({ conversationId, onBack }: ChatConversationPro
   }
 
   return (
-    <div className="h-[calc(100vh-120px)] flex flex-col bg-background dark:bg-primary">
-      <div className="sticky top-16 bg-surface border-b border-border px-4 py-3 flex items-center gap-3 z-20 shadow-sm">
+    <div className="h-[calc(100vh-120px)] flex flex-col bg-background-gradient ">
+      <div className="sticky top-16 bg-dark-gray-1 border-b border-primary px-4 py-3 flex items-center gap-3 z-20 shadow-sm">
         <button 
           onClick={onBack} 
-          className="p-2 hover:bg-surface-light rounded-lg transition-all duration-300 cursor-pointer hover:scale-110 active:scale-95"
+          className="p-2 hover:bg-dark-gray-2 rounded-lg transition-all duration-300 cursor-pointer hover:scale-110 active:scale-95"
         >
-          <ArrowLeft size={24} className="text-text" />
+          <ArrowLeft size={24} className="text-foreground" />
         </button>
         <img 
           src="/conversation-avatar.jpg" 
@@ -68,12 +68,12 @@ export function ChatConversation({ conversationId, onBack }: ChatConversationPro
           className="w-10 h-10 rounded-full object-cover cursor-pointer hover:scale-110 transition-transform" 
         />
         <div className="flex-1">
-          <p className="font-semibold text-text">Sarah Mitchell</p>
-          <p className="text-xs text-text-secondary">Active now</p>
+          <p className="font-semibold text-foreground">Sarah Mitchell</p>
+          <p className="text-xs text-foreground/70">Active now</p>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 scroll-smooth">
+      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4 scroll-smooth">
         {messages.map((msg) => (
           <div 
             key={msg.id} 
@@ -82,12 +82,12 @@ export function ChatConversation({ conversationId, onBack }: ChatConversationPro
             <div
               className={`max-w-xs px-4 py-3 rounded-2xl transition-all duration-300 hover:scale-105 ${
                 msg.sender === "user"
-                  ? "bg-accent-bright text-primary rounded-br-none shadow-md hover:shadow-lg"
-                  : "bg-surface border border-border text-text rounded-bl-none shadow-sm hover:shadow-md"
+                  ? "bg-dark-gray-2 text-foreground rounded-br-none shadow-md border border-primary hover:shadow-lg"
+                  : "bg-dark-gray-1 border border-primary text-foreground rounded-bl-none shadow-sm hover:shadow-md"
               }`}
             >
               <p className="text-sm break-words">{msg.text}</p>
-              <p className={`text-xs mt-2 ${msg.sender === "user" ? "text-primary/70" : "text-text-secondary"}`}>
+              <p className="text-xs mt-2 text-foreground/70">
                 {msg.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
               </p>
             </div>
@@ -95,9 +95,9 @@ export function ChatConversation({ conversationId, onBack }: ChatConversationPro
         ))}
       </div>
 
-      <div className="border-t border-border bg-surface px-4 py-3 flex items-center gap-2 shadow-lg">
+      <div className="border-t border-primary bg-dark-gray-1 px-6 pt-8 pb-12 flex items-center gap-2 shadow-lg">
         <button 
-          className="p-2 hover:bg-surface-light rounded-lg transition-all duration-300 cursor-pointer hover:scale-110 active:scale-95 flex-shrink-0 text-text-secondary hover:text-text"
+          className="p-2 hover:bg-dark-gray-2 rounded-lg transition-all duration-300 cursor-pointer hover:scale-110 active:scale-95 flex-shrink-0 text-foreground mr-2"
         >
           <Plus size={20} />
         </button>
@@ -107,14 +107,14 @@ export function ChatConversation({ conversationId, onBack }: ChatConversationPro
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyPress={(e) => e.key === "Enter" && handleSend()}
-          className="flex-1 px-4 py-2.5 bg-primary border border-border rounded-full text-text placeholder-text-secondary focus:outline-none focus:border-accent-bright focus:ring-2 focus:ring-accent-bright/20 transition-all duration-300 cursor-text"
+          className="flex-1 px-4 py-2.5 bg-background border border-primary rounded-full text-foreground placeholder-foreground/70 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 cursor-text"
         />
         <button
           onClick={handleSend}
           disabled={!newMessage.trim()}
-          className="p-2 hover:bg-surface-light rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex-shrink-0 hover:scale-110 active:scale-95"
+          className="p-2 hover:bg-dark-gray-2 rounded-lg transition-all duration-300  disabled:cursor-not-allowed cursor-pointer flex-shrink-0 hover:scale-110 active:scale-95 ml-2"
         >
-          <Send size={20} className={newMessage.trim() ? "text-accent-bright" : "text-text-secondary"} />
+          <Send size={20} className="text-foreground" />
         </button>
       </div>
     </div>

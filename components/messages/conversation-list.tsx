@@ -23,7 +23,7 @@ export function ConversationList({ searchQuery, onSelectChat }: ConversationList
     {
       id: 1,
       name: "Sarah Mitchell",
-      avatar: "/placeholder.svg?key=s1",
+      avatar: "/user.png",
       lastMessage: "That sounds great! See you tomorrow at 8am",
       lastMessageTime: new Date(Date.now() - 5 * 60000),
       unread: false,
@@ -32,7 +32,7 @@ export function ConversationList({ searchQuery, onSelectChat }: ConversationList
     {
       id: 2,
       name: "HC Amsterdam Recruiting",
-      avatar: "/placeholder.svg?key=s2",
+      avatar: "/user.png",
       lastMessage: "We received your application! Thanks for your interest.",
       lastMessageTime: new Date(Date.now() - 2 * 60 * 60000),
       unread: true,
@@ -41,7 +41,7 @@ export function ConversationList({ searchQuery, onSelectChat }: ConversationList
     {
       id: 3,
       name: "Coach Mike",
-      avatar: "/placeholder.svg?key=s3",
+      avatar: "/user.png",
       lastMessage: "Great performance in the last match!",
       lastMessageTime: new Date(Date.now() - 24 * 60 * 60000),
       unread: false,
@@ -50,7 +50,7 @@ export function ConversationList({ searchQuery, onSelectChat }: ConversationList
     {
       id: 4,
       name: "Team Netherlands Players",
-      avatar: "/placeholder.svg?key=s4",
+      avatar: "/user.png",
       lastMessage: "Practice moved to 7pm next Tuesday",
       lastMessageTime: new Date(Date.now() - 2 * 24 * 60 * 60000),
       unread: false,
@@ -68,7 +68,7 @@ export function ConversationList({ searchQuery, onSelectChat }: ConversationList
             <button
               key={conversation.id}
               onClick={() => onSelectChat(conversation.id)}
-              className="w-full px-4 py-3 hover:bg-surface-light transition-all duration-300 text-left flex items-center gap-3 border-b border-border last:border-b-0 cursor-pointer group active:scale-95"
+              className="w-full px-4 py-3 bg-dark-gray-1/40 backdrop-blur-md hover:bg-dark-gray-1 transition-all duration-300 text-left flex items-center gap-3 border-b border-primary last:border-b-0 cursor-pointer group active:scale-95"
             >
               <img
                 src={conversation.avatar || "/placeholder.svg"}
@@ -77,16 +77,16 @@ export function ConversationList({ searchQuery, onSelectChat }: ConversationList
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-2 mb-1">
-                  <p className={`font-semibold text-text truncate ${conversation.unread ? "font-bold" : ""}`}>
+                  <p className={`font-semibold text-foreground truncate ${conversation.unread ? "font-bold" : ""}`}>
                     {conversation.name}
                   </p>
-                  <span className="text-xs text-text-secondary flex-shrink-0">
+                  <span className="text-xs text-foreground flex-shrink-0">
                     {formatDistanceToNow(conversation.lastMessageTime, { addSuffix: false })}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <p
-                    className={`text-sm truncate ${conversation.unread ? "text-text font-medium" : "text-text-secondary"}`}
+                    className={`text-sm truncate ${conversation.unread ? "text-foreground font-medium" : "text-foreground/70"}`}
                   >
                     {conversation.lastMessage}
                   </p>
@@ -101,7 +101,7 @@ export function ConversationList({ searchQuery, onSelectChat }: ConversationList
                 onClick={(e) => {
                   e.stopPropagation()
                 }}
-                className="opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-2 hover:bg-error/10 hover:text-error rounded-lg text-text-secondary transition-colors"
+                className="opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-2 hover:bg-error/10 hover:text-error rounded-lg text-foreground transition-colors"
               >
                 <Trash2 size={18} />
               </button>
@@ -110,7 +110,7 @@ export function ConversationList({ searchQuery, onSelectChat }: ConversationList
         </div>
       ) : (
         <div className="flex items-center justify-center h-full">
-          <p className="text-text-secondary text-center">No conversations found</p>
+          <p className="text-foreground text-lg text-center">No conversations found</p>
         </div>
       )}
     </div>
