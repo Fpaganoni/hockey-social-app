@@ -34,6 +34,10 @@
   --dark-gray-2: oklch(0.9 0.03 215);
   --dark-gray-3: oklch(0.8 0.04 220);
 
+  --success: oklch(50.174% 0.12243 143.997);
+  --warning: oklch(48.21% 0.10411 68.013);
+  --info:oklch(47.162% 0.12006 249.177);
+
   /* Estados Muted y Accent */
   --muted: oklch(0.95 0.03 85);
   --muted-foreground: oklch(0.45 0.08 70); /* Gris-marrón sutil */
@@ -79,8 +83,6 @@
     oklch(0.3 0.05 220)  /* Azul oscuro medio */
   );
 
-
-
   --background: oklch(0.18 0.03 70); /* Fondo muy oscuro y cálido */
   --foreground: oklch(0.9 0.03 80); /* Texto claro, ligeramente cálido */
   --card: oklch(0.25 0.03 70);
@@ -104,7 +106,9 @@
   --gray-light-2: oklch(0.9 0.03 215);
   --gray-light-3: oklch(0.8 0.04 220);
 
-    
+  --success: oklch(62.486% 0.1578 143.936);
+  --warning: oklch(77.025% 0.17409 64.047);
+  --info:oklch(65.817% 0.16904 248.834);
 
   /* Estados Muted y Accent */
   --muted: oklch(0.3 0.04 70);
@@ -152,12 +156,17 @@
   --color-text: #ffffff;
   --color-text-secondary: #a8b8c8;
   --color-border: #2a4066;
-  --color-success: #409f43;
+  
   --color-error: #f44336;
-  --color-warning: #ff9800;
-  --color-info: #2196f3;
+  
+  
   --color-pending: #ff6f00;
   --radius: 0.5rem;
+
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
 
   /* Alias para Grises Claros */
   --color-gray-light-1: var(--gray-light-1);

@@ -13,15 +13,15 @@ export function UserProfilePage({ isOwnProfile = false }: UserProfilePageProps) 
 
   // Demo player data
   const playerData = {
-    name: "Alex Johnson",
+    name: "Fiorela Tirabassi",
     role: "Player",
-    position: "Left Midfielder",
-    country: "🇨🇦",
+    position: "Central Defender",
+    country: "🇮🇹",
     bio: "Passionate field hockey player with 10+ years of experience. Love competing at the highest level.",
     stats: {
       gamesPlayed: 156,
-      goals: 78,
-      assists: 45,
+      goals: 38,
+      assists: 6,
     },
     trajectory: [
       {
@@ -66,7 +66,7 @@ export function UserProfilePage({ isOwnProfile = false }: UserProfilePageProps) 
   const userData = isOwnProfile ? playerData : clubData
 
   return (
-    <main className="max-w-2xl mx-auto">
+    <main className="max-w-2xl mx-auto mb-24">
       <ProfileHeader {...userData} isOwnProfile={isOwnProfile} />
       <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab} userData={userData} />
     </main>
