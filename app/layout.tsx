@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { QueryProvider } from "@/lib/query-client";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,12 +26,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.className} min-h-screen`}
-      >
-        <ThemeProvider>
-           {children}
-        </ThemeProvider>
+      <body className={`${inter.className} min-h-screen`}>
+        <QueryProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );
