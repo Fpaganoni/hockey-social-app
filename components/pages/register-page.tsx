@@ -73,7 +73,7 @@ export const RegisterPage = ({ data }: { data: RegisterData }) => {
               id="name"
               className="block text-sm font-medium text-foreground mb-2"
             >
-              Name
+              Full Name
             </label>
             <div className="relative">
               <User

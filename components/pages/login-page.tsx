@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { HockeyXTicks } from "../ui/hockey-xtick";
-
+import Link from "next/link";
 
 const DEMO_CREDENTIALS = {
   player: {
-    email: "player@fieldlink.com",
+    email: "demo@fieldlink.com",
     password: "password123",
     name: "Alex Johnson",
   },
@@ -60,10 +60,14 @@ export function LoginPage({ onLogin }: LoginPageProps) {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="w-26 h-26 flex items-center justify-center mx-auto mb-4 ">
-            <HockeyXTicks size={200} className="text-primary"/>
+            <HockeyXTicks size={200} className="text-primary" />
           </div>
-          <h1 className="text-3xl font-bold text-primary mb-2">Hockey Connect</h1>
-          <p className="text-primary-primary/85">Field Hockey Community Network</p>
+          <h1 className="text-3xl font-bold text-primary mb-2">
+            Hockey Connect
+          </h1>
+          <p className="text-primary-primary/85">
+            Field Hockey Community Network
+          </p>
         </div>
 
         {/* Login Card */}
@@ -137,14 +141,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
               disabled={isLoading}
               className="w-full py-2.5 bg-foreground/80 text-primary-contrast/80 font-semibold rounded-lg hover:text-primary-contrast hover:bg-foreground transition-all duration-300 cursor-pointer disabled:opacity-50"
             >
-              {isLoading ? "Logging in..." : "Demo: Player"}
-            </button>
-            <button
-              onClick={() => handleDemoLogin("club")}
-              disabled={isLoading}
-              className="w-full py-2.5 bg-primary/80 text-primary-contrast/80 font-semibold rounded-lg hover:bg-primary hover:text-primary-contrast transition-all duration-300 cursor-pointer disabled:opacity-50"
-            >
-              {isLoading ? "Logging in..." : "Demo: Club"}
+              {isLoading ? "Logging in..." : "Demo Login"}
             </button>
           </div>
 
@@ -158,11 +155,16 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           {/* Social Login */}
           <div className="space-y-2">
             <button className="w-full h-12 py-2.5 border border-primary rounded-lg text-foreground bg-dark-gray-1/80 hover:bg-dark-gray-2 transition-colors cursor-pointer flex items-center justify-center gap-2">
-              <img src={"/google-icon.svg"} alt="Google" width={24} height={24}/>
+              <img
+                src={"/google-icon.svg"}
+                alt="Google"
+                width={24}
+                height={24}
+              />
               Continue with Google
             </button>
             <button className="w-full h-12 py-2.5 border border-primary   rounded-lg text-foreground bg-dark-gray-1/80 hover:bg-dark-gray-2 transition-colors cursor-pointer flex items-center justify-center gap-2">
-              <img src={"/apple-icon.svg"} alt="Apple" width={30} height={30}/>
+              <img src={"/apple-icon.svg"} alt="Apple" width={30} height={30} />
               Continue with Apple
             </button>
           </div>
@@ -170,9 +172,12 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           {/* Footer */}
           <p className="text-xs text-foreground/90 text-center mt-6">
             Don't have an account?{" "}
-            <button className="text-foreground/75 hover:text-foreground cursor-pointer transition-colors">
+            <Link
+              href="/register"
+              className="text-foreground/75 hover:text-foreground cursor-pointer transition-colors"
+            >
               Sign up
-            </button>
+            </Link>
           </p>
         </div>
       </div>
