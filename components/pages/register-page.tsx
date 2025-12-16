@@ -11,6 +11,7 @@ import {
   LogIn,
   ClipboardList,
   UserPlus,
+  ArrowUpIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -20,14 +21,34 @@ import { motion } from "framer-motion";
 
 const registerSchema = z
   .object({
-    name: z.string().min(6, "Name must be at least 6 characters long"),
-    username: z.string().min(6, "Username must be at least 6 characters long"),
-    email: z.string().email("Invalid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters long"),
-    confirmPassword: z
+    name: z
       .string()
-      .min(6, "Password must be at least 6 characters long"),
-    role: z.enum(["player", "club", "Coach"]),
+      .min(6, "Full name must be at least 6 characters long")
+      .max(30, "Full name must be at most 30 characters long"),
+    username: z
+      .string()
+      .min(6, "Username must be at least 6 characters long")
+      .max(30, "Username must be at most 30 characters long"),
+    email: z
+      .string()
+      .email("Invalid email address")
+      .regex(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "Please enter a valid email address"
+      ),
+    password: z
+      .string()
+      .min(6, "Password must be at least 6 characters long")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[0-9]/, "Password must contain at least one number")
+      .regex(
+        /[@$!%*?&#]/,
+        "Password must contain at least one special character"
+      ),
+    confirmPassword: z.string().min(6, "Please confirm your password"),
+    role: z.enum(["player", "club", "Coach"], {
+      message: "Select a valid role",
+    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -55,7 +76,7 @@ export const RegisterPage = () => {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 pb-32 pt-16">
+    <main className="min-h-screen flex flex-col gap-8 items-center justify-center px-4 pb-32 pt-16">
       <div className="w-full  max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
@@ -71,16 +92,10 @@ export const RegisterPage = () => {
         </div>
 
         {/* Register Card */}
-        <div className="relative rounded-2xl border border-primary bg-dark-gray-1 p-6 shadow-xl">
+        <div className="rounded-2xl border border-primary bg-dark-gray-1 p-6 shadow-xl">
           <h2 className="text-xl text-center font-bold text-foreground mb-6">
             Register
           </h2>
-
-          {error && (
-            <div className="mb-4 p-3 bg-error/10 border border-error/30 rounded-lg">
-              <p className="text-error text-sm">{error}</p>
-            </div>
-          )}
 
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Name input */}
@@ -93,7 +108,9 @@ export const RegisterPage = () => {
               </label>
               <div className="relative">
                 <User
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
+                  className={`absolute left-3 top-1/2 -translate-y-1/2 text-foreground ${
+                    errors.name ? "text-destructive" : ""
+                  }`}
                   size={18}
                 />
                 <input
@@ -104,9 +121,20 @@ export const RegisterPage = () => {
                     maxLength: 30,
                   })}
                   placeholder="Billy Backer"
-                  className="w-full pl-10 pr-4 py-2.5 bg-background border border-foreground rounded-lg text-foreground focus:outline-none focus:border-primary transition-colors cursor-text"
+                  className="w-full pl-10 pr-4 py-2.5 bg-background border border-foreground rounded-lg text-foreground focus:outline-none focus:border-primary transition-colors cursor-text "
                 />
               </div>
+              {errors.name && (
+                <motion.p
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="flex gap-1 text-destructive bg-destructive/20 font-semibold p-1 text-xs mt-2"
+                >
+                  <ArrowUpIcon size={16} />
+                  {errors.name.message}
+                </motion.p>
+              )}
             </div>
 
             {/* Username input */}
@@ -129,6 +157,17 @@ export const RegisterPage = () => {
                   className="w-full pl-10 pr-4 py-2.5 bg-background border border-foreground rounded-lg text-foreground focus:outline-none focus:border-primary transition-colors cursor-text"
                 />
               </div>
+              {errors.username && (
+                <motion.p
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="flex gap-1 text-destructive bg-destructive/20 font-semibold p-1 text-xs mt-2"
+                >
+                  <ArrowUpIcon size={16} />
+                  {errors.username.message}
+                </motion.p>
+              )}
             </div>
 
             {/* Email Input */}
@@ -151,6 +190,17 @@ export const RegisterPage = () => {
                   className="w-full pl-10 pr-4 py-2.5 bg-background border border-foreground rounded-lg text-foreground focus:outline-none focus:border-primary transition-colors cursor-text"
                 />
               </div>
+              {errors.email && (
+                <motion.p
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="flex gap-1 text-destructive bg-destructive/20 font-semibold p-1 text-xs mt-2"
+                >
+                  <ArrowUpIcon size={16} />
+                  {errors.email.message}
+                </motion.p>
+              )}
             </div>
 
             {/* Password Input */}
@@ -179,6 +229,17 @@ export const RegisterPage = () => {
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
+              {errors.password && (
+                <motion.p
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="flex gap-1 text-destructive bg-destructive/20 font-semibold p-1 text-xs mt-2"
+                >
+                  <ArrowUpIcon size={16} />
+                  {errors.password.message}
+                </motion.p>
+              )}
             </div>
 
             {/* Reapeat Password Input */}
@@ -211,6 +272,17 @@ export const RegisterPage = () => {
                   )}
                 </button>
               </div>
+              {errors.confirmPassword && (
+                <motion.p
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="flex gap-1 text-destructive bg-destructive/20 font-semibold p-1 text-xs mt-2"
+                >
+                  <ArrowUpIcon size={16} />
+                  {errors.confirmPassword.message}
+                </motion.p>
+              )}
             </div>
 
             {/* Role Input */}
@@ -233,42 +305,20 @@ export const RegisterPage = () => {
                   className="w-full pl-10 pr-10 py-2.5 bg-background border border-foreground rounded-lg text-foreground placeholder-text-secondary focus:outline-none focus:border-accent-bright transition-colors cursor-text"
                 />
               </div>
+              {errors.role && (
+                <motion.p
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="flex gap-1 text-destructive bg-destructive/20 font-semibold p-1 text-xs mt-2"
+                >
+                  <ArrowUpIcon size={16} />
+                  {errors.role.message}
+                </motion.p>
+              )}
             </div>
 
-            {/* Error message */}
-            {Object.keys(errors).length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="w-84 mr-2 fixed top-72 bottom-16 left-12 p-6 border border-destructive bg-destructive/30 rounded-md"
-              >
-                <motion.ul
-                  initial={{ opacity: 0, x: 0 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="flex flex-col gap-2 font-bold"
-                >
-                  {Object.entries(errors).map(([fieldName, error]) => {
-                    return (
-                      <motion.li
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className="text-destructive text-sm mt-2"
-                        key={fieldName}
-                      >
-                        {error?.message}
-                      </motion.li>
-                    );
-                  })}
-                </motion.ul>
-              </motion.div>
-            )}
-
             {/* Register button */}
-
             <button
               onClick={() => handleSubmit(onSubmit)}
               disabled={isLoading}
