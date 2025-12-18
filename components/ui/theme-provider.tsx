@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { ThemeToggleButton, useThemeTransition } from "./toggleThemeRight"
+import { useEffect, useState } from "react";
+import { ThemeToggleButton, useThemeTransition } from "./toggleThemeRight";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<"light" | "dark">("light")
-  const [mounted, setMounted] = useState(false)
-  const { startTransition } = useThemeTransition()
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [mounted, setMounted] = useState(false);
+  const { startTransition } = useThemeTransition();
 
   useEffect(() => {
-    setMounted(true)
-    
+    setMounted(true);
+
     const savedTheme = localStorage.getItem("theme") as "light" | "dark";
     if (!savedTheme) {
       localStorage.setItem("theme", "light");
@@ -24,23 +24,23 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         document.documentElement.classList.remove("dark");
       }
     }
-  }, [])
+  }, []);
 
   const toggleTheme = () => {
     startTransition(() => {
-      const newTheme = theme === "dark" ? "light" : "dark"
-      setTheme(newTheme)
-      localStorage.setItem("theme", newTheme)
-      
-      if (newTheme === "dark") {
-        document.documentElement.classList.add("dark")
-      } else {
-        document.documentElement.classList.remove("dark")
-      }
-    })
-  } 
+      const newTheme = theme === "dark" ? "light" : "dark";
+      setTheme(newTheme);
+      localStorage.setItem("theme", newTheme);
 
-  if (!mounted) return <>{children}</>
+      if (newTheme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    });
+  };
+
+  if (!mounted) return <>{children}</>;
 
   return (
     <>
@@ -58,9 +58,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
           variant="circle-blur"
           start="top-right"
           onClick={toggleTheme}
-          className="w-12 h-12 rounded-full bg-dark-gray-2 border border-2 border-primary hover:border-primary text-foreground text-sm hover:bg-primary hover:text-background shadow-lg"
+          className="w-12 h-12 rounded-full bg-background-gradient border-2 border-primary hover:border-primary text-foreground text-sm hover:bg-primary hover:text-background shadow-lg"
         />
       </div>
     </>
-  )
+  );
 }

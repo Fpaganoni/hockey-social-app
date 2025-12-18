@@ -18,6 +18,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
+import { Input } from "@/components/ui/input";
 
 const registerSchema = z
   .object({
@@ -77,7 +78,7 @@ export const RegisterPage = () => {
 
   return (
     <main className="min-h-screen flex flex-col gap-8 items-center justify-center px-4 pb-32 pt-16">
-      <div className="w-full  max-w-md">
+      <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="w-26 h-26 flex items-center justify-center mx-auto mb-4 ">
@@ -86,18 +87,18 @@ export const RegisterPage = () => {
           <h1 className="text-3xl font-bold text-primary mb-2">
             Hockey Connect
           </h1>
-          <p className="text-primary/85">Field Hockey Community Network</p>
+          <p className="text-foreground-muted">
+            Field Hockey Community Network
+          </p>
         </div>
 
         {/* Register Card */}
         <div className="rounded-2xl border border-primary bg-dark-gray-1 p-6 shadow-xl">
-          <h2 className="text-xl text-center font-bold text-foreground mb-6">
-            Register
-          </h2>
+          <h2 className="text-xl font-medium text-foreground mb-6">Register</h2>
 
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Name input */}
-            <div className="mb-4">
+            <div className="mb-5">
               <label
                 id="name"
                 className="block text-sm font-medium text-foreground mb-2"
@@ -111,7 +112,7 @@ export const RegisterPage = () => {
                   }`}
                   size={18}
                 />
-                <input
+                <Input
                   type="text"
                   {...register("name", {
                     required: true,
@@ -119,7 +120,7 @@ export const RegisterPage = () => {
                     maxLength: 30,
                   })}
                   placeholder="Billy Backer"
-                  className="w-full pl-10 pr-4 py-2.5 bg-background border border-foreground rounded-lg text-foreground focus:outline-none focus:border-primary transition-colors cursor-text "
+                  className="pl-10"
                 />
               </div>
               {errors.name && (
@@ -136,10 +137,10 @@ export const RegisterPage = () => {
             </div>
 
             {/* Username input */}
-            <div className="mb-4">
+            <div className="mb-5">
               <label
                 id="username"
-                className="block text-sm font-medium text-foreground mb-2"
+                className="block text-sm text-foreground mb-2"
               >
                 Username
               </label>
@@ -148,11 +149,11 @@ export const RegisterPage = () => {
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
                   size={18}
                 />
-                <input
+                <Input
                   {...register("username", { required: true })}
                   type="text"
                   placeholder="user_name"
-                  className="w-full pl-10 pr-4 py-2.5 bg-background border border-foreground rounded-lg text-foreground focus:outline-none focus:border-primary transition-colors cursor-text"
+                  className="pl-10"
                 />
               </div>
               {errors.username && (
@@ -169,11 +170,8 @@ export const RegisterPage = () => {
             </div>
 
             {/* Email Input */}
-            <div className="mb-4">
-              <label
-                id="email"
-                className="block text-sm font-medium text-foreground mb-2"
-              >
+            <div className="mb-5">
+              <label id="email" className="block text-sm text-foreground mb-2">
                 Email
               </label>
               <div className="relative">
@@ -181,11 +179,11 @@ export const RegisterPage = () => {
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
                   size={18}
                 />
-                <input
+                <Input
                   {...register("email", { required: true })}
                   type="email"
                   placeholder="your@email.com"
-                  className="w-full pl-10 pr-4 py-2.5 bg-background border border-foreground rounded-lg text-foreground focus:outline-none focus:border-primary transition-colors cursor-text"
+                  className="pl-10"
                 />
               </div>
               {errors.email && (
@@ -202,10 +200,10 @@ export const RegisterPage = () => {
             </div>
 
             {/* Password Input */}
-            <div className="mb-4">
+            <div className="mb-5">
               <label
                 id="password"
-                className="block text-sm font-medium text-foreground mb-2"
+                className="block text-sm text-foreground mb-2"
               >
                 Password
               </label>
@@ -214,16 +212,17 @@ export const RegisterPage = () => {
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
                   size={18}
                 />
-                <input
+                <Input
                   {...register("password", { required: true })}
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-10 py-2.5 bg-background border border-foreground rounded-lg text-foreground placeholder-text-secondary focus:outline-none focus:border-accent-bright transition-colors cursor-text"
+                  className="pl-10"
                 />
                 <button
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground/85 hover:text-foreground transition-colors cursor-pointer"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground transition-colors cursor-pointer"
                 >
+                  {/* TODO: Hasta esta linea resolvi */}
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
@@ -253,7 +252,7 @@ export const RegisterPage = () => {
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
                   size={18}
                 />
-                <input
+                <Input
                   {...register("confirmPassword", { required: true })}
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="••••••••"
@@ -296,7 +295,7 @@ export const RegisterPage = () => {
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
                   size={18}
                 />
-                <input
+                <Input
                   {...register("role", { required: true })}
                   type="text"
                   placeholder="Player | Coach | Trainer"
@@ -340,7 +339,7 @@ export const RegisterPage = () => {
 
           <Link
             href="/login"
-            className="w-full h-12 py-2.5 border border-primary   rounded-lg text-foreground bg-dark-gray-1/80 hover:bg-dark-gray-2 transition-colors cursor-pointer flex items-center justify-center gap-2"
+            className="w-full h-12 py-2.5 border border-primary rounded-lg text-foreground bg-dark-gray-1/80 hover:bg-dark-gray-2 transition-colors cursor-pointer flex items-center justify-center gap-2"
           >
             <LogIn size={18} />
             Login
