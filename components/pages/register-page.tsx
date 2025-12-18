@@ -86,9 +86,7 @@ export const RegisterPage = () => {
           <h1 className="text-3xl font-bold text-primary mb-2">
             Hockey Connect
           </h1>
-          <p className="text-primary-primary/85">
-            Field Hockey Community Network
-          </p>
+          <p className="text-primary/85">Field Hockey Community Network</p>
         </div>
 
         {/* Register Card */}
@@ -204,7 +202,7 @@ export const RegisterPage = () => {
             </div>
 
             {/* Password Input */}
-            <div className="mb-6">
+            <div className="mb-4">
               <label
                 id="password"
                 className="block text-sm font-medium text-foreground mb-2"
@@ -243,7 +241,7 @@ export const RegisterPage = () => {
             </div>
 
             {/* Reapeat Password Input */}
-            <div className="mb-6">
+            <div className="mb-4">
               <label
                 id="repeat-password"
                 className="block text-sm font-medium text-foreground mb-2"
@@ -286,7 +284,7 @@ export const RegisterPage = () => {
             </div>
 
             {/* Role Input */}
-            <div className="mb-6">
+            <div className="mb-4">
               <label
                 id="role"
                 className="block text-sm font-medium text-foreground mb-2"
