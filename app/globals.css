@@ -5,10 +5,10 @@
   /* Fondo y Primer Plano */
   /* Gradiente para tema CLARO: tonos claros/pasteles */
   --background-gradient: linear-gradient(
-    to bottom right, 
-    oklch(0.95 0.02 210),  /* Azul muy claro */
-    oklch(0.8 0.04 220),  /* Azul claro medio */
-    oklch(0.95 0.02 210)   /* Cian claro */
+    to bottom right,
+    oklch(0.95 0.02 210),
+    /* Azul muy claro */ oklch(0.8 0.04 220),
+    /* Azul claro medio */ oklch(0.95 0.02 210) /* Cian claro */
   );
   --background: oklch(0.98 0.02 80); /* Casi blanco, un toque cálido */
   --foreground: oklch(0.2 0.05 70); /* Texto oscuro, cálido y legible */
@@ -22,7 +22,7 @@
   --primary-contrast: oklch(0.8 0.1 65);
   --primary-foreground: oklch(0.95 0.05 60); /* Texto muy claro y cálido */
   --turf: oklch(0.65 0.2 130);
-  
+
   --secondary: oklch(0.9 0.08 75); /* Fondo secundario suave */
   --secondary-foreground: var(--foreground);
 
@@ -36,7 +36,7 @@
 
   --success: oklch(50.174% 0.12243 143.997);
   --warning: oklch(48.21% 0.10411 68.013);
-  --info:oklch(47.162% 0.12006 249.177);
+  --info: oklch(47.162% 0.12006 249.177);
 
   /* Estados Muted y Accent */
   --muted: oklch(0.95 0.03 85);
@@ -78,9 +78,9 @@
   /* Gradiente para tema OSCURO: tonos oscuros profundos */
   --background-gradient: linear-gradient(
     to top left,
-    oklch(0.3 0.05 220),  /* Cian oscuro */
-    oklch(0.4 0.04 210),  /* Azul muy oscuro */
-    oklch(0.3 0.05 220)  /* Azul oscuro medio */
+    oklch(0.3 0.05 220),
+    /* Cian oscuro */ oklch(0.4 0.04 210),
+    /* Azul muy oscuro */ oklch(0.3 0.05 220) /* Azul oscuro medio */
   );
 
   --background: oklch(0.18 0.03 70); /* Fondo muy oscuro y cálido */
@@ -108,7 +108,7 @@
 
   --success: oklch(62.486% 0.1578 143.936);
   --warning: oklch(77.025% 0.17409 64.047);
-  --info:oklch(65.817% 0.16904 248.834);
+  --info: oklch(65.817% 0.16904 248.834);
 
   /* Estados Muted y Accent */
   --muted: oklch(0.3 0.04 70);
@@ -130,7 +130,7 @@
   --chart-2: oklch(0.35 0.1 90);
   --chart-3: oklch(0.55 0.08 30);
   --chart-4: oklch(0.45 0.12 50);
-  --chart-5:  oklch(0.3 0.18 40);
+  --chart-5: oklch(0.3 0.18 40);
 
   /* Sidebar */
   --sidebar: oklch(0.2 0.03 75);
@@ -156,13 +156,11 @@
   --color-text: #ffffff;
   --color-text-secondary: #a8b8c8;
   --color-border: #2a4066;
-  
+
   --color-error: #f44336;
-  
-  
+
   --color-pending: #ff6f00;
   --radius: 0.5rem;
-
 
   --color-success: var(--success);
   --color-warning: var(--warning);
@@ -240,7 +238,7 @@
 
 /* Smooth transitions */
 * {
-  @apply transition-all duration-300 ease-in-out;
+  @apply transition-colors duration-300 ease-in-out;
 }
 
 button,

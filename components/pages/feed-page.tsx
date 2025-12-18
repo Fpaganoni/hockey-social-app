@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { Plus } from 'lucide-react'
-import { StoriesCarousel } from "@/components/feed/stories-carousel"
-import { PostCard } from "@/components/feed/post-card"
-import { OpportunityCard } from "@/components/feed/opportunity-card"
+import { Plus } from "lucide-react";
+import { StoriesCarousel } from "@/components/feed/stories-carousel";
+import { PostCard } from "@/components/feed/post-card";
+import { OpportunityCard } from "@/components/feed/opportunity-card";
 
 interface FeedPageProps {
-  userType: "player" | "club"
+  userType: "player" | "club";
 }
 
 export function FeedPage({ userType }: FeedPageProps) {
@@ -28,7 +28,8 @@ export function FeedPage({ userType }: FeedPageProps) {
         author: "Alex Johnson",
         role: "Player",
         timeAgo: "2h",
-        content: "Just finished an intense training session! 💪 Ready for the upcoming match 🏑",
+        content:
+          "Just finished an intense training session! 💪 Ready for the upcoming match 🏑",
         image: "/field-hockey-training.jpg",
       },
     },
@@ -38,11 +39,12 @@ export function FeedPage({ userType }: FeedPageProps) {
         author: "HC Davos",
         role: "Club",
         timeAgo: "4h",
-        content: "Congratulations to our team for the amazing performance tonight! 🎉 Great victory against rivals!",
+        content:
+          "Congratulations to our team for the amazing performance tonight! 🎉 Great victory against rivals!",
         image: "/field-hockey-celebration.jpg",
       },
     },
-  ]
+  ];
 
   return (
     <main className="max-w-2xl mx-auto mb-32 ">
@@ -54,7 +56,7 @@ export function FeedPage({ userType }: FeedPageProps) {
             <OpportunityCard key={idx} {...item.data} />
           ) : (
             <PostCard key={idx} {...item.data} />
-          ),
+          )
         )}
       </div>
 
@@ -63,5 +65,5 @@ export function FeedPage({ userType }: FeedPageProps) {
         <Plus size={32} />
       </button>
     </main>
-  )
+  );
 }
