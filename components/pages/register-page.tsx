@@ -19,6 +19,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const registerSchema = z
   .object({
@@ -99,12 +100,9 @@ export const RegisterPage = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Name input */}
             <div className="mb-5">
-              <label
-                id="name"
-                className="block text-sm font-medium text-foreground mb-2"
-              >
+              <Label id="name" className="mb-2">
                 Full Name
-              </label>
+              </Label>
               <div className="relative">
                 <User
                   className={`absolute left-3 top-1/2 -translate-y-1/2 text-foreground ${
@@ -128,7 +126,7 @@ export const RegisterPage = () => {
                   initial={{ opacity: 0, y: -5 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="flex gap-1 text-destructive bg-destructive/20 font-semibold p-1 text-xs mt-2"
+                  className="flex gap-1 text-error bg-error/20 font-semibold p-1 text-xs mt-2"
                 >
                   <ArrowUpIcon size={16} />
                   {errors.name.message}
@@ -138,12 +136,9 @@ export const RegisterPage = () => {
 
             {/* Username input */}
             <div className="mb-5">
-              <label
-                id="username"
-                className="block text-sm text-foreground mb-2"
-              >
+              <Label id="username" className="mb-2">
                 Username
-              </label>
+              </Label>
               <div className="relative">
                 <User
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
@@ -161,7 +156,7 @@ export const RegisterPage = () => {
                   initial={{ opacity: 0, y: -5 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="flex gap-1 text-destructive bg-destructive/20 font-semibold p-1 text-xs mt-2"
+                  className="flex gap-1 text-error bg-error/20 font-semibold p-1 text-xs mt-2"
                 >
                   <ArrowUpIcon size={16} />
                   {errors.username.message}
@@ -171,9 +166,9 @@ export const RegisterPage = () => {
 
             {/* Email Input */}
             <div className="mb-5">
-              <label id="email" className="block text-sm text-foreground mb-2">
+              <Label id="email" className="mb-2">
                 Email
-              </label>
+              </Label>
               <div className="relative">
                 <Mail
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
@@ -191,7 +186,7 @@ export const RegisterPage = () => {
                   initial={{ opacity: 0, y: -5 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="flex gap-1 text-destructive bg-destructive/20 font-semibold p-1 text-xs mt-2"
+                  className="flex gap-1 text-error bg-error/20 font-semibold p-1 text-xs mt-2"
                 >
                   <ArrowUpIcon size={16} />
                   {errors.email.message}
@@ -201,12 +196,9 @@ export const RegisterPage = () => {
 
             {/* Password Input */}
             <div className="mb-5">
-              <label
-                id="password"
-                className="block text-sm text-foreground mb-2"
-              >
+              <Label id="password" className="mb-2">
                 Password
-              </label>
+              </Label>
               <div className="relative">
                 <Lock
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
@@ -219,10 +211,12 @@ export const RegisterPage = () => {
                   className="pl-10"
                 />
                 <button
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowPassword(!showPassword);
+                  }}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground transition-colors cursor-pointer"
                 >
-                  {/* TODO: Hasta esta linea resolvi */}
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
@@ -231,7 +225,7 @@ export const RegisterPage = () => {
                   initial={{ opacity: 0, y: -5 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="flex gap-1 text-destructive bg-destructive/20 font-semibold p-1 text-xs mt-2"
+                  className="flex gap-1 text-error bg-error/20 font-semibold p-1 text-xs mt-2"
                 >
                   <ArrowUpIcon size={16} />
                   {errors.password.message}
@@ -241,12 +235,9 @@ export const RegisterPage = () => {
 
             {/* Reapeat Password Input */}
             <div className="mb-4">
-              <label
-                id="repeat-password"
-                className="block text-sm font-medium text-foreground mb-2"
-              >
+              <Label id="confirm-password" className="mb-2">
                 Confirm Password
-              </label>
+              </Label>
               <div className="relative">
                 <Lock
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
@@ -256,11 +247,14 @@ export const RegisterPage = () => {
                   {...register("confirmPassword", { required: true })}
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-10 py-2.5 bg-background border border-foreground rounded-lg text-foreground placeholder-text-secondary focus:outline-none focus:border-accent-bright transition-colors cursor-text"
+                  className="pl-10"
                 />
                 <button
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground/85 hover:text-foreground transition-colors cursor-pointer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowConfirmPassword(!showConfirmPassword);
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground transition-colors cursor-pointer"
                 >
                   {showConfirmPassword ? (
                     <EyeOff size={18} />
@@ -274,7 +268,7 @@ export const RegisterPage = () => {
                   initial={{ opacity: 0, y: -5 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="flex gap-1 text-destructive bg-destructive/20 font-semibold p-1 text-xs mt-2"
+                  className="flex gap-1 text-error bg-error/20 font-semibold p-1 text-xs mt-2"
                 >
                   <ArrowUpIcon size={16} />
                   {errors.confirmPassword.message}
@@ -284,12 +278,9 @@ export const RegisterPage = () => {
 
             {/* Role Input */}
             <div className="mb-4">
-              <label
-                id="role"
-                className="block text-sm font-medium text-foreground mb-2"
-              >
+              <Label id="role" className="mb-2">
                 Role
-              </label>
+              </Label>
               <div className="relative">
                 <ClipboardList
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
@@ -299,7 +290,7 @@ export const RegisterPage = () => {
                   {...register("role", { required: true })}
                   type="text"
                   placeholder="Player | Coach | Trainer"
-                  className="w-full pl-10 pr-10 py-2.5 bg-background border border-foreground rounded-lg text-foreground placeholder-text-secondary focus:outline-none focus:border-accent-bright transition-colors cursor-text"
+                  className="pl-10"
                 />
               </div>
               {errors.role && (
@@ -307,7 +298,7 @@ export const RegisterPage = () => {
                   initial={{ opacity: 0, y: -5 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="flex gap-1 text-destructive bg-destructive/20 font-semibold p-1 text-xs mt-2"
+                  className="flex gap-1 text-error bg-error/20 font-semibold p-1 text-xs mt-2"
                 >
                   <ArrowUpIcon size={16} />
                   {errors.role.message}
@@ -316,34 +307,38 @@ export const RegisterPage = () => {
             </div>
 
             {/* Register button */}
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => handleSubmit(onSubmit)}
               disabled={isLoading}
-              className="w-full flex items-center justify-center gap-2 py-3 bg-primary/80 text-background font-semibold rounded-lg hover:text-primary-contrast hover:bg-foreground transition-all duration-300 cursor-pointer disabled:opacity-50 mb-4 mt-1"
+              className="w-full bg-primary hover:bg-primary-hover inline-flex items-center justify-center gap-2 rounded-md mt-5 h-9 px-4 py-2 text-background"
             >
               <UserPlus size={18} />
               {isLoading ? "Registering..." : "Register"}
-            </button>
+            </motion.button>
           </form>
 
           {/* Divider */}
-          <div className="flex items-center gap-3 mb-4">
-            <div className="flex-1 h-px bg-foreground/80"></div>
-            <span className="text-sm text-foreground/85">
+          <div className="flex items-center gap-3 my-5">
+            <div className="flex-1 h-px bg-border"></div>
+            <span className="text-sm text-foreground-muted">
               Already have an account?
             </span>
-            <div className="flex-1 h-px bg-foreground/80"></div>
+            <div className="flex-1 h-px bg-border"></div>
           </div>
 
           {/* Login option */}
 
-          <Link
-            href="/login"
-            className="w-full h-12 py-2.5 border border-primary rounded-lg text-foreground bg-dark-gray-1/80 hover:bg-dark-gray-2 transition-colors cursor-pointer flex items-center justify-center gap-2"
-          >
-            <LogIn size={18} />
-            Login
-          </Link>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              href="/login"
+              className="w-full h-9 px-4 py-2 border-2 border-border-strong rounded-lg text-foreground hover:text-white-black hover:bg-foreground transition-colors cursor-pointer flex items-center justify-center gap-2"
+            >
+              <LogIn size={18} />
+              Login
+            </Link>
+          </motion.div>
         </div>
       </div>
     </main>
