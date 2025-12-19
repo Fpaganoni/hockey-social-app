@@ -78,7 +78,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           <h2 className="text-xl font-medium text-foreground mb-6">Welcome</h2>
 
           {error && (
-            <div className="mb-4 p-3 bg-error/10 border border-error/30 rounded-lg">
+            <div className="text-error bg-error/20 font-semibold py-2 px-4 text-xs mt-2 rounded-lg mb-5">
               <p className="text-error text-sm">{error}</p>
             </div>
           )}

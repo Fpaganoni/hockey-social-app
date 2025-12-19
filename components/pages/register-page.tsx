@@ -94,7 +94,7 @@ export const RegisterPage = () => {
         </div>
 
         {/* Register Card */}
-        <div className="rounded-2xl border border-primary bg-dark-gray-1 p-6 shadow-xl">
+        <div className="rounded-2xl border border-border bg-background p-6 shadow-xl">
           <h2 className="text-xl font-medium text-foreground mb-6">Register</h2>
 
           <form onSubmit={handleSubmit(onSubmit)}>
