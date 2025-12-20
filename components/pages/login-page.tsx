@@ -127,7 +127,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                   e.preventDefault();
                   setShowPassword(!showPassword);
                 }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground bg-input transition-colors cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground bg-input cursor-pointer"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>

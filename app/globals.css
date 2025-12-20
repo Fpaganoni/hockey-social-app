@@ -16,18 +16,6 @@
 
   --turf: oklch(0.65 0.2 130);
 
-  --secondary: oklch(0.9 0.08 75); /* Fondo secundario suave */
-  --secondary-foreground: var(--foreground);
-
-  --success: oklch(50.174% 0.12243 143.997);
-  --warning: oklch(48.21% 0.10411 68.013);
-  --info: oklch(47.162% 0.12006 249.177);
-
-  /* Estados Muted y Accent */
-  --muted: oklch(0.95 0.03 85);
-  --accent: oklch(0.9 0.08 75);
-  --accent-foreground: var(--primary);
-
   --destructive-foreground: oklch(1 0 0);
 
   --input: oklch(0.85 0.05 80);
@@ -106,26 +94,9 @@
   /* Colores Principales (Énfasis Cálido y Sutil) */
 
   --turf: oklch(0.35 0.1 130);
-  --secondary: oklch(0.3 0.04 70); /* Fondo secundario oscuro y sutil */
-  --secondary-foreground: var(--foreground);
-
-  /* grises */
-  --dark-gray-1: oklch(0.2 0.03 215);
-  --dark-gray-2: oklch(0.4 0.04 210);
-  --dark-gray-3: oklch(0.3 0.05 220);
-  --gray-light-1: oklch(0.95 0.02 210);
-  --gray-light-2: oklch(0.9 0.03 215);
-  --gray-light-3: oklch(0.8 0.04 220);
-
-  --success: oklch(62.486% 0.1578 143.936);
-  --warning: oklch(77.025% 0.17409 64.047);
-  --info: oklch(65.817% 0.16904 248.834);
 
   /* Estados Muted y Accent */
   --muted: oklch(0.3 0.04 70);
-
-  --accent: oklch(0.3 0.04 70);
-  --accent-foreground: var(--primary);
 
   /* Alertas (Tonos oscuros, menos brillantes) */
   --destructive: oklch(0.5 0.15 25);

@@ -1,38 +1,53 @@
-"use client"
+"use client";
 
-import { Heart, MessageCircle, Share2 } from 'lucide-react'
-import { useState } from "react"
+import { Heart, MessageCircle, Share2 } from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 interface PostCardProps {
-  author: string
-  role: string
-  timeAgo: string
-  content: string
-  image?: string
+  author: string;
+  role: string;
+  timeAgo: string;
+  content: string;
+  image?: string;
 }
 
-export function PostCard({ author, role, timeAgo, content, image }: PostCardProps) {
-  const [liked, setLiked] = useState(false)
+export function PostCard({
+  author,
+  role,
+  timeAgo,
+  content,
+  image,
+}: PostCardProps) {
+  const [liked, setLiked] = useState(false);
 
   return (
-    <div className="bg-dark-gray-1 rounded-xl  overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 hover:scale-103">
+    <motion.div
+      whileHover={{ scale: 1.03 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className="bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg"
+    >
       {/* Header */}
-      <div className="p-4 flex items-center justify-between border-b border-primary">
+      <div className="p-4 flex items-center justify-between border-b border-border">
         <div className="flex items-center gap-3">
-          <img
+          <motion.img
+            whileHover={{ scale: 1.1 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
             src={`/profile-.jpg?height=40&width=40&query=profile-${author}`}
             alt={author}
-            className="w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition-transform"
+            className="w-10 h-10 rounded-full cursor-pointer"
           />
           <div>
             <p className="font-semibold text-foreground">{author}</p>
-            <p className="text-xs text-light-gray-1">
+            <p className="text-xs text-foreground-muted">
               {role} • {timeAgo}
             </p>
           </div>
         </div>
-        <button className="group p-2 hover:bg-primary rounded-lg transition-colors cursor-pointer hover:scale-110">
-          <span className="text-foreground group-hover:text-background text-xl">•••</span>
+        <button className="group p-2 rounded-lg cursor-pointer transition-colors">
+          <span className="text-foreground group-hover:text-foreground-muted text-md">
+            •••
+          </span>
         </button>
       </div>
 
@@ -42,27 +57,35 @@ export function PostCard({ author, role, timeAgo, content, image }: PostCardProp
       </div>
 
       {/* Image */}
-      {image && <img src={image || "/placeholder.svg"} alt="Post content" className="w-full h-64 object-cover cursor-pointer hover:opacity-90 transition-opacity" />}
+      {image && (
+        <img
+          src={image || "/placeholder.svg"}
+          alt="Post content"
+          className="w-full h-64 object-cover cursor-pointer"
+        />
+      )}
 
       {/* Actions */}
-      <div className="px-4 py-3 flex items-center justify-around border-t border-primary">
+      <div className="px-4 py-3 flex items-center justify-around border-t border-border">
         <button
           onClick={() => setLiked(!liked)}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer hover:scale-105 ${
-            liked ? "text-error hover:bg-error/20" : "text-foreground hover:text-background hover:bg-primary"
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-300 cursor-pointer ${
+            liked
+              ? "text-error hover:bg-error/30"
+              : "text-foreground  hover:bg-error/30"
           }`}
         >
           <Heart size={18} fill={liked ? "currentColor" : "none"} />
           <span className="text-sm font-medium">{liked ? "124" : "123"}</span>
         </button>
-        <button className="flex items-center gap-2 px-4 py-2 text-foreground hover:text-background hover:bg-primary rounded-lg transition-all duration-300 cursor-pointer hover:scale-105">
+        <button className="flex items-center gap-2 px-4 py-2 hover:bg-foreground-muted/30 rounded-lg transition-colors duration-300 cursor-pointer">
           <MessageCircle size={18} />
           <span className="text-sm font-medium">8</span>
         </button>
-        <button className="flex items-center gap-2 px-4 py-2 text-foreground hover:text-background hover:bg-primary rounded-lg transition-all duration-300 cursor-pointer hover:scale-105">
+        <button className="flex items-center gap-2 px-4 py-2 hover:bg-foreground-muted/30 rounded-lg transition-colors duration-300 cursor-pointer">
           <Share2 size={18} />
         </button>
       </div>
-    </div>
-  )
+    </motion.div>
+  );
 }
