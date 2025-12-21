@@ -39,11 +39,7 @@ export function OpportunityCard({
   };
 
   return (
-    <motion.div
-      whileHover={{ scale: 1.03 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="bg-accent-soft rounded-xl overflow-hidden shadow-md hover:shadow-lg group"
-    >
+    <div className="bg-accent-soft rounded-xl overflow-hidden shadow-md hover:shadow-lg group">
       <div className="p-4 border-l-4 border-l-accent">
         <div className="mb-3">
           <div className="flex items-start justify-between gap-2 mb-2">
@@ -107,6 +103,6 @@ export function OpportunityCard({
           </button>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }

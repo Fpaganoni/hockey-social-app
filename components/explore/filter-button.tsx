@@ -1,47 +1,72 @@
-"use client"
+"use client";
 
-import { ChevronDown, X } from 'lucide-react'
-import { useState } from "react"
+import { ChevronDown, X } from "lucide-react";
+import { useState } from "react";
 
 interface FilterButtonProps {
-  label: string
-  options?: string[]
-  onSelect?: (option: string) => void
+  label: string;
+  options?: string[];
+  onSelect?: (option: string) => void;
 }
 
-export function FilterButton({ label, options = [], onSelect }: FilterButtonProps) {
-  const [isOpen, setIsOpen] = useState(false)
+export function FilterButton({
+  label,
+  options = [],
+  onSelect,
+}: FilterButtonProps) {
+  const [isOpen, setIsOpen] = useState(false);
 
   const defaultOptions: Record<string, string[]> = {
     Role: ["Player", "Coach", "Club Manager"],
-    Country: ["🇨🇦 Canada", "🇺🇸 USA", "🇳🇱 Netherlands", "🇬🇧 UK"],
+    Country: [
+      "ca Canada",
+      "us USA",
+      "nl Netherlands",
+      "uk UK",
+      "be Belgium",
+      "fr France",
+      "de Germany",
+      "es Spain",
+      "it Italy",
+      "pt Portugal",
+      "ch Switzerland",
+      "dk Denmark",
+      "ar Argentina",
+      "se Sweden",
+      "fi Finland",
+      "cl Chile",
+      "at Austria",
+    ],
     Level: ["Elite", "Professional", "Amateur", "Youth"],
     Position: ["Forward", "Midfielder", "Defender", "Goalkeeper"],
     Season: ["Current Season", "Next Season", "Any Time"],
-  }
+  };
 
-  const items = options.length > 0 ? options : defaultOptions[label] || []
+  const items = options.length > 0 ? options : defaultOptions[label] || [];
 
   return (
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2.5 bg-dark-gray-2 border border-primary rounded-lg text-foreground transition-all duration-300 text-sm font-medium cursor-pointer hover:scale-105 active:scale-95"
+        className="flex items-center gap-2 h-9 px-4 py-2.5 bg-background border border-border rounded-md text-foreground transition-colors duration-300 text-sm font-medium cursor-pointer active:scale-95"
       >
         {label}
-        <ChevronDown size={16} className={`transition-transform ${isOpen ? "rotate-180" : ""}`} />
+        <ChevronDown
+          size={16}
+          className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
+        />
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-48 bg-dark-gray-1 border border-primary rounded-lg shadow-lg z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="absolute top-full left-0 mt-2 w-48 shadow-lg z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
           {items.map((item) => (
             <button
               key={item}
               onClick={() => {
-                onSelect?.(item)
-                setIsOpen(false)
+                onSelect?.(item);
+                setIsOpen(false);
               }}
-              className="w-full text-left px-4 py-2.5 hover:bg-dark-gray-2 text-foreground text-sm transition-colors cursor-pointer border-b border-primary last:border-b-0"
+              className="w-full text-left px-4 py-2.5 bg-background hover:bg-input text-foreground rounded-md text-sm transition-colors cursor-pointer border border-border-strong"
             >
               {item}
             </button>
@@ -58,5 +83,5 @@ export function FilterButton({ label, options = [], onSelect }: FilterButtonProp
         />
       )}
     </div>
-  )
+  );
 }

@@ -22,11 +22,7 @@ export function PostCard({
   const [liked, setLiked] = useState(false);
 
   return (
-    <motion.div
-      whileHover={{ scale: 1.03 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg"
-    >
+    <motion.div className="bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg">
       {/* Header */}
       <div className="p-4 flex items-center justify-between border-b border-border">
         <div className="flex items-center gap-3">
