@@ -27,9 +27,9 @@ export function OpportunitiesPage() {
       club: "British Field Hockey Club",
       location: "UK",
       description: "Seeking an experienced defender for the upcoming season.",
-      tags: ["Professional", "Contract 2 Years", "EU"],
+      tags: ["Amateur", "Contract 2 Years", "EU"],
       deadline: "15 Jan 2026",
-      level: "Professional",
+      level: "Amateur",
       salary: "€2,000 - €3,500",
     },
     {
@@ -51,7 +51,7 @@ export function OpportunitiesPage() {
       location: "Netherlands",
       description:
         "We are searching for a right midfielder to join our professional field hockey team.",
-      tags: ["Professional", "Contract 1 Year", "EU"],
+      tags: ["Elite", "Contract 1 Year", "EU"],
       deadline: "15 Jan 2026",
       level: "Elite",
       salary: "To agree",
@@ -72,7 +72,7 @@ export function OpportunitiesPage() {
 
   return (
     <main className="max-w-2xl mx-auto pb-4 mb-22">
-      <div className="sticky top-16 bg-background border-b border-primary rounded-b-lg shadow-md px-4 py-4 z-20 flex items-center justify-between gap-3">
+      <div className="sticky top-16 bg-background border-b border-border rounded-b-lg shadow-md px-4 py-4 z-20 flex items-center justify-between gap-3">
         <h2 className="text-lg font-semibold text-foreground">
           Available Positions
         </h2>
@@ -100,7 +100,7 @@ export function OpportunitiesPage() {
             {["Experience", "Location", "Contract", "Salary"].map((filter) => (
               <button
                 key={filter}
-                className="px-3 py-2 bg-background border border-border-strong rounded-lg text-foreground cursor-pointer text-sm font-medium"
+                className="px-3 py-2 bg-background hover:bg-input text-foreground border border-border-strong rounded-lg  cursor-pointer text-sm font-medium"
               >
                 {filter}
               </button>

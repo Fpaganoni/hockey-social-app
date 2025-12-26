@@ -3,7 +3,7 @@
 import { Plus } from "lucide-react";
 import { StoriesCarousel } from "@/components/feed/stories-carousel";
 import { PostCard } from "@/components/feed/post-card";
-import { OpportunityCard } from "@/components/feed/opportunity-card";
+import { OpportunityListCard } from "@/components/opportunities/opportunity-list-card";
 
 interface FeedPageProps {
   userType: "player" | "club";
@@ -64,7 +64,7 @@ export function FeedPage({ userType }: FeedPageProps) {
       <div className="px-4 py-6 space-y-8">
         {feedItems.map((item, idx) =>
           item.type === "opportunity" ? (
-            <OpportunityCard key={idx} {...item.data} />
+            <OpportunityListCard key={idx} {...item.data} />
           ) : (
             <PostCard key={idx} {...item.data} />
           )
