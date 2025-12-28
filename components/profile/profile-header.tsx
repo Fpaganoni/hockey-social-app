@@ -1,29 +1,38 @@
-"use client"
+"use client";
 
-import { MessageSquare, Heart, UserPlus, Edit } from 'lucide-react'
-import { useState } from "react"
+import { MessageSquare, Heart, UserPlus, Edit } from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Badge } from "../ui/badge";
 
 interface ProfileHeaderProps {
-  name: string
-  role: string
-  position: string
-  country: string
-  bio: string
-  isOwnProfile?: boolean
+  name: string;
+  role: string;
+  position: string;
+  country: string;
+  bio: string;
+  isOwnProfile?: boolean;
 }
 
-export function ProfileHeader({ name, role, position, country, bio, isOwnProfile = false }: ProfileHeaderProps) {
-  const [isFollowing, setIsFollowing] = useState(false)
+export function ProfileHeader({
+  name,
+  role,
+  position,
+  country,
+  bio,
+  isOwnProfile = false,
+}: ProfileHeaderProps) {
+  const [isFollowing, setIsFollowing] = useState(false);
 
   return (
-    <div className="bg-dark-gray-1">
-      <div className="h-60 bg-gradient-to-b from-gray-light-1/30 via-gray-light-2/20 to-gray-light-1/20 relative overflow-hidden">
-        <img 
-          src="/hockey-stadium.jpg" 
-          alt="Cover" 
-          className="w-full h-full object-cover opacity-60" 
+    <div className="bg-background">
+      <div className="h-60 relative overflow-hidden">
+        <img
+          src="/hockey-stadium.jpg"
+          alt="Cover"
+          className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-dark-gray-1"></div>
+        <div className="absolute inset-0 bg-linear-to-t from-background via-background/10 to-transparent"></div>
       </div>
 
       {/* Profile Content */}
@@ -31,42 +40,53 @@ export function ProfileHeader({ name, role, position, country, bio, isOwnProfile
         {/* Profile Picture and Info */}
         <div className="flex justify-between items-start mb-4">
           <div className="flex items-start gap-3 flex-1 -mt-24 relative z-10">
-            <img
+            <motion.img
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
               src="/hockey-player.jpg"
               alt={name}
-              className="w-32 h-32 rounded-full border-2 border-primary shadow-lg hover:scale-105 transition-transform cursor-pointer mx-2"
+              className="w-32 h-32 rounded-full border-2 border-border shadow-lg cursor-pointer mx-2"
             />
             <div className="pt-6">
               <div className="flex items-center gap-2 flex-wrap">
                 <h1 className="text-2xl font-bold text-foreground">{name}</h1>
-                <span className="text-2xl text-foreground/75">{country}</span>
+                <span className="text-2xl text-foreground-muted">
+                  {country}
+                </span>
               </div>
               <div className="flex items-center gap-2 mt-1">
-                <span className="px-3 py-1 text-xs font-semibold rounded-lg bg-info/20 text-foreground/80 border border-info/30">
-                  {role}
+                <Badge variant="player">{role}</Badge>
+                <span className="text-foreground font-semibold text-sm">
+                  {position}
                 </span>
-                <span className="text-gray-light-2 font-semibold text-sm">{position}</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Bio */}
-        <p className="text-foreground/75 text-sm mb-4 leading-relaxed">{bio}</p>
+        <p className="text-foreground-muted text-sm mb-4 leading-relaxed">
+          {bio}
+        </p>
 
         <div className="flex flex-col gap-2">
           {isOwnProfile ? (
-            <button className="w-full py-3 rounded-lg bg-dark-gray-2 hover:bg-primary active:scale-95 text-foreground hover:text-background font-semibold transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 hover:shadow-lg border border-primary">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+              className="w-[90%] mx-auto flex items-center gap-2 justify-center h-(--input-button-height) px-4 py-2 bg-primary text-white-black font-semibold rounded-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer disabled:opacity-50"
+            >
               <Edit size={18} />
               Edit Profile
-            </button>
+            </motion.button>
           ) : (
             <div className="flex gap-2">
-              <button 
+              <button
                 onClick={() => setIsFollowing(!isFollowing)}
                 className={`flex-1 py-2.5 rounded-lg font-semibold transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 hover:scale-105 active:scale-95 ${
-                  isFollowing 
-                    ? "bg-dark-gray-1/20 text-foreground border-2 border-primary" 
+                  isFollowing
+                    ? "bg-dark-gray-1/20 text-foreground border-2 border-primary"
                     : "bg-dark-gray-3 border-2 border-primary text-foreground "
                 }`}
               >
@@ -86,5 +106,5 @@ export function ProfileHeader({ name, role, position, country, bio, isOwnProfile
         </div>
       </div>
     </div>
-  )
+  );
 }

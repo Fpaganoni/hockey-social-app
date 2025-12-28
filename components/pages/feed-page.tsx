@@ -3,7 +3,7 @@
 import { Plus } from "lucide-react";
 import { StoriesCarousel } from "@/components/feed/stories-carousel";
 import { PostCard } from "@/components/feed/post-card";
-import { OpportunityCard } from "@/components/feed/opportunity-card";
+import { OpportunityListCard } from "@/components/opportunities/opportunity-list-card";
 
 interface FeedPageProps {
   userType: "player" | "club";
@@ -44,16 +44,27 @@ export function FeedPage({ userType }: FeedPageProps) {
         image: "/field-hockey-celebration.jpg",
       },
     },
+    {
+      type: "post",
+      data: {
+        author: "Club Genk",
+        role: "Club",
+        timeAgo: "18h",
+        content:
+          "Tonight we have the big celebratin, our U12 won the championship!",
+        image: "/genk-u12.jpg",
+      },
+    },
   ];
 
   return (
     <main className="max-w-2xl mx-auto mb-32 ">
       <StoriesCarousel />
 
-      <div className="px-4 py-6 space-y-4">
+      <div className="px-4 py-6 space-y-8">
         {feedItems.map((item, idx) =>
           item.type === "opportunity" ? (
-            <OpportunityCard key={idx} {...item.data} />
+            <OpportunityListCard key={idx} {...item.data} />
           ) : (
             <PostCard key={idx} {...item.data} />
           )
@@ -61,7 +72,7 @@ export function FeedPage({ userType }: FeedPageProps) {
       </div>
 
       {/* Floating Action Button */}
-      <button className="fixed bottom-24 right-4 w-16 h-16 border-2 border-primary hover:bg-primary active:scale-95 text-foreground hover:text-background font-bold rounded-full flex items-center justify-center shadow-lg transition-all duration-300 z-30 cursor-pointer ">
+      <button className="fixed bottom-24 right-4 w-16 h-16 border-2 border-border-strong hover:border-primary hover:bg-primary active:scale-95 text-foreground hover:text-white-black font-bold rounded-full flex items-center justify-center shadow-lg transition-transform duration-300 z-30 cursor-pointer ">
         <Plus size={32} />
       </button>
     </main>
