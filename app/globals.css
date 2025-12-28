@@ -43,9 +43,9 @@
   /* === GRADIENTE DE FONDO === */
   --background-gradient: linear-gradient(
     135deg,
-    oklch(0.98 0.01 80),
-    oklch(0.96 0.02 85),
-    oklch(0.98 0.01 75)
+    oklch(0.97 0.015 85),
+    oklch(0.98 0.025 75),
+    oklch(0.96 0.02 70)
   );
 
   /* SPECIFIC COLORS */
@@ -57,13 +57,21 @@
 
 .dark {
   /* === FONDOS === */
-  --background: oklch(0.18 0.015 70); /* #252220 - Fondo principal */
-  --surface: oklch(0.24 0.015 70); /* #332F2C - Cards, modales */
-  --surface-elevated: oklch(0.28 0.02 70); /* #3D3935 - Elementos elevados */
+  --background: oklch(
+    0.18 0.02 240
+  ); /* #1A1D25 - Fondo principal azul oscuro */
+  --surface: oklch(0.24 0.02 240); /* #282C36 - Cards, modales azul oscuro */
+  --surface-elevated: oklch(
+    0.28 0.025 240
+  ); /* #323845 - Elementos elevados azul */
 
   /* === TEXTOS === */
-  --foreground: oklch(0.92 0.01 80); /* #EEEEED - Texto principal */
-  --foreground-muted: oklch(0.65 0.02 75); /* #9E9A96 - Texto secundario */
+  --foreground: oklch(
+    0.92 0.015 240
+  ); /* #E8EAEF - Texto principal azul claro */
+  --foreground-muted: oklch(
+    0.65 0.025 240
+  ); /* #949BAA - Texto secundario azul */
 
   /* === COLORES DE MARCA === */
   --primary: oklch(
@@ -99,9 +107,9 @@
   /* === GRADIENTE DE FONDO === */
   --background-gradient: linear-gradient(
     135deg,
-    oklch(0.18 0.015 70),
-    oklch(0.2 0.02 75),
-    oklch(0.17 0.015 65)
+    oklch(0.16 0.03 240),
+    oklch(0.2 0.035 250),
+    oklch(0.18 0.025 235)
   );
 
   /* SPECIFIC COLORS */
