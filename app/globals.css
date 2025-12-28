@@ -2,37 +2,6 @@
 @import "tw-animate-css";
 
 :root {
-  /* Fondo y Primer Plano */
-  /* Gradiente para tema CLARO: tonos claros/pasteles */
-
-  --card: oklch(1 0 0);
-  --card-foreground: var(--foreground);
-  --popover: var(--card);
-  --popover-foreground: var(--foreground);
-
-  /* Colores Principales (Énfasis Cálido y Vivo) */
-
-  --primary-contrast: oklch(0.8 0.1 65);
-
-  --turf: oklch(0.65 0.2 130);
-
-  --destructive-foreground: oklch(1 0 0);
-
-  --input: oklch(0.85 0.05 80);
-  --ring: oklch(0.6 0.15 70); /* Anillo de enfoque cálido */
-
-  /* Sidebar (Separado para estructura) */
-  --sidebar: oklch(0.95 0.03 85);
-  --sidebar-foreground: var(--foreground);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: var(--accent);
-  --sidebar-accent-foreground: var(--accent-foreground);
-  --sidebar-border: var(--border);
-  --sidebar-ring: var(--ring);
-
-  --radius: 0.625rem;
-
   /* === FONDOS === */
   --background: oklch(0.98 0.01 80); /* #F9F9F8 - Fondo principal */
   --surface: oklch(1 0 0); /* #FFFFFF - Cards, modales */
@@ -60,6 +29,7 @@
   --warning: oklch(0.7 0.15 65); /* #F39C12 - Amarillo alerta */
   --error: oklch(0.55 0.2 25); /* #E74C3C - Rojo error */
   --info: oklch(0.6 0.15 250); /* #3498DB - Azul info */
+  --input: oklch(0.85 0.05 80);
 
   /* === BORDES Y DIVISORES === */
   --border: oklch(0.82 0.02 75); /* #C7C1BA - Bordes VISIBLES (medio-claro) */
@@ -80,48 +50,12 @@
 
   /* SPECIFIC COLORS */
   --bg-apple: oklch(1 0 0);
+
+  /* height inputs */
+  --input-button-height: 2.5rem;
 }
 
 .dark {
-  /* Fondo y Primer Plano */
-  /* Gradiente para tema OSCURO: tonos oscuros profundos */
-
-  --card: oklch(0.25 0.03 70);
-  --card-foreground: var(--foreground);
-  --popover: var(--card);
-  --popover-foreground: var(--foreground);
-
-  /* Colores Principales (Énfasis Cálido y Sutil) */
-
-  --turf: oklch(0.35 0.1 130);
-
-  /* Estados Muted y Accent */
-  --muted: oklch(0.3 0.04 70);
-
-  /* Alertas (Tonos oscuros, menos brillantes) */
-  --destructive: oklch(0.5 0.15 25);
-  --destructive-foreground: oklch(0.9 0.05 70);
-
-  --input: oklch(0.3 0.04 70);
-  --ring: oklch(0.5 0.1 70); /* Anillo de enfoque sutil */
-
-  /* Colores de Gráficos (Oscuros y armoniosos) */
-  --chart-1: oklch(0.4 0.15 60);
-  --chart-2: oklch(0.35 0.1 90);
-  --chart-3: oklch(0.55 0.08 30);
-  --chart-4: oklch(0.45 0.12 50);
-  --chart-5: oklch(0.3 0.18 40);
-
-  /* Sidebar */
-  --sidebar: oklch(0.2 0.03 75);
-  --sidebar-foreground: var(--foreground);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: var(--accent);
-  --sidebar-accent-foreground: var(--accent-foreground);
-  --sidebar-border: var(--border);
-  --sidebar-ring: var(--ring);
-
   /* === FONDOS === */
   --background: oklch(0.18 0.015 70); /* #252220 - Fondo principal */
   --surface: oklch(0.24 0.015 70); /* #332F2C - Cards, modales */
@@ -151,6 +85,7 @@
   --warning: oklch(0.75 0.13 65); /* #F5B56F - Amarillo alerta claro */
   --error: oklch(0.6 0.18 25); /* #F07263 - Rojo error claro */
   --info: oklch(0.65 0.13 250); /* #5DADE8 - Azul info claro */
+  --input: oklch(0.3 0.04 70);
 
   /* === BORDES Y DIVISORES === */
   --border: oklch(0.35 0.02 70); /* #4D453F - Bordes VISIBLES (medio-oscuro) */
@@ -171,11 +106,13 @@
 
   /* SPECIFIC COLORS */
   --bg-apple: oklch(1 0 0);
+
+  /* height inputs */
+  --input-button-height: 2.5rem;
 }
 
 @theme inline {
   --color-primary: #18283e;
-
   --color-primary-light: #1f3a52;
   --color-accent: #4caf50;
   --color-accent-bright: #b1e4e4;
@@ -243,6 +180,9 @@
   --color-white-black: var(--white-black);
   --color-bg-apple: var(--bg-apple);
   --color-accent-soft: var(--accent-soft);
+  --color-overlay: var(--overlay);
+
+  --input-button-height: var(--input-button-height);
 }
 
 @layer base {

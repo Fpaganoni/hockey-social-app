@@ -95,12 +95,12 @@ export function OpportunitiesPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="group relative pt-16 -top-12 bg-background border-b border-border px-4 py-4 grid grid-cols-2 gap-2 "
+            className="bg-background border-b border-border px-4 py-4 grid grid-cols-2 gap-2"
           >
             {["Experience", "Location", "Contract", "Salary"].map((filter) => (
               <button
                 key={filter}
-                className="px-3 py-2 bg-background hover:bg-input text-foreground border border-border-strong rounded-lg  cursor-pointer text-sm font-medium"
+                className="px-3 py-2 bg-background hover:bg-input text-foreground border border-border-strong rounded-lg cursor-pointer text-sm font-medium"
               >
                 {filter}
               </button>

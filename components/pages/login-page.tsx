@@ -142,7 +142,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
               transition={{ duration: 0.2, ease: "easeInOut" }}
               onClick={() => handleDemoLogin("player")}
               disabled={isLoading}
-              className="w-full h-9 px-4 py-2 bg-primary text-white-black font-semibold rounded-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer disabled:opacity-50"
+              className="w-full h-(--input-button-height) px-4 py-2 bg-primary text-white-black font-semibold rounded-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer disabled:opacity-50"
             >
               {isLoading ? "Logging in..." : "Demo Login"}
             </motion.button>
@@ -161,7 +161,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="w-full h-9 px-4 py-2 border-2 border-border-strong rounded-lg text-foreground hover:text-white-black hover:bg-foreground transition-colors cursor-pointer flex items-center justify-center gap-2"
+              className="w-full h-(var(--input-button-height)) px-4 py-2 border-2 border-border-strong rounded-lg text-foreground hover:text-white-black hover:bg-foreground transition-colors cursor-pointer flex items-center justify-center gap-2"
             >
               <img
                 src={"/google-icon.svg"}
@@ -175,7 +175,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="w-full h-9 px-4 py-2 border-2 border-border-strong rounded-lg text-foreground hover:text-white-black hover:bg-foreground transition-colors cursor-pointer flex items-center justify-center gap-2"
+              className="w-full h-(--input-button-height) px-4 py-2 border-2 border-border-strong rounded-lg text-foreground hover:text-white-black hover:bg-foreground transition-colors cursor-pointer flex items-center justify-center gap-2"
             >
               <img
                 src={"/apple-icon.svg"}

@@ -48,7 +48,7 @@ export function FilterButton({
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 h-9 px-4 py-2.5 bg-background border border-border rounded-md text-foreground transition-colors duration-300 text-sm font-medium cursor-pointer active:scale-95"
+        className="flex items-center gap-2 h-(--input-button-height) px-4 py-2.5 bg-background border border-border rounded-md text-foreground transition-colors duration-300 text-sm font-medium cursor-pointer active:scale-95"
       >
         {label}
         <ChevronDown
@@ -66,7 +66,7 @@ export function FilterButton({
                 onSelect?.(item);
                 setIsOpen(false);
               }}
-              className="w-full text-left px-4 py-2.5 bg-background hover:bg-input text-foreground rounded-md text-sm transition-colors cursor-pointer border border-border-strong"
+              className="w-full h-10 text-left justify-center items-center px-4 py-1.5 bg-background hover:bg-input text-foreground rounded-md text-sm transition-colors cursor-pointer border border-border-strong"
             >
               {item}
             </button>

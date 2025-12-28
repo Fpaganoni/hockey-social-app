@@ -2,6 +2,7 @@
 
 import { ArrowRight, MapPin, Star } from "lucide-react";
 import { motion } from "framer-motion";
+import { Badge } from "@/components/ui/badge";
 
 export interface ProfileCardProps {
   id: number;
@@ -31,17 +32,17 @@ export function ProfileCard({
     Player: {
       bg: "bg-info/20",
       text: "text-info",
-      badge: "bg-info/20 text-foreground border-border-strong",
+      badge: "bg-info/20 text-foreground border-info",
     },
     Coach: {
       bg: "bg-warning/20",
       text: "text-warning",
-      badge: "bg-warning/20 text-foreground border-border-strong",
+      badge: "bg-warning/20 text-foreground border-warning",
     },
     Club: {
       bg: "bg-success/20",
       text: "text-success",
-      badge: "bg-success/20 text-foreground border-border-strong",
+      badge: "bg-success/20 text-foreground border-success",
     },
   };
 
@@ -65,11 +66,7 @@ export function ProfileCard({
             <div className="flex items-center gap-2 flex-wrap">
               <h3 className="font-medium text-foreground truncate">{name}</h3>
               <span className="shrink-0">{country}</span>
-              <span
-                className={`px-2 py-1 text-xs font-semibold rounded-md border ${colors.badge}`}
-              >
-                {role}
-              </span>
+              <Badge className={`${colors.badge}`}>{role}</Badge>
             </div>
             <p className="text-sm text-foreground-muted mb-1 truncate">
               {position}

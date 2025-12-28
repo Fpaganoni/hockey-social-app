@@ -1,15 +1,17 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { ProfileHeader } from "@/components/profile/profile-header"
-import { ProfileTabs } from "@/components/profile/profile-tabs"
+import { useState } from "react";
+import { ProfileHeader } from "@/components/profile/profile-header";
+import { ProfileTabs } from "@/components/profile/profile-tabs";
 
 interface UserProfilePageProps {
-  isOwnProfile?: boolean
+  isOwnProfile?: boolean;
 }
 
-export function UserProfilePage({ isOwnProfile = false }: UserProfilePageProps) {
-  const [activeTab, setActiveTab] = useState("trajectory")
+export function UserProfilePage({
+  isOwnProfile = false,
+}: UserProfilePageProps) {
+  const [activeTab, setActiveTab] = useState("trajectory");
 
   // Demo player data
   const playerData = {
@@ -25,17 +27,24 @@ export function UserProfilePage({ isOwnProfile = false }: UserProfilePageProps) 
     },
     trajectory: [
       {
-        club: "HC Amsterdam",
-        period: "2022 - Present",
-        description: "Professional midfielder, key player in Elite League",
+        club: "Duendes Rugby Club AR",
+        period: "2004 - Present",
+        description:
+          "Beginning of my career as a Defender - I started playing field hockey at the age of 5.",
       },
       {
-        club: "Toronto Field Hockey Academy",
-        period: "2018 - 2022",
-        description: "Youth development program, represented Canada internationally",
+        club: "Polisportiva Valverde IT",
+        period: "2023 - 2024",
+        description:
+          "First international experience - First season, promotion A1 => Elite - Second season, 2nd position Elite.",
+      },
+      {
+        club: "Old Club de Liege BE",
+        period: "2024 - 2025",
+        description: "First experience in Belgium - A1 level.",
       },
     ],
-  }
+  };
 
   // Demo club data
   const clubData = {
@@ -53,7 +62,8 @@ export function UserProfilePage({ isOwnProfile = false }: UserProfilePageProps) 
       {
         club: "National Championship 2024",
         period: "2024",
-        description: "Won the national championship with outstanding team performance",
+        description:
+          "Won the national championship with outstanding team performance",
       },
       {
         club: "European Cup 2023",
@@ -61,14 +71,18 @@ export function UserProfilePage({ isOwnProfile = false }: UserProfilePageProps) 
         description: "Reached semi-finals of the European Field Hockey Cup",
       },
     ],
-  }
+  };
 
-  const userData = isOwnProfile ? playerData : clubData
+  const userData = isOwnProfile ? playerData : clubData;
 
   return (
     <main className="max-w-2xl mx-auto mb-24">
       <ProfileHeader {...userData} isOwnProfile={isOwnProfile} />
-      <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab} userData={userData} />
+      <ProfileTabs
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        userData={userData}
+      />
     </main>
-  )
+  );
 }

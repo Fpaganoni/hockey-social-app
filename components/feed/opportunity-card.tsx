@@ -89,7 +89,7 @@ export function OpportunityCard({
         {applied ? (
           <button
             disabled
-            className="w-full py-3 rounded-lg border-2 border-success bg-success/20 font-semibold text-foreground flex items-center justify-center gap-2 transition-colors duration-300 cursor-default"
+            className="w-full h-(--input-button-height) py-2 rounded-lg border-2 border-success bg-success/20 font-semibold text-foreground flex items-center justify-center gap-2 transition-colors duration-300 cursor-default"
           >
             <CheckCircle size={18} />
             Application Sent
@@ -97,7 +97,7 @@ export function OpportunityCard({
         ) : (
           <button
             onClick={() => setApplied(true)}
-            className="w-full py-3 rounded-lg bg-success/20 border border-success hover:bg-success text-foreground hover:text-background font-semibold transition-colors duration-300 cursor-pointer hover:shadow-lg"
+            className="w-full h-(--input-button-height) py-2 rounded-lg bg-success/20 border border-success hover:bg-success text-foreground hover:text-background font-semibold transition-colors duration-300 cursor-pointer hover:shadow-lg"
           >
             Apply with Profile
           </button>

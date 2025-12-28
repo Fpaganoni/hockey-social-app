@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowLeft, Send, Plus } from "lucide-react";
 import { motion } from "framer-motion";
+import { Input } from "../ui/input";
 
 interface ChatMessage {
   id: number;
@@ -101,7 +102,7 @@ export function ChatConversation({
               }`}
             >
               <p className="text-sm wrap-break-word">{msg.text}</p>
-              <p className="text-xs mt-2 text-foreground/70">
+              <p className="text-xs mt-2 text-foreground-muted">
                 {msg.timestamp.toLocaleTimeString([], {
                   hour: "2-digit",
                   minute: "2-digit",
@@ -112,25 +113,33 @@ export function ChatConversation({
         ))}
       </div>
 
-      <div className="border-t border-primary bg-dark-gray-1 px-6 pt-8 pb-12 flex items-center gap-2 shadow-lg">
-        <button className="p-2 hover:bg-dark-gray-2 rounded-lg transition-all duration-300 cursor-pointer hover:scale-110 active:scale-95 shrink-0 text-foreground mr-2">
-          <Plus size={20} />
-        </button>
-        <input
+      <div className="border-t border-border bg-background px-6 pt-8 pb-12 flex items-center gap-2 shadow-lg">
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+          className="p-2 cursor-pointer shrink-0 text-foreground mr-2"
+        >
+          <Plus size={24} />
+        </motion.button>
+        <Input
           type="text"
           placeholder="Type a message..."
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyPress={(e) => e.key === "Enter" && handleSend()}
-          className="flex-1 px-4 py-2.5 bg-background border border-primary rounded-full text-foreground placeholder-foreground/70 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 cursor-text"
+          className="flex-1 pl-4"
         />
-        <button
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
           onClick={handleSend}
           disabled={!newMessage.trim()}
-          className="p-2 hover:bg-dark-gray-2 rounded-lg transition-all duration-300  disabled:cursor-not-allowed cursor-pointer shrink-0 hover:scale-110 active:scale-95 ml-2"
+          className="p-2 rounded-lg disabled:cursor-not-allowed cursor-pointer shrink-0 ml-2"
         >
           <Send size={20} className="text-foreground" />
-        </button>
+        </motion.button>
       </div>
     </div>
   );

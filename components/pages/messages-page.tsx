@@ -43,7 +43,7 @@ export function MessagesPage() {
             transition={{ duration: 0.2, ease: "easeInOut" }}
             className="p-2"
           >
-            <Plus size={20} className="text-foreground" />
+            <Plus size={24} className="text-foreground" />
           </motion.button>
         </div>
       </div>

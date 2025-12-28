@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { CheckCircle, MapPin, Calendar, Award } from "lucide-react";
+import { Badge } from "../ui/badge";
 
 interface OpportunityListCardProps {
   id: number;
@@ -51,15 +52,15 @@ export function OpportunityListCard({
             {level && (
               <div className="flex flex-wrap gap-2 mb-4">
                 {tags.map((tag) => (
-                  <span
+                  <Badge
                     key={tag}
-                    className={`px-3 py-1.5 text-xs font-semibold rounded-lg border ${
+                    className={
                       tagColorMap[tag] ||
                       "bg-foreground/20 text-foreground border-foreground/30"
-                    }`}
+                    }
                   >
                     {tag}
-                  </span>
+                  </Badge>
                 ))}
               </div>
             )}
@@ -89,7 +90,7 @@ export function OpportunityListCard({
         {applied ? (
           <button
             disabled
-            className="w-full py-3 rounded-lg border-2 border-success bg-success/20 font-semibold text-foreground flex items-center justify-center gap-2 transition-colors duration-300 cursor-default"
+            className="w-full py-2 rounded-lg border-2 border-success bg-success/20 font-semibold text-foreground flex items-center justify-center gap-2 transition-colors duration-300 cursor-default"
           >
             <CheckCircle size={18} />
             Application Sent
@@ -97,7 +98,7 @@ export function OpportunityListCard({
         ) : (
           <button
             onClick={() => setApplied(true)}
-            className="w-full py-3 rounded-lg bg-success/20 border border-border hover:bg-success text-foreground hover:text-background font-semibold transition-colors duration-300 cursor-pointer hover:shadow-lg"
+            className="w-full py-2 rounded-lg bg-success/20 border border-border hover:bg-success text-foreground hover:text-background font-semibold transition-colors duration-300 cursor-pointer hover:shadow-lg"
           >
             Apply with Profile
           </button>
