@@ -76,7 +76,7 @@ export function UserProfilePage({
   const userData = isOwnProfile ? playerData : clubData;
 
   return (
-    <main className="max-w-2xl mx-auto mb-24">
+    <main className="bg-overlay max-w-2xl mx-auto pb-24">
       <ProfileHeader {...userData} isOwnProfile={isOwnProfile} />
       <ProfileTabs
         activeTab={activeTab}

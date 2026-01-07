@@ -68,11 +68,12 @@ export const GET_POSTS = gql`
       user {
         id
         name
+        username
         avatar
+        role
       }
       likes {
         id
-        userId
       }
       comments {
         id
@@ -169,9 +170,11 @@ export interface User {
   id: string;
   email: string;
   name: string;
+  username?: string;
   avatar?: string;
   bio?: string;
   position?: string;
+  role?: string;
   clubId?: string;
   club?: Club;
   posts?: Post[];
