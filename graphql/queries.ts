@@ -162,9 +162,52 @@ export const GET_CLUB = gql`
   }
 `;
 
+/// ============================================
+/// OPPORTUNITIES QUERIES
+/// ============================================
+
+export const GET_JOB_OPPORTUNITIES = gql`
+  query {
+    jobOpportunities {
+      id
+      title
+      description
+      positionType
+      club {
+        name
+        city
+        country
+        isVerified
+      }
+      country
+      city
+      salary
+      currency
+      benefits
+      status
+      createdAt
+    }
+  }
+`;
+
 // ============================================
 // TYPE DEFINITIONS (adjust based on your schema)
 // ============================================
+
+export interface JobOpportunity {
+  id: string;
+  title: string;
+  description: string;
+  positionType: string;
+  club: Club;
+  country: string;
+  city: string;
+  salary: number;
+  currency: string;
+  benefits: string[];
+  status: string;
+  createdAt: string;
+}
 
 export interface User {
   id: string;

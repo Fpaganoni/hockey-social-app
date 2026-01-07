@@ -3,6 +3,7 @@
 import { Heart, MessageCircle, Share2 } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { formatRelativeTime } from "@/lib/date-utils";
 
 type User = {
   id: string;
@@ -17,12 +18,19 @@ type Likes = {
   user?: { name: string };
 };
 
+type Comment = {
+  id: string;
+  content: string;
+  user: User;
+};
+
 type Post = {
   id: string;
   content: string;
   imageUrl?: string;
   user: User;
   createdAt: string;
+  comments: Comment[];
   updatedAt: string;
   likes: Likes[];
 };
@@ -48,9 +56,9 @@ export function PostCard({ post }: PostCardProps) {
             className="w-10 h-10 rounded-full cursor-pointer"
           />
           <div>
-            <p className="font-semibold text-foreground">{user.name}</p>
+            <p className="font-semibold text-foreground">{post.user.name}</p>
             <p className="text-xs text-foreground-muted">
-              {user.role} • {post.createdAt}
+              {post.user.role} • {formatRelativeTime(post.createdAt)}
             </p>
           </div>
         </div>
@@ -73,7 +81,7 @@ export function PostCard({ post }: PostCardProps) {
         <img
           src={post.imageUrl}
           alt="Post content"
-          className="w-full h-64 object-cover cursor-pointer"
+          className="w-full h-108 object-cover cursor-pointer"
         />
       )}
 
@@ -92,7 +100,7 @@ export function PostCard({ post }: PostCardProps) {
         </button>
         <button className="flex items-center gap-2 px-4 py-2 hover:bg-foreground-muted/30 rounded-lg transition-colors duration-300 cursor-pointer">
           <MessageCircle size={18} />
-          <span className="text-sm font-medium">msjs</span>
+          <span className="text-sm font-medium">{post.comments.length}</span>
         </button>
         <button className="flex items-center gap-2 px-4 py-2 hover:bg-foreground-muted/30 rounded-lg transition-colors duration-300 cursor-pointer">
           <Share2 size={18} />
