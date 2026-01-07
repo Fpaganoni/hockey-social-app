@@ -4,22 +4,36 @@ import { Heart, MessageCircle, Share2 } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-interface PostCardProps {
-  author: string;
-  role: string;
-  timeAgo: string;
+type User = {
+  id: string;
+  name: string;
+  username?: string;
+  avatar?: string;
+  role?: string;
+};
+
+type Likes = {
+  id: string;
+  user?: { name: string };
+};
+
+type Post = {
+  id: string;
   content: string;
-  image?: string;
+  imageUrl?: string;
+  user: User;
+  createdAt: string;
+  updatedAt: string;
+  likes: Likes[];
+};
+
+interface PostCardProps {
+  post: Post;
 }
 
-export function PostCard({
-  author,
-  role,
-  timeAgo,
-  content,
-  image,
-}: PostCardProps) {
+export function PostCard({ post }: PostCardProps) {
   const [liked, setLiked] = useState(false);
+  const user = post.user;
 
   return (
     <motion.div className="bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg">
@@ -29,14 +43,14 @@ export function PostCard({
           <motion.img
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            src={`/profile-.jpg?height=40&width=40&query=profile-${author}`}
-            alt={author}
+            src={user.avatar}
+            alt={user.name}
             className="w-10 h-10 rounded-full cursor-pointer"
           />
           <div>
-            <p className="font-semibold text-foreground">{author}</p>
+            <p className="font-semibold text-foreground">{user.name}</p>
             <p className="text-xs text-foreground-muted">
-              {role} • {timeAgo}
+              {user.role} • {post.createdAt}
             </p>
           </div>
         </div>
@@ -49,13 +63,15 @@ export function PostCard({
 
       {/* Content */}
       <div className="px-4 py-3">
-        <p className="text-foreground leading-relaxed text-sm">{content}</p>
+        <p className="text-foreground leading-relaxed text-sm">
+          {post.content}
+        </p>
       </div>
 
       {/* Image */}
-      {image && (
+      {post.imageUrl && (
         <img
-          src={image || "/placeholder.svg"}
+          src={post.imageUrl}
           alt="Post content"
           className="w-full h-64 object-cover cursor-pointer"
         />
@@ -72,11 +88,11 @@ export function PostCard({
           }`}
         >
           <Heart size={18} fill={liked ? "currentColor" : "none"} />
-          <span className="text-sm font-medium">{liked ? "124" : "123"}</span>
+          <span className="text-sm font-medium">{post.likes.length}</span>
         </button>
         <button className="flex items-center gap-2 px-4 py-2 hover:bg-foreground-muted/30 rounded-lg transition-colors duration-300 cursor-pointer">
           <MessageCircle size={18} />
-          <span className="text-sm font-medium">8</span>
+          <span className="text-sm font-medium">msjs</span>
         </button>
         <button className="flex items-center gap-2 px-4 py-2 hover:bg-foreground-muted/30 rounded-lg transition-colors duration-300 cursor-pointer">
           <Share2 size={18} />
