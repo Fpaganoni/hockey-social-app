@@ -5,6 +5,7 @@ import { useState } from "react";
 import { ProfileCard } from "@/components/explore/profile-card";
 import { FilterButton } from "@/components/explore/filter-button";
 import { Input } from "@/components/ui/input";
+import { Filter } from "@/components/ui/filter";
 
 export function ExplorePage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -58,19 +59,12 @@ export function ExplorePage() {
   return (
     <main className="max-w-2xl mx-auto pb-4">
       <div className="sticky top-16 bg-background/30 z-20 px-4 py-4 border-b border-border space-y-4 backdrop-blur-sm">
-        <div className="relative">
-          <Search
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
-            size={20}
-          />
-          <Input
-            type="text"
-            placeholder="Search by name, club, city..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
-          />
-        </div>
+        <Filter
+          value={searchQuery}
+          onChange={setSearchQuery}
+          placeholder="Search by name, club, city..."
+          className="relative"
+        />
 
         <div className="grid grid-cols-4 gap-0">
           <FilterButton label="Role" />

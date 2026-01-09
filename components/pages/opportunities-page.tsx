@@ -4,71 +4,10 @@ import { Filter } from "lucide-react";
 import { useState } from "react";
 import { OpportunityListCard } from "@/components/opportunities/opportunity-list-card";
 import { motion, AnimatePresence } from "framer-motion";
+import { JobOpportunities } from "@/components/opportunities/job-opportunities";
 
 export function OpportunitiesPage() {
   const [showFilters, setShowFilters] = useState(false);
-
-  const opportunities = [
-    {
-      id: 1,
-      title: "Left Midfielder",
-      club: "HC Amsterdam",
-      location: "Netherlands",
-      description:
-        "We are looking for a skilled midfielder to join our professional field hockey team.",
-      tags: ["Professional", "Contract 1 Year", "EU"],
-      deadline: "30 Dec 2025",
-      level: "Elite",
-      salary: "€2,500 - €4,000",
-    },
-    {
-      id: 2,
-      title: "Defender",
-      club: "British Field Hockey Club",
-      location: "UK",
-      description: "Seeking an experienced defender for the upcoming season.",
-      tags: ["Amateur", "Contract 2 Years", "EU"],
-      deadline: "15 Jan 2026",
-      level: "Amateur",
-      salary: "€2,000 - €3,500",
-    },
-    {
-      id: 3,
-      title: "Goalkeeper",
-      club: "Team Sweden Elite",
-      location: "Sweden",
-      description:
-        "Top-tier goalkeeper position available for the elite league.",
-      tags: ["Professional", "Contract 1 Year", "EU"],
-      deadline: "5 Jan 2026",
-      level: "Elite",
-      salary: "€3,000 - €5,000",
-    },
-    {
-      id: 4,
-      title: "Right Midfielder",
-      club: "HC Rotterdam",
-      location: "Netherlands",
-      description:
-        "We are searching for a right midfielder to join our professional field hockey team.",
-      tags: ["Elite", "Contract 1 Year", "EU"],
-      deadline: "15 Jan 2026",
-      level: "Elite",
-      salary: "To agree",
-    },
-    {
-      id: 5,
-      title: "Central Attacker",
-      club: "Wattducks",
-      location: "Belgium",
-      description:
-        "Central attacker position available for the upcoming season.",
-      tags: ["Professional", "Half Season", "EU"],
-      deadline: "15 Feb 2026",
-      level: "Elite",
-      salary: "€3,000",
-    },
-  ];
 
   return (
     <main className="max-w-2xl mx-auto pb-4 mb-22">
@@ -111,17 +50,7 @@ export function OpportunitiesPage() {
 
       {/* MADE IT UNTIL HERE */}
 
-      <div className="px-4 py-6 space-y-4">
-        {opportunities.length > 0 ? (
-          opportunities.map((opp) => (
-            <OpportunityListCard key={opp.id} {...opp} />
-          ))
-        ) : (
-          <p className="text-center text-foreground py-12">
-            No opportunities available at the moment.
-          </p>
-        )}
-      </div>
+      <JobOpportunities />
     </main>
   );
 }

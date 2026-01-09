@@ -179,6 +179,7 @@ export const GET_JOB_OPPORTUNITIES = gql`
         country
         isVerified
       }
+      level
       country
       city
       salary
@@ -201,6 +202,7 @@ export interface JobOpportunity {
   positionType: string;
   club: Club;
   country: string;
+  level: string;
   city: string;
   salary: number;
   currency: string;
@@ -244,6 +246,7 @@ export interface Club {
   description?: string;
   city?: string;
   country?: string;
+  isVerified?: boolean;
   members?: User[];
 }
 

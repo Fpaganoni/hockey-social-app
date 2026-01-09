@@ -3,32 +3,42 @@
 import { useState } from "react";
 import { CheckCircle, MapPin, Calendar, Award } from "lucide-react";
 import { Badge } from "../ui/badge";
+import { Club } from "@/graphql/queries";
+import { formatRelativeTime } from "@/lib/date-utils";
 
-interface OpportunityListCardProps {
-  id: number;
+interface OpportunityListCard {
+  id: string;
   title: string;
-  club: string;
-  location: string;
   description: string;
-  tags: string[];
-  deadline: string;
+  positionType: string;
+  club: Club;
+  country: string;
+  city: string;
+  salary?: number;
+  currency?: string;
+  benefits?: string[];
+  createdAt: string;
   level?: string;
-  salary?: string;
+  status?: string;
 }
+
+export type OpportunityListCardProps = OpportunityListCard;
 
 export function OpportunityListCard({
   id,
   title,
-  club,
-  location,
   description,
-  tags,
-  deadline,
-  level,
+  positionType,
+  club,
+  country,
+  city,
+  status,
   salary,
+  currency,
+  benefits,
+  createdAt,
+  level,
 }: OpportunityListCardProps) {
-  const [applied, setApplied] = useState(false);
-
   const tagColorMap: Record<string, string> = {
     Professional: "bg-info/30 text-foreground border-info/40",
     Amateur: "bg-warning/30 text-foreground border-warning/40",
@@ -47,34 +57,78 @@ export function OpportunityListCard({
           <div className="flex items-start justify-between gap-4 mb-3">
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-foreground">{title}</h3>
-              <p className="text-foreground-muted font-medium mt-1">{club}</p>
+              <p className="text-foreground-muted font-medium mt-1">
+                {club.name}
+              </p>
             </div>
             {level && (
-              <div className="flex flex-wrap gap-2 mb-4">
-                {tags.map((tag) => (
-                  <Badge
-                    key={tag}
-                    className={
-                      tagColorMap[tag] ||
-                      "bg-foreground/20 text-foreground border-foreground/30"
-                    }
-                  >
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
+              <>
+                {level == "PROFESSIONAL" ? (
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <Badge
+                      key={status}
+                      className={
+                        status == "OPEN"
+                          ? "bg-success/30 text-foreground border-success/40"
+                          : "bg-error/30 text-foreground border-error/40"
+                      }
+                    >
+                      {status}
+                    </Badge>
+                    <Badge
+                      key={country}
+                      className="bg-foreground/20 text-foreground border-foreground/30"
+                    >
+                      {country.slice(0, 4)}
+                    </Badge>
+                    <Badge
+                      key={level}
+                      className="bg-info/30 text-foreground border-info/40"
+                    >
+                      {level}
+                    </Badge>
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <Badge
+                      key={status}
+                      className={
+                        status == "OPEN"
+                          ? "bg-success/30 text-foreground border-success/40"
+                          : "bg-danger/30 text-foreground border-danger/40"
+                      }
+                    >
+                      {status}
+                    </Badge>
+                    <Badge
+                      key={country}
+                      className="bg-foreground/20 text-foreground border-foreground/30"
+                    >
+                      {country.slice(0, 4)}
+                    </Badge>
+                    <Badge
+                      key={level}
+                      className="bg-warning/30 text-foreground border-warning/40"
+                    >
+                      {level}
+                    </Badge>
+                  </div>
+                )}
+              </>
             )}
           </div>
 
           <div className="flex flex-wrap items-center gap-3 text-sm text-foreground-muted mb-4">
             <div className="flex items-center gap-1">
               <MapPin size={16} />
-              <span>{location}</span>
+              <span>{city}</span>
             </div>
             {salary && (
               <div className="flex items-center gap-1">
                 <Award size={16} />
-                <span>{salary}</span>
+                <span>
+                  {salary} {currency}
+                </span>
               </div>
             )}
           </div>
@@ -83,11 +137,11 @@ export function OpportunityListCard({
 
           <div className="flex items-center gap-2 text-xs text-foreground-muted mb-4">
             <Calendar size={14} />
-            <span>Deadline: {deadline}</span>
+            <span>Published {formatRelativeTime(createdAt)} ago.</span>
           </div>
         </div>
 
-        {applied ? (
+        {status == "FILLED" ? (
           <button
             disabled
             className="w-full py-2 rounded-lg border-2 border-success bg-success/20 font-semibold text-foreground flex items-center justify-center gap-2 transition-colors duration-300 cursor-default"
@@ -96,10 +150,7 @@ export function OpportunityListCard({
             Application Sent
           </button>
         ) : (
-          <button
-            onClick={() => setApplied(true)}
-            className="w-full py-2 rounded-lg bg-success/20 border border-border hover:bg-success text-foreground hover:text-background font-semibold transition-colors duration-300 cursor-pointer hover:shadow-lg"
-          >
+          <button className="w-full py-2 rounded-lg bg-success/20 border border-border hover:bg-success text-foreground hover:text-background font-semibold transition-colors duration-300 cursor-pointer hover:shadow-lg">
             Apply with Profile
           </button>
         )}
