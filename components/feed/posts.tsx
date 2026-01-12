@@ -7,7 +7,7 @@ export function Posts() {
   const { data, isLoading, error } = usePosts({ limit: 10 });
 
   if (isLoading) {
-    return <Loader />;
+    return <Loader children="Loading posts..." />;
   }
 
   if (error) {
