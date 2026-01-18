@@ -3,8 +3,9 @@ import { persist } from "zustand/middleware";
 
 type Club = {
   id: string;
-  email: string;
-  logo: string;
+  name: string; // Added missing property
+  email?: string;
+  logo?: string;
 };
 
 export enum Role {
@@ -26,12 +27,23 @@ interface User {
   name: string;
   username: string;
   role: Role;
+  isEmailVerified: boolean;
   avatar?: string;
   bio?: string;
   position?: Position;
   country?: string;
   city?: string;
   club?: Club;
+  statistics?: {
+    gamesPlayed: number;
+    goals: number;
+    assists: number;
+  };
+  trajectories?: {
+    club: Club;
+    period: string;
+    description: string;
+  }[];
 }
 
 type UpdateUserInput = Partial<User>;
@@ -48,28 +60,35 @@ interface AuthState {
   updateUser: (data: UpdateUserInput) => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  // INITIAL STATE
-  user: null,
-  isLoggedIn: false,
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      // INITIAL STATE
+      user: null,
+      isLoggedIn: false,
 
-  //ACTIONS
+      //ACTIONS
 
-  login: (user: User) => {
-    set({ user, isLoggedIn: true });
-  },
+      login: (user: User) => {
+        set({ user, isLoggedIn: true });
+      },
 
-  logout: () => {
-    set({ user: null, isLoggedIn: false });
-  },
+      logout: () => {
+        set({ user: null, isLoggedIn: false });
+      },
 
-  register: (user: User) => {
-    set({ user });
-  },
+      register: (user: User) => {
+        set({ user });
+      },
 
-  updateUser: (data: UpdateUserInput) => {
-    set((state) => ({
-      user: state.user ? { ...state.user, ...data } : null,
-    }));
-  },
-}));
+      updateUser: (data: UpdateUserInput) => {
+        set((state) => ({
+          user: state.user ? { ...state.user, ...data } : null,
+        }));
+      },
+    }),
+    {
+      name: "auth-storage",
+    },
+  ),
+);

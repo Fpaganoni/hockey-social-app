@@ -44,7 +44,7 @@ export function PostCard({ post }: PostCardProps) {
   const user = post.user;
 
   return (
-    <motion.div className="bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg">
+    <motion.div className="max-w-[500px] bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg">
       {/* Header */}
       <div className="p-4 flex items-center justify-between border-b border-border">
         <div className="flex items-center gap-3">
@@ -81,7 +81,7 @@ export function PostCard({ post }: PostCardProps) {
         <img
           src={post.imageUrl}
           alt="Post content"
-          className="w-full h-108 object-cover cursor-pointer"
+          className="w-full h-full object-cover cursor-pointer"
         />
       )}
 

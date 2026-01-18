@@ -15,7 +15,7 @@ export function Posts() {
   }
 
   return (
-    <div className="px-4 py-6 space-y-8">
+    <div className="flex flex-col items-center  px-4 py-6 space-y-8">
       {data?.posts.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}

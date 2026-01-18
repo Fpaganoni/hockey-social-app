@@ -3,9 +3,10 @@
 import { Plus } from "lucide-react";
 import { StoriesCarousel } from "@/components/feed/stories-carousel";
 import { Posts } from "@/components/feed/posts";
+import { Role } from "@/stores/useAuthStore";
 
 interface FeedPageProps {
-  userType: "player" | "club";
+  userType: Role | "player";
 }
 
 export function FeedPage({ userType }: FeedPageProps) {

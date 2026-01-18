@@ -4,19 +4,19 @@ import { Bell, LogOut } from "lucide-react";
 import { useState } from "react";
 import { HockeyXTicks } from "../ui/hockey-xtick";
 import { motion } from "framer-motion";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 interface HeaderProps {
   title?: string;
   showNotifications?: boolean;
-  onLogout?: () => void;
 }
 
 export function Header({
   title = "Hockey Connect",
   showNotifications = true,
-  onLogout,
 }: HeaderProps) {
   const [showLogout, setShowLogout] = useState(false);
+  const { logout, user } = useAuthStore();
 
   return (
     <header className="sticky top-0 bg-background/30 backdrop-blur-sm border-b border-border z-30 px-4 py-3 flex items-center justify-between">
@@ -42,27 +42,25 @@ export function Header({
               3
             </span>
           </button>
-          {onLogout && (
-            <div className="relative ">
+          <div className="relative ">
+            <button
+              onClick={() => setShowLogout(!showLogout)}
+              className="p-2 hover:bg-primary group group-hover:text-white-black rounded-lg transition-colors cursor-pointer"
+            >
+              <LogOut
+                size={20}
+                className="text-foreground group-hover:text-white-black transition-colors"
+              />
+            </button>
+            {showLogout && (
               <button
-                onClick={() => setShowLogout(!showLogout)}
-                className="p-2 hover:bg-primary group group-hover:text-white-black rounded-lg transition-colors cursor-pointer"
+                onClick={logout}
+                className="absolute right-0 top-full mt-2 px-4 py-2 bg-background border-2 border-border rounded-lg text-foreground text-sm hover:bg-primary hover:text-background shadow-lg transition-colors cursor-pointer whitespace-nowrap z-50"
               >
-                <LogOut
-                  size={20}
-                  className="text-foreground group-hover:text-white-black transition-colors"
-                />
+                Logout
               </button>
-              {showLogout && (
-                <button
-                  onClick={onLogout}
-                  className="absolute right-0 top-full mt-2 px-4 py-2 bg-background border-2 border-border rounded-lg text-foreground text-sm hover:bg-primary hover:text-background shadow-lg transition-colors cursor-pointer whitespace-nowrap z-50"
-                >
-                  Logout
-                </button>
-              )}
-            </div>
-          )}
+            )}
+          </div>
         </div>
       )}
     </header>

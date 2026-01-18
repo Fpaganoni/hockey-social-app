@@ -18,8 +18,43 @@ export const GET_USERS = gql`
   }
 `;
 
+export const GET_USER_FOR_LOGIN = gql`
+  query GetUserForLogin($id: String!) {
+    user(id: $id) {
+      id
+      email
+      name
+      username
+      avatar
+      bio
+      position
+      role
+      clubId
+      country
+      city
+      club {
+        name
+        logo
+      }
+      statistics {
+        gamesPlayed
+        goals
+        assists
+      }
+      trajectories {
+        club {
+          name
+          logo
+        }
+        period
+        description
+      }
+    }
+  }
+`;
+
 export const GET_USER = gql`
-  query GetUser($id: ID!) {
+  query GetUser($id: String!) {
     user(id: $id) {
       id
       email
@@ -190,76 +225,3 @@ export const GET_JOB_OPPORTUNITIES = gql`
     }
   }
 `;
-
-// ============================================
-// TYPE DEFINITIONS (adjust based on your schema)
-// ============================================
-
-export interface JobOpportunity {
-  id: string;
-  title: string;
-  description: string;
-  positionType: string;
-  club: Club;
-  country: string;
-  level: string;
-  city: string;
-  salary: number;
-  currency: string;
-  benefits: string[];
-  status: string;
-  createdAt: string;
-}
-
-export interface User {
-  id: string;
-  email: string;
-  name: string;
-  username?: string;
-  avatar?: string;
-  bio?: string;
-  position?: string;
-  role?: string;
-  clubId?: string;
-  club?: Club;
-  posts?: Post[];
-  followers?: User[];
-  following?: User[];
-}
-
-export interface Post {
-  id: string;
-  content: string;
-  imageUrl?: string;
-  createdAt: string;
-  updatedAt: string;
-  userId: string;
-  user: User;
-  likes: Like[];
-  comments: Comment[];
-}
-
-export interface Club {
-  id: string;
-  name: string;
-  logo?: string;
-  description?: string;
-  city?: string;
-  country?: string;
-  isVerified?: boolean;
-  members?: User[];
-}
-
-export interface Like {
-  id: string;
-  userId: string;
-  user?: User;
-}
-
-export interface Comment {
-  id: string;
-  content: string;
-  createdAt: string;
-  userId: string;
-  user: User;
-}

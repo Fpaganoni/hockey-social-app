@@ -2,20 +2,11 @@
 
 import { Play } from "lucide-react";
 import { motion } from "framer-motion";
-
-interface TrajectoryItem {
-  club: string;
-  period: string;
-  description: string;
-}
+import { TrajectoryItem, UserStats } from "@/types/models/user";
 
 interface UserData {
-  stats: {
-    gamesPlayed: number;
-    goals: number;
-    assists: number;
-  };
-  trajectory: TrajectoryItem[];
+  stats: UserStats;
+  trajectories: TrajectoryItem[];
 }
 
 interface ProfileTabsProps {
@@ -37,7 +28,7 @@ export function ProfileTabs({
 
   return (
     <>
-      <div className="flex border-t border-border sticky top-16 z-20 overflow-x-auto">
+      <div className="flex border-t border-border sticky top-16 z-20 overflow-x-auto ">
         {tabs.map((tab) => (
           <button
             key={tab.id}
@@ -57,7 +48,7 @@ export function ProfileTabs({
       <div className="px-4 py-6">
         {activeTab === "trajectory" && (
           <div className="space-y-4">
-            {userData.trajectory.map((item, idx) => (
+            {userData.trajectories.map((item, idx) => (
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.2, ease: "easeInOut" }}
@@ -65,7 +56,7 @@ export function ProfileTabs({
                 className="bg-background rounded-xl p-4 border border-border hover:shadow-lg group"
               >
                 <h3 className="font-semibold text-foreground text-lg mb-1 transition-colors">
-                  {item.club}
+                  {item.club?.name}
                 </h3>
                 <p className="text-foreground-muted text-sm font-medium mb-2">
                   {item.period}

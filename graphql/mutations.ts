@@ -117,6 +117,12 @@ export const UNFOLLOW_USER = gql`
 // USER MUTATIONS
 // ============================================
 
+export const LOGIN = gql`
+  mutation Login($email: String!, $password: String!) {
+    login(email: $email, password: $password)
+  }
+`;
+
 export const UPDATE_USER = gql`
   mutation UpdateUser(
     $name: String
@@ -184,4 +190,13 @@ export interface UpdateUserVariables {
   avatar?: string;
   position?: string;
   clubId?: string;
+}
+
+export interface LoginVariables {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  login: string;
 }

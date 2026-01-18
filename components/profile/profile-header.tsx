@@ -8,10 +8,10 @@ import { Badge } from "../ui/badge";
 interface ProfileHeaderProps {
   name: string;
   role: string;
-  position: string;
-  country: string;
-  bio: string;
-  isOwnProfile?: boolean;
+  avatar: string;
+  position?: string;
+  country?: string;
+  bio?: string;
 }
 
 export function ProfileHeader({
@@ -20,7 +20,7 @@ export function ProfileHeader({
   position,
   country,
   bio,
-  isOwnProfile = false,
+  avatar,
 }: ProfileHeaderProps) {
   const [isFollowing, setIsFollowing] = useState(false);
 
@@ -43,7 +43,7 @@ export function ProfileHeader({
             <motion.img
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              src="/hockey-player.jpg"
+              src={avatar}
               alt={name}
               className="w-32 h-32 rounded-full border-2 border-border shadow-lg cursor-pointer mx-2"
             />
@@ -51,13 +51,13 @@ export function ProfileHeader({
               <div className="flex items-center gap-2 flex-wrap">
                 <h1 className="text-2xl font-bold text-foreground">{name}</h1>
                 <span className="text-2xl text-foreground-muted">
-                  {country}
+                  {country || "🌍"}
                 </span>
               </div>
               <div className="flex items-center gap-2 mt-1">
                 <Badge variant="player">{role}</Badge>
                 <span className="text-foreground font-semibold text-sm">
-                  {position}
+                  {position || "Position not set"}
                 </span>
               </div>
             </div>
@@ -66,22 +66,26 @@ export function ProfileHeader({
 
         {/* Bio */}
         <p className="text-foreground-muted text-sm mb-4 leading-relaxed">
-          {bio}
+          {bio || "No bio yet"}
         </p>
 
         <div className="flex flex-col gap-2">
-          {isOwnProfile ? (
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="w-[90%] mx-auto flex items-center gap-2 justify-center h-(--input-button-height) px-4 py-2 bg-primary text-white-black font-semibold rounded-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer disabled:opacity-50"
-            >
-              <Edit size={18} />
-              Edit Profile
-            </motion.button>
-          ) : (
-            <div className="flex gap-2">
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="w-[90%] mx-auto flex items-center gap-2 justify-center h-(--input-button-height) px-4 py-2 bg-primary text-white-black font-semibold rounded-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer disabled:opacity-50"
+          >
+            <Edit size={18} />
+            Edit Profile
+          </motion.button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* <div className="flex gap-2">
               <button
                 onClick={() => setIsFollowing(!isFollowing)}
                 className={`flex-1 py-2.5 rounded-lg font-semibold transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 hover:scale-105 active:scale-95 ${
@@ -101,10 +105,4 @@ export function ProfileHeader({
                 <MessageSquare size={18} />
                 Message
               </button>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
+            </div>*/

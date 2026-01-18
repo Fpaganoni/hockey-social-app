@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { HockeyXTicks } from "../ui/hockey-xtick";
@@ -7,54 +5,39 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuthStore, Role } from "@/stores/useAuthStore";
+import { jwtDecode } from "jwt-decode";
+import { useUserLogin } from "@/hooks/useUsers";
+import { graphqlClient } from "@/lib/graphql-client";
+import { GET_USER_FOR_LOGIN } from "@/graphql/queries";
 
-const DEMO_CREDENTIALS = {
-  player: {
-    email: "demo@fieldlink.com",
-    password: "password123",
-    name: "Alex Johnson",
-  },
-  club: {
-    email: "club@fieldlink.com",
-    password: "password123",
-    name: "HC Davos",
-  },
-};
-
-interface LoginPageProps {
-  onLogin: (type: "player" | "club") => void;
-}
-
-export function LoginPage({ onLogin }: LoginPageProps) {
+export function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const { login } = useAuthStore();
+  const { mutate: loginUser, isPending, error: loginError } = useUserLogin();
 
-  const handleLogin = async (type: "player" | "club") => {
-    setIsLoading(true);
-    setError("");
+  const handleLogin = () => {
+    loginUser(
+      { email, password },
+      {
+        onSuccess: async (data) => {
+          const decoded = jwtDecode(data.login);
+          const userId = decoded.sub;
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    const creds = DEMO_CREDENTIALS[type];
-    if (email === creds.email && password === creds.password) {
-      onLogin(type);
-    } else {
-      setError(
-        `Demo ${type} credentials:\nEmail: ${creds.email}\nPassword: ${creds.password}`
-      );
-    }
-    setIsLoading(false);
-  };
-
-  const handleDemoLogin = (type: "player" | "club") => {
-    const creds = DEMO_CREDENTIALS[type];
-    setEmail(creds.email);
-    setPassword(creds.password);
-    setTimeout(() => handleLogin(type), 100);
+          const response = await graphqlClient.request(GET_USER_FOR_LOGIN, {
+            id: userId,
+          });
+          const fullUser = response.user;
+          login(fullUser);
+        },
+        onError: (error) => {
+          setError(error.message || "Login failed");
+        },
+      },
+    );
   };
 
   return (
@@ -140,11 +123,11 @@ export function LoginPage({ onLogin }: LoginPageProps) {
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              onClick={() => handleDemoLogin("player")}
-              disabled={isLoading}
+              onClick={() => handleLogin()}
+              disabled={isPending}
               className="w-full h-(--input-button-height) px-4 py-2 bg-primary text-white-black font-semibold rounded-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer disabled:opacity-50"
             >
-              {isLoading ? "Logging in..." : "Demo Login"}
+              {isPending ? "Logging in..." : "Login"}
             </motion.button>
           </div>
 
