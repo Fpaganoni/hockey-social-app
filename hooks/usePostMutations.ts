@@ -1,20 +1,25 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
-import {
-  CREATE_POST,
-  UPDATE_POST,
-  DELETE_POST,
-  type CreatePostVariables,
-  type UpdatePostVariables,
-  type DeletePostVariables,
-} from "@/graphql/mutations";
-import { type Post } from "@/graphql/queries";
+import { CREATE_POST, UPDATE_POST, DELETE_POST } from "@/graphql/mutations";
+import { Post } from "@/types/models/post";
+import { Role } from "@/types/enums";
+import { useAuthStore } from "@/stores/useAuthStore";
+
+// type user = Pick<User, "id" | "name" | "avatar" | "email">;
+type CreatePostVariables = Pick<Post, "content" | "imageUrl">;
+type UpdatePostVariables = Pick<Post, "id" | "content" | "imageUrl">;
+type DeletePostVariables = Pick<Post, "id">;
 
 /**
  * Hook to create a new post with optimistic updates
  */
 export function useCreatePost() {
   const queryClient = useQueryClient();
+  const { user } = useAuthStore();
+
+  if (!user) {
+    throw new Error("User not found");
+  }
 
   return useMutation<{ createPost: Post }, Error, CreatePostVariables>({
     mutationFn: async (variables) =>
@@ -38,12 +43,15 @@ export function useCreatePost() {
           imageUrl: newPost.imageUrl,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
-          userId: "current-user", // Replace with actual user ID
+          userId: user.id || "", // Replace with actual user ID
           user: {
-            id: "current-user",
-            name: "You",
-            email: "",
-            avatar: "",
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            avatar: user.avatar,
+            username: "",
+            role: Role.PLAYER,
+            isEmailVerified: false,
           },
           likes: [],
           comments: [],

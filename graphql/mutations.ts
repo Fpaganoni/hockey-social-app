@@ -150,22 +150,7 @@ export const UPDATE_USER = gql`
 
 // ============================================
 // TYPE DEFINITIONS FOR MUTATION VARIABLES
-// ============================================
-
-export interface CreatePostVariables {
-  content: string;
-  imageUrl?: string;
-}
-
-export interface UpdatePostVariables {
-  id: string;
-  content?: string;
-  imageUrl?: string;
-}
-
-export interface DeletePostVariables {
-  id: string;
-}
+// ===========================================
 
 export interface LikePostVariables {
   postId: string;

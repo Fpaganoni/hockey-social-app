@@ -1,28 +1,26 @@
 "use client";
 
-import { useState } from "react";
 import { CheckCircle, MapPin, Calendar, Award } from "lucide-react";
 import { Badge } from "../ui/badge";
-import { Club } from "@/graphql/queries";
+import { JobOpportunity } from "@/types/models/job-opportunity";
 import { formatRelativeTime } from "@/lib/date-utils";
 
-interface OpportunityListCard {
-  id: string;
-  title: string;
-  description: string;
-  positionType: string;
-  club: Club;
-  country: string;
-  city: string;
-  salary?: number;
-  currency?: string;
-  benefits?: string[];
-  createdAt: string;
-  level?: string;
-  status?: string;
-}
-
-export type OpportunityListCardProps = OpportunityListCard;
+type OpportunityListCardProps = Pick<
+  JobOpportunity,
+  | "id"
+  | "title"
+  | "description"
+  | "positionType"
+  | "club"
+  | "country"
+  | "city"
+  | "salary"
+  | "currency"
+  | "benefits"
+  | "createdAt"
+  | "level"
+  | "status"
+>;
 
 export function OpportunityListCard({
   id,
@@ -63,12 +61,12 @@ export function OpportunityListCard({
             </div>
             {level && (
               <>
-                {level == "PROFESSIONAL" ? (
+                {level == "professional" ? (
                   <div className="flex flex-wrap gap-2 mb-4">
                     <Badge
                       key={status}
                       className={
-                        status == "OPEN"
+                        status == "open"
                           ? "bg-success/30 text-foreground border-success/40"
                           : "bg-error/30 text-foreground border-error/40"
                       }
@@ -93,7 +91,7 @@ export function OpportunityListCard({
                     <Badge
                       key={status}
                       className={
-                        status == "OPEN"
+                        status == "open"
                           ? "bg-success/30 text-foreground border-success/40"
                           : "bg-danger/30 text-foreground border-danger/40"
                       }
@@ -141,7 +139,7 @@ export function OpportunityListCard({
           </div>
         </div>
 
-        {status == "FILLED" ? (
+        {status == "filled" ? (
           <button
             disabled
             className="w-full py-2 rounded-lg border-2 border-success bg-success/20 font-semibold text-foreground flex items-center justify-center gap-2 transition-colors duration-300 cursor-default"

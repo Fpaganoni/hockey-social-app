@@ -1,30 +1,56 @@
+"use client";
+
 import { useState } from "react";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, ArrowUpIcon } from "lucide-react";
 import { HockeyXTicks } from "../ui/hockey-xtick";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAuthStore, Role } from "@/stores/useAuthStore";
+import { useAuthStore } from "@/stores/useAuthStore";
 import { jwtDecode } from "jwt-decode";
 import { useUserLogin } from "@/hooks/useUsers";
 import { graphqlClient } from "@/lib/graphql-client";
 import { GET_USER_FOR_LOGIN } from "@/graphql/queries";
+import { Role } from "@/types/enums";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const loginSchema = z.object({
+  email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Invalid email address")
+    .regex(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      "Please enter a valid email address",
+    ),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
+});
+
+type LoginData = z.infer<typeof loginSchema>;
 
 export function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const { login } = useAuthStore();
   const { mutate: loginUser, isPending, error: loginError } = useUserLogin();
 
-  const handleLogin = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginData>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit: SubmitHandler<LoginData> = (data) => {
     loginUser(
-      { email, password },
+      { email: data.email, password: data.password },
       {
-        onSuccess: async (data) => {
-          const decoded = jwtDecode(data.login);
+        onSuccess: async (responseData) => {
+          const decoded = jwtDecode(responseData.login);
           const userId = decoded.sub;
 
           const response = await graphqlClient.request(GET_USER_FOR_LOGIN, {
@@ -66,70 +92,90 @@ export function LoginPage() {
             </div>
           )}
 
-          {/* Email Input */}
-          <div className="mb-5">
-            <Label id="email" className="mb-2">
-              Email
-            </Label>
-            <div className="relative">
-              <Mail
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
-                size={18}
-              />
-              <Input
-                name="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                className="w-full pl-10 pr-4 py-2.5 bg-input border border-border rounded-lg text-foreground placeholder-text-foreground focus:outline-none focus:border-strong transition-colors cursor-text"
-              />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {/* Email Input */}
+            <div className="mb-5">
+              <Label id="email" className="mb-2">
+                Email
+              </Label>
+              <div className="relative">
+                <Mail
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
+                  size={18}
+                />
+                <Input
+                  {...register("email", { required: true })}
+                  type="email"
+                  placeholder="your@email.com"
+                  className="pl-10"
+                />
+              </div>
+              {errors.email && (
+                <motion.p
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="flex gap-1 text-error bg-error/20 font-semibold p-1 text-xs mt-2"
+                >
+                  <ArrowUpIcon size={16} />
+                  {errors.email.message}
+                </motion.p>
+              )}
             </div>
-          </div>
 
-          {/* Password Input */}
-          <div className="mb-5">
-            <Label id="password" className="mb-2">
-              Password
-            </Label>
-            <div className="relative">
-              <Lock
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
-                size={18}
-              />
-              <Input
-                name="password"
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full pl-10 pr-10 py-2.5 bg-input border border-border rounded-lg text-foreground placeholder-text-foreground-muted focus:outline-none focus:border-strong transition-colors cursor-text"
-              />
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowPassword(!showPassword);
-                }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground bg-input cursor-pointer"
+            {/* Password Input */}
+            <div className="mb-5">
+              <Label id="password" className="mb-2">
+                Password
+              </Label>
+              <div className="relative">
+                <Lock
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
+                  size={18}
+                />
+                <Input
+                  {...register("password", { required: true })}
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  className="pl-10"
+                />
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowPassword(!showPassword);
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground bg-input cursor-pointer"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+              {errors.password && (
+                <motion.p
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="flex gap-1 text-error bg-error/20 font-semibold p-1 text-xs mt-2"
+                >
+                  <ArrowUpIcon size={16} />
+                  {errors.password.message}
+                </motion.p>
+              )}
+            </div>
+
+            {/* Login Button */}
+            <div className="space-y-2 mb-5">
+              <motion.button
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
+                type="submit"
+                disabled={isPending}
+                className="w-full h-(--input-button-height) px-4 py-2 bg-primary text-white-black font-semibold rounded-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer disabled:opacity-50"
               >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
+                {isPending ? "Logging in..." : "Login"}
+              </motion.button>
             </div>
-          </div>
-
-          {/* Demo Buttons */}
-          <div className="space-y-2 mb-5">
-            <motion.button
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
-              onClick={() => handleLogin()}
-              disabled={isPending}
-              className="w-full h-(--input-button-height) px-4 py-2 bg-primary text-white-black font-semibold rounded-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer disabled:opacity-50"
-            >
-              {isPending ? "Logging in..." : "Login"}
-            </motion.button>
-          </div>
+          </form>
 
           {/* Divider */}
           <div className="flex items-center gap-3 mb-5">

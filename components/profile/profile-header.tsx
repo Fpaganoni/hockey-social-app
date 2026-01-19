@@ -4,15 +4,12 @@ import { MessageSquare, Heart, UserPlus, Edit } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Badge } from "../ui/badge";
+import { User } from "@/types/models/user";
 
-interface ProfileHeaderProps {
-  name: string;
-  role: string;
-  avatar: string;
-  position?: string;
-  country?: string;
-  bio?: string;
-}
+type ProfileHeaderProps = Pick<
+  User,
+  "name" | "role" | "avatar" | "position" | "country" | "bio"
+>;
 
 export function ProfileHeader({
   name,

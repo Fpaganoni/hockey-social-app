@@ -19,12 +19,10 @@ export function UserProfilePage({
     return <div>PLEASE LOGIN</div>;
   }
 
-  const role = user?.role?.toLowerCase();
-
   // Demo player data
   const userData = {
     name: user.name,
-    role: role,
+    role: user.role,
     position: user.position,
     country: user.country,
     avatar: user.avatar || "/user.png",
@@ -35,6 +33,7 @@ export function UserProfilePage({
         club: t.club,
         period: t.period,
         description: t.description,
+        title: t.title,
       })) || [],
   };
 

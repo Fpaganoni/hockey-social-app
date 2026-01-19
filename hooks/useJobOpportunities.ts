@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
 import { GET_JOB_OPPORTUNITIES } from "@/graphql/queries";
-import { JobOpportunity } from "@/graphql/queries";
+import { JobOpportunity } from "@/types/models/job-opportunity";
 
 /**
  * Hook to fetch job opportunities with pagination

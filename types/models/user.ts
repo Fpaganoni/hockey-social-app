@@ -10,6 +10,7 @@ export interface UserStats {
 
 export interface TrajectoryItem {
   club: Club;
+  title: string;
   period: string;
   description: string;
 }

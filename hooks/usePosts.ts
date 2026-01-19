@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
-import { GET_POSTS, GET_POST, type Post } from "@/graphql/queries";
+import { GET_POSTS, GET_POST } from "@/graphql/queries";
+import { Post } from "@/types/models/post";
 
 interface GetPostsVariables {
   limit?: number;

@@ -1,8 +1,9 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
-import { GET_USERS, GET_USER, type User } from "@/graphql/queries";
+import { GET_USERS, GET_USER } from "@/graphql/queries";
 import { LOGIN } from "@/graphql/mutations";
 import { LoginVariables, LoginResponse } from "@/graphql/mutations";
+import { User } from "@/types/models/user";
 
 /**
  * Hook to fetch all users

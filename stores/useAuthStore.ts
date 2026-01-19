@@ -1,50 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-type Club = {
-  id: string;
-  name: string; // Added missing property
-  email?: string;
-  logo?: string;
-};
-
-export enum Role {
-  COACH = "coach",
-  PLAYER = "player",
-  CLUB = "club",
-}
-
-export enum Position {
-  GOALKEEPER = "goalkeeper",
-  DEFENDER = "defender",
-  MIDFIELDER = "midfielder",
-  ATTACKER = "attacker",
-}
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  username: string;
-  role: Role;
-  isEmailVerified: boolean;
-  avatar?: string;
-  bio?: string;
-  position?: Position;
-  country?: string;
-  city?: string;
-  club?: Club;
-  statistics?: {
-    gamesPlayed: number;
-    goals: number;
-    assists: number;
-  };
-  trajectories?: {
-    club: Club;
-    period: string;
-    description: string;
-  }[];
-}
+import { User } from "@/types/models/user";
 
 type UpdateUserInput = Partial<User>;
 

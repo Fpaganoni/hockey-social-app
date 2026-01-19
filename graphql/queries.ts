@@ -48,6 +48,7 @@ export const GET_USER_FOR_LOGIN = gql`
         }
         period
         description
+        title
       }
     }
   }

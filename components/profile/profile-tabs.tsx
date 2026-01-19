@@ -56,7 +56,7 @@ export function ProfileTabs({
                 className="bg-background rounded-xl p-4 border border-border hover:shadow-lg group"
               >
                 <h3 className="font-semibold text-foreground text-lg mb-1 transition-colors">
-                  {item.club?.name}
+                  {item.club?.name || item.title}
                 </h3>
                 <p className="text-foreground-muted text-sm font-medium mb-2">
                   {item.period}
