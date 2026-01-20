@@ -3,7 +3,7 @@
 import { Plus } from "lucide-react";
 import { StoriesCarousel } from "@/components/feed/stories-carousel";
 import { Posts } from "@/components/feed/posts";
-import { Role } from "@/stores/useAuthStore";
+import { Role } from "@/types/enums";
 
 interface FeedPageProps {
   userType: Role | "player";

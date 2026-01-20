@@ -4,47 +4,29 @@ import { Heart, MessageCircle, Share2 } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { formatRelativeTime } from "@/lib/date-utils";
+import { Post } from "@/types/models/post";
 
-type User = {
-  id: string;
-  name: string;
-  username?: string;
-  avatar?: string;
-  role?: string;
+type PostCardProps = {
+  post: Pick<
+    Post,
+    | "id"
+    | "content"
+    | "imageUrl"
+    | "createdAt"
+    | "user"
+    | "comments"
+    | "likes"
+    | "updatedAt"
+  >;
 };
-
-type Likes = {
-  id: string;
-  user?: { name: string };
-};
-
-type Comment = {
-  id: string;
-  content: string;
-  user: User;
-};
-
-type Post = {
-  id: string;
-  content: string;
-  imageUrl?: string;
-  user: User;
-  createdAt: string;
-  comments: Comment[];
-  updatedAt: string;
-  likes: Likes[];
-};
-
-interface PostCardProps {
-  post: Post;
-}
 
 export function PostCard({ post }: PostCardProps) {
+  const { id, content, imageUrl, createdAt, user, comments, likes, updatedAt } =
+    post;
   const [liked, setLiked] = useState(false);
-  const user = post.user;
 
   return (
-    <motion.div className="max-w-[500px] bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg">
+    <motion.div className="w-full bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg">
       {/* Header */}
       <div className="p-4 flex items-center justify-between border-b border-border">
         <div className="flex items-center gap-3">
@@ -56,9 +38,9 @@ export function PostCard({ post }: PostCardProps) {
             className="w-10 h-10 rounded-full cursor-pointer"
           />
           <div>
-            <p className="font-semibold text-foreground">{post.user.name}</p>
+            <p className="font-semibold text-foreground">{user.name}</p>
             <p className="text-xs text-foreground-muted">
-              {post.user.role} • {formatRelativeTime(post.createdAt)}
+              {user.role} • {formatRelativeTime(createdAt)}
             </p>
           </div>
         </div>
@@ -71,15 +53,13 @@ export function PostCard({ post }: PostCardProps) {
 
       {/* Content */}
       <div className="px-4 py-3">
-        <p className="text-foreground leading-relaxed text-sm">
-          {post.content}
-        </p>
+        <p className="text-foreground leading-relaxed text-sm">{content}</p>
       </div>
 
       {/* Image */}
-      {post.imageUrl && (
+      {imageUrl && (
         <img
-          src={post.imageUrl}
+          src={imageUrl}
           alt="Post content"
           className="w-full h-full object-cover cursor-pointer"
         />
@@ -96,11 +76,11 @@ export function PostCard({ post }: PostCardProps) {
           }`}
         >
           <Heart size={18} fill={liked ? "currentColor" : "none"} />
-          <span className="text-sm font-medium">{post.likes.length}</span>
+          <span className="text-sm font-medium">{likes.length}</span>
         </button>
         <button className="flex items-center gap-2 px-4 py-2 hover:bg-foreground-muted/30 rounded-lg transition-colors duration-300 cursor-pointer">
           <MessageCircle size={18} />
-          <span className="text-sm font-medium">{post.comments.length}</span>
+          <span className="text-sm font-medium">{comments.length}</span>
         </button>
         <button className="flex items-center gap-2 px-4 py-2 hover:bg-foreground-muted/30 rounded-lg transition-colors duration-300 cursor-pointer">
           <Share2 size={18} />

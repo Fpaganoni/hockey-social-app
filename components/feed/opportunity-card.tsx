@@ -3,24 +3,18 @@
 import { useState } from "react";
 import { CheckCircle, MapPin, Calendar, Award } from "lucide-react";
 import { motion } from "framer-motion";
-
-interface OpportunityCardProps {
-  title: string;
-  club: string;
-  location: string;
-  level?: string;
-  salary?: string;
-  tags: string[];
-}
+import { JobOpportunityCard } from "@/types/models/job-opportunity";
 
 export function OpportunityCard({
   title,
   club,
-  location,
+  country,
+  city,
   level,
   salary,
-  tags,
-}: OpportunityCardProps) {
+  currency,
+  positionType,
+}: JobOpportunityCard) {
   const [applied, setApplied] = useState(false);
 
   const tagColorMap: Record<string, string> = {
@@ -52,11 +46,13 @@ export function OpportunityCard({
               </span>
             )}
           </div>
-          <p className="text-foreground-muted font-medium mb-1">{club}</p>
+          <p className="text-foreground-muted font-medium mb-1">{club.name}</p>
           <div className="flex flex-wrap items-center gap-2 text-sm text-foreground-muted">
             <div className="flex items-center gap-1">
               <MapPin size={14} />
-              <span>{location}</span>
+              <span>
+                {city}, {country}
+              </span>
             </div>
             {salary && (
               <div className="flex items-center gap-1">
@@ -68,6 +64,7 @@ export function OpportunityCard({
         </div>
 
         <div className="flex flex-wrap gap-2 mb-4">
+          {/* TODO: cambiar tags por cada una de las propiedades de JobOpportunity */}
           {tags.map((tag) => (
             <span
               key={tag}

@@ -25,7 +25,15 @@ export interface JobOpportunity {
 // Variantes
 export type JobOpportunityCard = Pick<
   JobOpportunity,
-  "id" | "title" | "positionType" | "level" | "city" | "country" | "club"
+  | "id"
+  | "title"
+  | "positionType"
+  | "level"
+  | "city"
+  | "country"
+  | "club"
+  | "salary"
+  | "currency"
 >;
 export type JobOpportunityBasic = Pick<
   JobOpportunity,
