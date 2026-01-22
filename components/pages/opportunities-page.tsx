@@ -2,7 +2,6 @@
 
 import { Filter } from "lucide-react";
 import { useState } from "react";
-import { OpportunityListCard } from "@/components/opportunities/opportunity-list-card";
 import { motion, AnimatePresence } from "framer-motion";
 import { JobOpportunities } from "@/components/opportunities/job-opportunities";
 

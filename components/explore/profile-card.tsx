@@ -3,24 +3,19 @@
 import { ArrowRight, MapPin, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
+import { User } from "@/types/models/user";
 
-export interface ProfileCardProps {
-  id: number;
-  name: string;
-  role: string;
-  position: string;
-  location: string;
-  country: string;
-  level?: string;
-  bio?: string;
-}
+type ProfileCardProps = Pick<
+  User,
+  "id" | "name" | "role" | "position" | "country" | "city" | "level" | "bio"
+>;
 
 export function ProfileCard({
   id,
   name,
   role,
   position,
-  location,
+  city,
   country,
   level,
   bio,
@@ -86,7 +81,9 @@ export function ProfileCard({
             )}
             <div className="flex items-center gap-1 text-xs text-foreground-muted mt-1">
               <MapPin size={12} />
-              <span>{location}</span>
+              <span>
+                {city}, {country}
+              </span>
             </div>
           </div>
         </div>

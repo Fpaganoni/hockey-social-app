@@ -29,6 +29,7 @@ export interface User {
   position?: Position;
   country?: string;
   city?: string;
+  level?: string;
 
   // Relations
   clubId?: string;

@@ -34,6 +34,7 @@ export type JobOpportunityCard = Pick<
   | "club"
   | "salary"
   | "currency"
+  | "status"
 >;
 export type JobOpportunityBasic = Pick<
   JobOpportunity,
