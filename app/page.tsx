@@ -1,6 +1,6 @@
 "use client";
 
-import { LoginPage } from "@/components/pages/login-page";
+import { LandingPage } from "@/components/pages/landing-page";
 import { Header } from "@/components/layout/header";
 import { BottomNavigation } from "@/components/layout/bottom-navigation";
 import { FeedPage } from "@/components/pages/feed-page";
@@ -10,7 +10,7 @@ export default function Home() {
   const { isLoggedIn, user } = useAuthStore();
 
   if (!isLoggedIn) {
-    return <LoginPage />;
+    return <LandingPage />;
   }
 
   return (

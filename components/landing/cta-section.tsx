@@ -64,7 +64,7 @@ export function CtaSection() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/register">
-              <Button size="lg" className="group px-10 py-6">
+              <Button size="lg" className="group px-10 py-6 text-pure-white">
                 Create Free Account
                 <ArrowRight
                   size={20}
@@ -73,7 +73,11 @@ export function CtaSection() {
               </Button>
             </Link>
             <Link href="/explore">
-              <Button variant="outline" size="lg" className="px-10 py-6">
+              <Button
+                variant="outline"
+                size="lg"
+                className="px-10 py-6 hover:text-foreground"
+              >
                 View Profiles
               </Button>
             </Link>

@@ -50,6 +50,11 @@
 
   /* SPECIFIC COLORS */
   --bg-apple: oklch(1 0 0);
+  --instagram: oklch(60% 0.25 340); /* Rosa/magenta vibrante */
+  --facebook: oklch(55% 0.18 250); /* Azul clásico */
+  --x: oklch(20% 0 0); /* Negro neutro (o blanco si el fondo es oscuro) */
+  --linkedin: oklch(50% 0.15 245); /* Azul profesional */
+  --pure-white: oklch(0.98 0 0);
 
   /* height inputs */
   --input-button-height: 2.5rem;
@@ -114,6 +119,11 @@
 
   /* SPECIFIC COLORS */
   --bg-apple: oklch(1 0 0);
+  --instagram: oklch(60% 0.25 340); /* Rosa/magenta vibrante */
+  --facebook: oklch(55% 0.18 250); /* Azul clásico */
+  --x: oklch(20% 0 0); /* Negro neutro (o blanco si el fondo es oscuro) */
+  --linkedin: oklch(50% 0.15 245); /* Azul profesional */
+  --pure-white: oklch(0.98 0 0);
 
   /* height inputs */
   --input-button-height: 2.5rem;
@@ -189,6 +199,12 @@
   --color-bg-apple: var(--bg-apple);
   --color-accent-soft: var(--accent-soft);
   --color-overlay: var(--overlay);
+  --color-pure-white: var(--pure-white);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-instagram: var(--instagram);
+  --color-facebook: var(--facebook);
+  --color-x: var(--x);
+  --color-linkedin: var(--linkedin);
 
   --input-button-height: var(--input-button-height);
 }
@@ -227,6 +243,25 @@
 button,
 a {
   @apply cursor-pointer;
+}
+
+/* Social media icon hover effects */
+.social-icon-link {
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.social-icon-link:hover {
+  background-color: color-mix(in oklch, var(--social-color) 15%, transparent);
+}
+
+.social-icon {
+  transition: color 0.3s ease;
+}
+
+.social-icon-link:hover .social-icon {
+  color: var(--social-color);
 }
 
 /* Scrollbar styling */

@@ -47,7 +47,7 @@ export function HeroSection() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <Link href="/register">
-              <Button size="lg" className="group text-base px-8">
+              <Button size="lg" className="group text-pure-white px-8">
                 Get Started
                 <ArrowRight
                   size={20}

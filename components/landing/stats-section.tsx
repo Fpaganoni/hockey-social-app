@@ -71,7 +71,7 @@ export function StatsSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Card className="group hover:scale-105 transition-all duration-300 border-2 hover:border-primary/50 bg-surface">
+                <Card className="group hover:scale-105 transition-all duration-300 border-2 hover:border-primary/50 bg-surface-elevated">
                   <CardContent className="p-6 text-center">
                     <div
                       className={`w-16 h-16 ${stat.bgColor} rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}

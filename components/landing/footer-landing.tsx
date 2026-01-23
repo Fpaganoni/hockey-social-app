@@ -1,7 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Instagram, Twitter, Facebook, Linkedin } from "lucide-react";
+import {
+  FaInstagram,
+  FaXTwitter,
+  FaFacebook,
+  FaLinkedin,
+} from "react-icons/fa6";
 import { HockeyXTicks } from "@/components/ui/hockey-xtick";
 
 export function FooterLanding() {
@@ -26,14 +31,34 @@ export function FooterLanding() {
   };
 
   const socialLinks = [
-    { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-    { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
-    { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
-    { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+    {
+      icon: FaInstagram,
+      href: "https://instagram.com",
+      label: "Instagram",
+      color: "var(--color-instagram)",
+    },
+    {
+      icon: FaFacebook,
+      href: "https://facebook.com",
+      label: "Facebook",
+      color: "var(--color-facebook)",
+    },
+    {
+      icon: FaXTwitter,
+      href: "https://twitter.com",
+      label: "Twitter",
+      color: "var(--color-x)",
+    },
+    {
+      icon: FaLinkedin,
+      href: "https://linkedin.com",
+      label: "LinkedIn",
+      color: "var(--color-linkedin)",
+    },
   ];
 
   return (
-    <footer className="bg-surface border-t border-border">
+    <footer className="bg-surface-elevated border-t border-border px-12">
       <div className="max-w-7xl mx-auto px-4 py-12">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
@@ -60,13 +85,13 @@ export function FooterLanding() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 hover:bg-primary/10 rounded-lg transition-all hover:scale-110"
+                    className="p-2 rounded-lg hover:scale-110 social-icon-link"
                     aria-label={social.label}
+                    style={
+                      { "--social-color": social.color } as React.CSSProperties
+                    }
                   >
-                    <Icon
-                      size={20}
-                      className="text-foreground hover:text-primary transition-colors"
-                    />
+                    <Icon size={20} className="social-icon text-foreground" />
                   </a>
                 );
               })}
