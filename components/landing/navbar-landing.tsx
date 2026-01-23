@@ -51,12 +51,20 @@ export function NavbarLanding() {
         {/* Desktop CTAs */}
         <div className="hidden md:flex items-center gap-4">
           <Link href="/login">
-            <Button variant="ghost" size="default">
+            <Button
+              variant="ghost"
+              size="default"
+              className="bg-input/30 hover:bg-input/80 text-foreground "
+            >
               Sign In
             </Button>
           </Link>
           <Link href="/register">
-            <Button variant="default" size="default">
+            <Button
+              variant="ghost"
+              size="default"
+              className="text-pure-white hover:text-pure-white bg-primary/80 hover:bg-primary"
+            >
               Sign Up
             </Button>
           </Link>

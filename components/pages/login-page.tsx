@@ -16,6 +16,7 @@ import { Role } from "@/types/enums";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 
 const loginSchema = z.object({
   email: z
@@ -36,6 +37,7 @@ export function LoginPage() {
   const [error, setError] = useState("");
   const { login } = useAuthStore();
   const { mutate: loginUser, isPending, error: loginError } = useUserLogin();
+  const router = useRouter();
 
   const {
     register,
@@ -58,6 +60,7 @@ export function LoginPage() {
           });
           const fullUser = response.user;
           login(fullUser);
+          router.push("/feed");
         },
         onError: (error) => {
           setError(error.message || "Login failed");

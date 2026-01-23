@@ -19,7 +19,6 @@ export function UserProfilePage({
     return <div>PLEASE LOGIN</div>;
   }
 
-  // Demo player data
   const userData = {
     name: user.name,
     role: user.role,
