@@ -7,7 +7,7 @@ interface childrenProps {
 
 export function Loader({ children, size = 60 }: childrenProps) {
   return (
-    <div className="flex flex-col gap-2.5 items-center justify-center h-screen">
+    <div className="flex flex-col gap-2.5 items-center justify-center p-6">
       <h2 className="text-inherit">{children}</h2>
       <CircularProgress size={size} color="inherit" />
     </div>

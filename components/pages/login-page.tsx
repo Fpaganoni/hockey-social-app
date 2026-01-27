@@ -12,11 +12,11 @@ import { jwtDecode } from "jwt-decode";
 import { useUserLogin } from "@/hooks/useUsers";
 import { graphqlClient } from "@/lib/graphql-client";
 import { GET_USER_FOR_LOGIN } from "@/graphql/queries";
-import { Role } from "@/types/enums";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { GraphQLError } from "@/types/graphql-error";
 
 const loginSchema = z.object({
   email: z
@@ -63,7 +63,10 @@ export function LoginPage() {
           router.push("/feed");
         },
         onError: (error) => {
-          setError(error.message || "Login failed");
+          const errorMsj =
+            (error as GraphQLError)?.response?.errors?.[0]?.message ||
+            "Login failed";
+          setError(errorMsj);
         },
       },
     );

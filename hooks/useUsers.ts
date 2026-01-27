@@ -1,8 +1,13 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
 import { GET_USERS, GET_USER } from "@/graphql/queries";
-import { LOGIN } from "@/graphql/mutations";
-import { LoginVariables, LoginResponse } from "@/graphql/mutations";
+import { LOGIN, REGISTER } from "@/graphql/mutations";
+import {
+  LoginVariables,
+  LoginResponse,
+  RegisterVariables,
+  RegisterResponse,
+} from "@/graphql/mutations";
 import { User } from "@/types/models/user";
 
 /**
@@ -32,6 +37,15 @@ export function useUser(userId: string | null) {
 export function useUserLogin() {
   return useMutation<LoginResponse, Error, LoginVariables>({
     mutationFn: async (variables) => graphqlClient.request(LOGIN, variables),
+  });
+}
+
+/**
+ * Register user
+ */
+export function useUserRegister() {
+  return useMutation<RegisterResponse, Error, RegisterVariables>({
+    mutationFn: async (variables) => graphqlClient.request(REGISTER, variables),
   });
 }
 
