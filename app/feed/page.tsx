@@ -5,13 +5,9 @@ import { Header } from "@/components/layout/header";
 import { BottomNavigation } from "@/components/layout/bottom-navigation";
 
 export default function FeedRoute() {
-  const handleLogout = () => {
-    window.location.href = "/";
-  };
-
   return (
     <>
-      <Header title="Feed" onLogout={handleLogout} />
+      <Header title="Feed" />
       <FeedPage userType="player" />
       <BottomNavigation />
     </>

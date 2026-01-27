@@ -20,6 +20,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useUserRegister } from "@/hooks/useUsers";
+import { jwtDecode } from "jwt-decode";
+import { graphqlClient } from "@/lib/graphql-client";
+import { GET_USER_FOR_LOGIN } from "@/graphql/queries";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/stores/useAuthStore";
+import { GraphQLError } from "@/types/graphql-error";
 
 const registerSchema = z
   .object({
@@ -36,7 +43,7 @@ const registerSchema = z
       .email("Invalid email address")
       .regex(
         /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-        "Please enter a valid email address"
+        "Please enter a valid email address",
       ),
     password: z
       .string()
@@ -45,7 +52,7 @@ const registerSchema = z
       .regex(/[0-9]/, "Password must contain at least one number")
       .regex(
         /[@$!%*?&#]/,
-        "Password must contain at least one special character"
+        "Password must contain at least one special character",
       ),
     confirmPassword: z.string().min(6, "Please confirm your password"),
     role: z.enum(["player", "club", "Coach"], {
@@ -63,7 +70,9 @@ export const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const { mutate: registerUser, isPending } = useUserRegister();
+  const router = useRouter();
+  const { login } = useAuthStore();
 
   const {
     register,
@@ -73,8 +82,32 @@ export const RegisterPage = () => {
     resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit: SubmitHandler<RegisterData> = async (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<RegisterData> = (data) => {
+    const { email, name, username, password, role } = data;
+
+    registerUser(
+      { email, name, username, password, role },
+      {
+        onSuccess: async (responseData) => {
+          const decoded = jwtDecode(responseData.register);
+          const userId = decoded.sub;
+
+          const response = await graphqlClient.request(GET_USER_FOR_LOGIN, {
+            id: userId,
+          });
+
+          const fullUser = response.user;
+          login(fullUser);
+          router.push("/feed");
+        },
+        onError: (error) => {
+          const errorMsj =
+            (error as GraphQLError)?.response?.errors?.[0]?.message ||
+            "Registration failed";
+          setError(errorMsj);
+        },
+      },
+    );
   };
 
   return (
@@ -96,6 +129,12 @@ export const RegisterPage = () => {
         {/* Register Card */}
         <div className="rounded-2xl border border-border bg-background p-6 shadow-xl">
           <h2 className="text-xl font-medium text-foreground mb-6">Register</h2>
+
+          {error && (
+            <div className="text-error bg-error/20 font-semibold py-2 px-4 text-xs mt-2 rounded-lg mb-5">
+              <p className="text-error text-sm">{error}</p>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Name input */}
@@ -310,12 +349,12 @@ export const RegisterPage = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => handleSubmit(onSubmit)}
-              disabled={isLoading}
-              className="w-full bg-primary hover:bg-primary-hover inline-flex items-center justify-center gap-2 rounded-md mt-5 h-9 px-4 py-2 text-background"
+              type="submit"
+              disabled={isPending}
+              className="w-full bg-primary hover:bg-primary-hover inline-flex items-center justify-center gap-2 rounded-md mt-5 h-9 px-4 py-2 text-background disabled:opacity-50"
             >
               <UserPlus size={18} />
-              {isLoading ? "Registering..." : "Register"}
+              {isPending ? "Registering..." : "Register"}
             </motion.button>
           </form>
 

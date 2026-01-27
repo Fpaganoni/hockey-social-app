@@ -123,6 +123,24 @@ export const LOGIN = gql`
   }
 `;
 
+export const REGISTER = gql`
+  mutation Register(
+    $email: String!
+    $name: String!
+    $username: String!
+    $password: String!
+    $role: String!
+  ) {
+    register(
+      email: $email
+      name: $name
+      username: $username
+      password: $password
+      role: $role
+    )
+  }
+`;
+
 export const UPDATE_USER = gql`
   mutation UpdateUser(
     $name: String
@@ -184,4 +202,16 @@ export interface LoginVariables {
 
 export interface LoginResponse {
   login: string;
+}
+
+export interface RegisterVariables {
+  email: string;
+  name: string;
+  username: string;
+  password: string;
+  role: string;
+}
+
+export interface RegisterResponse {
+  register: string;
 }
