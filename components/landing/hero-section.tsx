@@ -20,13 +20,13 @@ export function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.3 }}
           className="text-center lg:text-left"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5 }}
             className="inline-block mb-4"
           >
             <span className="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-semibold border border-primary/20">
@@ -71,7 +71,7 @@ export function HeroSection() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.3 }}
             className="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-border max-w-md mx-auto lg:mx-0"
           >
             <div className="text-center lg:text-left">
@@ -92,22 +92,20 @@ export function HeroSection() {
         </motion.div>
 
         {/* Right Content - Image/Illustration */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="relative hidden lg:block"
-        >
+        <div className="relative hidden lg:block">
           {/* Placeholder - you can replace with actual image */}
-          <figure className="relative w-full h-[400px] rounded-2xl overflow-hidden bg-linear-to-br from-accent/20 to-primary/20 border-2 border-border flex items-center justify-center">
-            <Image
-              src="/hero-field-hockey-players.avif"
-              alt="Field Hockey Players"
-              width={500}
-              height={500}
-              className="rounded-2xl"
-            />
-          </figure>
+          <div className=" min-w-[700px] min-h-[500px] rounded-2xl flex items-center justify-center">
+            <figure className="relative w-full h-[400px] rounded-2xl bg-linear-to-br from-accent/20 to-primary/20 border-2 border-border flex items-center justify-center">
+              <Image
+                src="/hero-field-hockey-players.avif"
+                alt="Field Hockey Players"
+                width={500}
+                height={400}
+                className="rounded-2xl"
+                priority
+              />
+            </figure>
+          </div>
 
           {/* Decorative Elements */}
           <motion.div
@@ -116,7 +114,6 @@ export function HeroSection() {
             }}
             transition={{
               duration: 3,
-              repeat: Infinity,
               repeatType: "reverse",
             }}
             className="absolute -top-6 -right-6 w-24 h-24 bg-primary/20 rounded-full blur-2xl"
@@ -127,12 +124,11 @@ export function HeroSection() {
             }}
             transition={{
               duration: 4,
-              repeat: Infinity,
               repeatType: "reverse",
             }}
             className="absolute -bottom-6 -left-6 w-32 h-32 bg-accent/20 rounded-full blur-2xl"
           />
-        </motion.div>
+        </div>
       </div>
     </section>
   );

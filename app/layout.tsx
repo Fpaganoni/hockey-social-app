@@ -26,6 +26,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Preconnect to ImageKit CDN for faster image loading */}
+        {/* <link rel="preconnect" href="https://ik.imagekit.io" />
+        <link rel="dns-prefetch" href="https://ik.imagekit.io" /> */}
+      </head>
       <body className={`${inter.className} min-h-screen`}>
         <QueryProvider>
           <ThemeProvider>{children}</ThemeProvider>

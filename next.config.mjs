@@ -4,11 +4,17 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "ik.imagekit.io",
+        pathname: "/**",
+      },
+    ],
   },
   turbopack: {
     root: process.cwd(), // Usa el directorio actual como raíz
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;
