@@ -45,11 +45,11 @@ export function PostCard({ post }: PostCardProps) {
             </p>
           </div>
         </div>
-        <button className="group p-2 rounded-lg cursor-pointer transition-colors">
+        {/* Future implementation:  <button className="group p-2 rounded-lg cursor-pointer transition-colors">
           <span className="text-foreground group-hover:text-foreground-muted text-md">
             •••
           </span>
-        </button>
+        </button> */}
       </div>
 
       {/* Content */}
