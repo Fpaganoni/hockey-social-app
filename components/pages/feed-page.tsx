@@ -3,13 +3,8 @@
 import { Plus } from "lucide-react";
 import { StoriesCarousel } from "@/components/feed/stories-carousel";
 import { Posts } from "@/components/feed/posts";
-import { Role } from "@/types/enums";
 
-interface FeedPageProps {
-  userType: Role | "player";
-}
-
-export function FeedPage({ userType }: FeedPageProps) {
+export function FeedPage() {
   return (
     <main className="max-w-2xl mx-auto mb-32 ">
       <StoriesCarousel />

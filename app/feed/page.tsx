@@ -8,7 +8,7 @@ export default function FeedRoute() {
   return (
     <>
       <Header title="Feed" />
-      <FeedPage userType="player" />
+      <FeedPage />
       <BottomNavigation />
     </>
   );

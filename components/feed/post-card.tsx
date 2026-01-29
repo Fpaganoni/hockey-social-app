@@ -1,10 +1,11 @@
 "use client";
 
-import { Heart, MessageCircle, Share2 } from "lucide-react";
+import { Fullscreen, Heart, MessageCircle, Share2 } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { formatRelativeTime } from "@/lib/date-utils";
 import { Post } from "@/types/models/post";
+import Image from "next/image";
 
 type PostCardProps = {
   post: Pick<
@@ -58,10 +59,12 @@ export function PostCard({ post }: PostCardProps) {
 
       {/* Image */}
       {imageUrl && (
-        <img
+        <Image
           src={imageUrl}
+          width={600}
+          height={300}
           alt="Post content"
-          className="w-full h-full object-cover cursor-pointer"
+          className="w-full h-[600px] object-cover cursor-pointer"
         />
       )}
 

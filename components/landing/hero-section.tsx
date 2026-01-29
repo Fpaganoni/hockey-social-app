@@ -95,12 +95,12 @@ export function HeroSection() {
         <div className="relative hidden lg:block">
           {/* Placeholder - you can replace with actual image */}
           <div className=" min-w-[700px] min-h-[500px] rounded-2xl flex items-center justify-center">
-            <figure className="relative w-full h-[400px] rounded-2xl bg-linear-to-br from-accent/20 to-primary/20 border-2 border-border flex items-center justify-center">
+            <figure className="relative w-full h-[500px] rounded-2xl bg-linear-to-br from-accent/20 to-primary/20 border-2 border-border flex items-center justify-center">
               <Image
                 src="/hero-field-hockey-players.avif"
                 alt="Field Hockey Players"
                 width={500}
-                height={400}
+                height={500}
                 className="rounded-2xl"
                 priority
               />

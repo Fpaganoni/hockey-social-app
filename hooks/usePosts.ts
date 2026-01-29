@@ -2,19 +2,29 @@ import { useQuery } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
 import { GET_POSTS, GET_POST } from "@/graphql/queries";
 import { Post } from "@/types/models/post";
-
-interface GetPostsVariables {
-  limit?: number;
-  offset?: number;
-}
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 /**
  * Hook to fetch posts with pagination
  */
-export function usePosts(variables?: GetPostsVariables) {
-  return useQuery<{ posts: Post[] }>({
-    queryKey: ["posts", variables],
-    queryFn: async () => graphqlClient.request(GET_POSTS, variables),
+export function usePosts(limit: number = 10) {
+  return useInfiniteQuery<{ posts: Post[] }>({
+    queryKey: ["posts", "infinite"],
+    queryFn: async ({ pageParam = 0 }) => {
+      const data = await graphqlClient.request(GET_POSTS, {
+        limit,
+        offset: pageParam,
+      });
+      return data;
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      // if the last page has post, continue to the next page
+      if (lastPage.posts.length === limit) {
+        return allPages.length * limit; // new offset
+      }
+      return undefined; // no more pages
+    },
+    initialPageParam: 0,
   });
 }
 
