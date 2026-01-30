@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+* {
+  scroll-behavior: smooth;
+}
+
 :root {
   /* === FONDOS === */
   --background: oklch(0.98 0.01 80); /* #F9F9F8 - Fondo principal */
@@ -232,6 +236,20 @@
   .hide-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+  }
+
+  /* Story progress bar animation */
+  @keyframes progress {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  .animate-progress {
+    animation: progress 5s linear forwards;
   }
 }
 
