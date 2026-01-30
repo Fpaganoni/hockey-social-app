@@ -15,6 +15,11 @@ const nextConfig = {
         hostname: "res.cloudinary.com",
         pathname: "/**", // Permite cualquier ruta dentro de Cloudinary
       },
+      {
+        protocol: "https",
+        hostname: "randomuser.me",
+        pathname: "/api/portraits/**",
+      },
     ],
   },
   turbopack: {

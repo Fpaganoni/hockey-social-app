@@ -7,6 +7,8 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { Loader } from "../ui/loader";
 import { Error } from "../ui/error";
 import { Story } from "@/types/models/story";
+import { StoryViewer } from "./story-viewer";
+import Image from "next/image";
 
 // Helper type for grouped stories (like Instagram)
 interface GroupedStory {
@@ -53,6 +55,17 @@ export function StoriesCarousel() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
+  const [selectedStories, setSelectedStories] = useState<GroupedStory | null>(
+    null,
+  );
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+
+  // Open viewer function
+
+  const handleStoryClick = (group: GroupedStory) => {
+    setSelectedStories(group);
+    setIsViewerOpen(true);
+  };
 
   // Get current user ID from auth store
   const user = useAuthStore((state) => state.user);
@@ -87,7 +100,7 @@ export function StoriesCarousel() {
       container.addEventListener("scroll", checkScrollPosition);
       return () => container.removeEventListener("scroll", checkScrollPosition);
     }
-  }, []);
+  }, [groupedStories]); // Re-check when stories load
 
   // Scroll by a specific amount (300px by default)
   const scroll = (direction: "left" | "right") => {
@@ -103,6 +116,11 @@ export function StoriesCarousel() {
       left: newScrollPosition,
       behavior: "smooth",
     });
+
+    // Check position after scroll animation completes (smooth scroll takes ~300ms)
+    setTimeout(() => {
+      checkScrollPosition();
+    }, 350);
   };
 
   // Show loading state
@@ -118,9 +136,11 @@ export function StoriesCarousel() {
   // Don't render if there are no stories
   if (!groupedStories || groupedStories.length === 0) {
     return (
-      <span className="text-center text-foreground-muted">
-        No stories available
-      </span>
+      <div className="bg-background border-b border-border px-4 py-4">
+        <span className="text-center text-foreground">
+          No stories available
+        </span>
+      </div>
     );
   }
 
@@ -146,6 +166,7 @@ export function StoriesCarousel() {
           <button
             key={group.userId}
             className="flex flex-col items-center gap-2 shrink-0 group cursor-pointer"
+            onClick={() => handleStoryClick(group)}
             title={`${group.user.name} - ${group.stories.length} ${
               group.stories.length === 1 ? "story" : "stories"
             }`}
@@ -153,16 +174,18 @@ export function StoriesCarousel() {
             <div className="relative">
               {/* Avatar with border (indicates unviewed stories) */}
               <div
-                className={`w-16 h-16 rounded-full overflow-hidden active:scale-95 transition-transform duration-300 hover:scale-110 shadow-md hover:shadow-lg ${
+                className={`relative w-16 h-16 rounded-full overflow-hidden active:scale-95 transition-transform duration-300 hover:scale-110 shadow-md hover:shadow-lg ${
                   group.hasMultiple
                     ? "border-3 border-primary ring-2 ring-primary/30"
                     : "border-3 border-primary"
                 }`}
               >
-                <img
+                <Image
                   src={group.user.avatar || "/user.png"}
                   alt={group.user.name}
-                  className="w-full h-full object-cover cursor-pointer"
+                  fill
+                  sizes="64px"
+                  className="object-cover cursor-pointer rounded-full"
                 />
               </div>
 
@@ -190,6 +213,13 @@ export function StoriesCarousel() {
         >
           <ChevronRight size={20} />
         </button>
+      )}
+
+      {isViewerOpen && selectedStories && (
+        <StoryViewer
+          stories={selectedStories?.stories || []}
+          onClose={() => setIsViewerOpen(false)}
+        />
       )}
     </div>
   );

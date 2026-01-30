@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Story } from "@/types/models/story";
+import Image from "next/image";
 
 interface StoryViewerProps {
   stories: Story[]; // Array of stories from the same user
@@ -66,7 +67,7 @@ export function StoryViewer({
   }, [currentIndex]);
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 bg-overlay flex items-center justify-center">
       <div className="relative w-full max-w-md h-full md:h-[90vh] bg-background">
         {/* Progress Bars */}
         <div className="absolute top-0 left-0 right-0 z-20 flex gap-1 p-2">
@@ -91,10 +92,12 @@ export function StoryViewer({
         {/* Header */}
         <div className="absolute top-4 left-0 right-0 z-10 px-4 pt-4 pb-2 flex items-center justify-between bg-linear-to-b from-black/60 to-transparent">
           <div className="flex items-center gap-2">
-            <img
+            <Image
               src={currentStory.user.avatar || "/user.png"}
               alt={currentStory.user.name}
-              className="w-10 h-10 rounded-full border-2 border-white"
+              width={40}
+              height={40}
+              className="rounded-full border-2 border-white"
             />
             <div>
               <p className="text-white font-semibold text-sm">
@@ -116,10 +119,12 @@ export function StoryViewer({
 
         {/* Story Image */}
         <div className="w-full h-full flex items-center justify-center bg-black">
-          <img
-            src={currentStory.imageUrl}
+          <Image
+            src={currentStory.imageUrl || "/user.png"}
             alt="Story"
-            className="max-w-full max-h-full object-contain"
+            fill
+            sizes="100vw 100vh"
+            className="object-contain"
           />
         </div>
 
@@ -166,20 +171,6 @@ export function StoryViewer({
           </p>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes progress {
-          from {
-            width: 0%;
-          }
-          to {
-            width: 100%;
-          }
-        }
-        .animate-progress {
-          animation: progress 5s linear forwards;
-        }
-      `}</style>
     </div>
   );
 }
