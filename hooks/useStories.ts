@@ -1,21 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
 import { GET_ACTIVE_STORIES } from "@/graphql/queries";
-
-export interface Story {
-  id: string;
-  userId: string;
-  imageUrl: string;
-  text: string;
-  createdAt: string;
-  viewsCount: number;
-  user: {
-    id: string;
-    name: string;
-    username: string;
-    avatar: string;
-  };
-}
+import { Story } from "@/types/models/story";
 
 interface ActiveStoriesResponse {
   activeStories: Story[];

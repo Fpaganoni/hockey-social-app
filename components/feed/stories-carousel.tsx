@@ -2,10 +2,11 @@
 
 import { useRef, useState, useEffect, useMemo } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useActiveStories, Story } from "@/hooks/useStories";
+import { useActiveStories } from "@/hooks/useStories";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { Loader } from "../ui/loader";
 import { Error } from "../ui/error";
+import { Story } from "@/types/models/story";
 
 // Helper type for grouped stories (like Instagram)
 interface GroupedStory {
@@ -116,7 +117,11 @@ export function StoriesCarousel() {
 
   // Don't render if there are no stories
   if (!groupedStories || groupedStories.length === 0) {
-    return null;
+    return (
+      <span className="text-center text-foreground-muted">
+        No stories available
+      </span>
+    );
   }
 
   return (

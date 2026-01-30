@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
-import { Story } from "@/hooks/useStories";
+import { Story } from "@/types/models/story";
 
 interface StoryViewerProps {
   stories: Story[]; // Array of stories from the same user
