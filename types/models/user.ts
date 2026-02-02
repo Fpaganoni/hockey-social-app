@@ -54,3 +54,40 @@ export type UserProfile = Omit<User, "email" | "isEmailVerified">;
 // Para crear/actualizar
 export type CreateUserInput = Omit<User, "id" | "createdAt" | "updatedAt">;
 export type UpdateUserInput = Partial<Omit<User, "id" | "email" | "role">>;
+
+// ============================================
+// TYPE DEFINITIONS FOR MUTATION VARIABLES
+// ===========================================
+
+export interface FollowUserVariables {
+  userId: string;
+}
+
+export interface UpdateUserVariables {
+  name?: string;
+  bio?: string;
+  avatar?: string;
+  position?: string;
+  clubId?: string;
+}
+
+export interface LoginVariables {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  login: string;
+}
+
+export interface RegisterVariables {
+  email: string;
+  name: string;
+  username: string;
+  password: string;
+  role: string;
+}
+
+export interface RegisterResponse {
+  register: string;
+}
