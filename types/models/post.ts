@@ -51,3 +51,20 @@ export type PostWithUser = Pick<
 // Para crear/actualizar
 export type CreatePostInput = Pick<Post, "content" | "imageUrl" | "userId">;
 export type UpdatePostInput = Partial<Pick<Post, "content" | "imageUrl">>;
+
+// ============================================
+// TYPE DEFINITIONS FOR MUTATION VARIABLES
+// ===========================================
+
+export interface LikePostVariables {
+  postId: string;
+}
+
+export interface CreateCommentVariables {
+  postId: string;
+  content: string;
+}
+
+export interface DeleteCommentVariables {
+  id: string;
+}
