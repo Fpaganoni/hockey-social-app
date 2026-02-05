@@ -1,6 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
-import { CREATE_POST, UPDATE_POST, DELETE_POST } from "@/graphql/mutations";
+import {
+  CREATE_POST,
+  UPDATE_POST,
+  DELETE_POST,
+} from "@/graphql/post/mutations";
 import { Post } from "@/types/models/post";
 import { Role } from "@/types/enums";
 import { useAuthStore } from "@/stores/useAuthStore";

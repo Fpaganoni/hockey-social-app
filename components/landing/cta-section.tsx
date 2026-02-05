@@ -7,7 +7,10 @@ import { Button } from "@/components/ui/button";
 
 export function CtaSection() {
   return (
-    <section className="py-20 px-4 bg-background relative overflow-hidden">
+    <section
+      id="cta"
+      className="py-20 px-4 bg-background relative overflow-hidden"
+    >
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-linear-to-r from-primary/10 via-accent/10 to-primary/10 -z-10" />
 

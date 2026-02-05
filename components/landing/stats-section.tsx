@@ -41,7 +41,7 @@ export function StatsSection() {
   ];
 
   return (
-    <section className="py-20 px-4 bg-surface-elevated/30">
+    <section id="stats" className="py-20 px-4 bg-surface-elevated/30">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div

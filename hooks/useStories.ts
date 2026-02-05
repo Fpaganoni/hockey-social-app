@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
-import { GET_ACTIVE_STORIES } from "@/graphql/queries";
+import { GET_ACTIVE_STORIES } from "@/graphql/story/queries";
 import { Story } from "@/types/models/story";
 
 interface ActiveStoriesResponse {

@@ -14,6 +14,8 @@ export function NavbarLanding() {
     { href: "#home", label: "Home" },
     { href: "#features", label: "Features" },
     { href: "#about", label: "About Us" },
+    { href: "#stats", label: "Stats" },
+    { href: "#cta", label: "Join Us" },
   ];
 
   return (

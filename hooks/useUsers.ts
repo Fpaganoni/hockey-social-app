@@ -1,14 +1,20 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
-import { GET_USERS, GET_USER } from "@/graphql/queries";
-import { LOGIN, REGISTER } from "@/graphql/mutations";
+import { GET_USERS, GET_USER } from "@/graphql/user/queries";
+import { LOGIN, REGISTER } from "@/graphql/user/mutations";
+import { GET_FOLLOWERS, GET_FOLLOWING } from "@/graphql/user/queries";
 import {
   LoginVariables,
   LoginResponse,
   RegisterVariables,
   RegisterResponse,
-} from "@/graphql/mutations";
-import { User } from "@/types/models/user";
+} from "@/types/models/user";
+import {
+  User,
+  FollowUserResponse,
+  FollowUserVariables,
+  FollowingUserResponse,
+} from "@/types/models/user";
 
 /**
  * Hook to fetch all users
@@ -67,3 +73,27 @@ export function useUserRegister() {
  *   );
  * }
  */
+
+// ==================
+// FOLLOW USER
+// ==================
+
+export function useFollowUser(entityType: string, entityId: string) {
+  return useQuery<FollowUserResponse, Error>({
+    queryKey: ["followers", entityType, entityId],
+    queryFn: async () =>
+      graphqlClient.request(GET_FOLLOWERS, { entityType, entityId }),
+  });
+}
+
+// ==================
+// FOLLOWING USER
+// ==================
+
+export function useFollowingUser(entityType: string, entityId: string) {
+  return useQuery<FollowingUserResponse, Error>({
+    queryKey: ["following", entityType, entityId],
+    queryFn: async () =>
+      graphqlClient.request(GET_FOLLOWING, { entityType, entityId }),
+  });
+}

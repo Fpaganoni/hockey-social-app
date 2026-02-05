@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
-import { GET_JOB_OPPORTUNITIES } from "@/graphql/queries";
+import { GET_JOB_OPPORTUNITIES } from "@/graphql/opportunity/queries";
 import { JobOpportunity } from "@/types/models/job-opportunity";
 
 /**

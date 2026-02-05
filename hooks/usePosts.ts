@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
-import { GET_POSTS, GET_POST } from "@/graphql/queries";
+import { GET_POSTS, GET_POST } from "@/graphql/post/queries";
 import { Post } from "@/types/models/post";
 import { useInfiniteQuery } from "@tanstack/react-query";
 

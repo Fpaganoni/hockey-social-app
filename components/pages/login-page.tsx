@@ -11,7 +11,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { jwtDecode } from "jwt-decode";
 import { useUserLogin } from "@/hooks/useUsers";
 import { graphqlClient } from "@/lib/graphql-client";
-import { GET_USER_FOR_LOGIN } from "@/graphql/queries";
+import { GET_USER_FOR_LOGIN } from "@/graphql/user/queries";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";

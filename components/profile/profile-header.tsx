@@ -5,6 +5,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Badge } from "../ui/badge";
 import { User } from "@/types/models/user";
+import { useFollowUser, useFollowingUser } from "@/hooks/useUsers";
+import { useAuthStore } from "@/stores/useAuthStore";
+import { ProfileStats } from "./profile-stats";
 
 type ProfileHeaderProps = Pick<
   User,
@@ -19,7 +22,7 @@ export function ProfileHeader({
   bio,
   avatar,
 }: ProfileHeaderProps) {
-  const [isFollowing, setIsFollowing] = useState(false);
+  const { user } = useAuthStore();
 
   return (
     <div className="bg-background">
@@ -57,12 +60,18 @@ export function ProfileHeader({
                   {position || "Position not set"}
                 </span>
               </div>
+              <div className="mt-1">
+                <ProfileStats
+                  userId={user?.id || ""}
+                  userRole={user?.role || ""}
+                />
+              </div>
             </div>
           </div>
         </div>
 
         {/* Bio */}
-        <p className="text-foreground-muted text-sm mb-4 leading-relaxed">
+        <p className="text-foreground-muted text-sm text-center mb-4 leading-relaxed">
           {bio || "No bio yet"}
         </p>
 

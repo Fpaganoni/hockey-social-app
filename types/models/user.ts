@@ -91,3 +91,37 @@ export interface RegisterVariables {
 export interface RegisterResponse {
   register: string;
 }
+
+// ============================================
+// TYPE DEFINITIONS FOR QUERY VARIABLES
+// ============================================
+
+type Followers = {
+  id: string;
+  followerType: string;
+  followerId: string;
+  followingType: string;
+  followingId: string;
+  createdAt: string;
+};
+export interface FollowUserResponse {
+  followers: Followers[];
+}
+
+type Following = {
+  id: string;
+  followingType: string;
+  followingId: string;
+  followerType: string;
+  followerId: string;
+  createdAt: string;
+};
+
+export interface FollowingUserResponse {
+  followings: Following[];
+}
+
+export interface FollowUserVariables {
+  entityType: string;
+  entityId: string;
+}
