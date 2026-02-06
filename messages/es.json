@@ -1,0 +1,216 @@
+{
+  "common": {
+    "appName": "FieldLink",
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "search": "Buscar"
+  },
+  "navigation": {
+    "feed": "Feed",
+    "explore": "Explorar",
+    "messages": "Mensajes",
+    "opportunities": "Oportunidades",
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión"
+  },
+  "profile": {
+    "followers": "Seguidores",
+    "following": "Siguiendo",
+    "editProfile": "Editar Perfil",
+    "bio": "Biografía",
+    "noBio": "Sin biografía aún",
+    "positionNotSet": "Posición no establecida"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "signUp": "Registrarse",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "name": "Nombre",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "dontHaveAccount": "¿No tienes cuenta?",
+    "alreadyHaveAccount": "¿Ya tienes cuenta?",
+    "loginTitle": "Bienvenido",
+    "registerTitle": "Crear una cuenta",
+    "loggingIn": "Iniciando sesión...",
+    "loginFailed": "Error al iniciar sesión",
+    "or": "o",
+    "continueWithGoogle": "Continuar con Google",
+    "continueWithApple": "Continuar con Apple",
+    "validation": {
+      "emailRequired": "El correo electrónico es obligatorio",
+      "emailInvalid": "Correo electrónico inválido",
+      "emailValid": "Por favor ingresa un correo electrónico válido",
+      "passwordMin": "La contraseña debe tener al menos 6 caracteres"
+    }
+  },
+  "register": {
+    "title": "Registrarse",
+    "subtitle": "Red Comunitaria de Hockey sobre Césped",
+    "fullName": "Nombre Completo",
+    "username": "Nombre de Usuario",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "role": "Rol",
+    "placeholders": {
+      "fullName": "Nombre Completo",
+      "username": "nombre_usuario",
+      "email": "tucorreo@email.com",
+      "password": "••••••••",
+      "role": "Jugador | Entrenador | DT"
+    },
+    "submitButton": "Registrarse",
+    "submitting": "Registrando...",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "loginLink": "Iniciar Sesión",
+    "registrationFailed": "Registro fallido",
+    "validation": {
+      "nameMin": "El nombre completo debe tener al menos 6 caracteres",
+      "nameMax": "El nombre completo debe tener como máximo 30 caracteres",
+      "usernameMin": "El nombre de usuario debe tener al menos 6 caracteres",
+      "usernameMax": "El nombre de usuario debe tener como máximo 30 caracteres",
+      "emailInvalid": "Dirección de correo electrónico inválida",
+      "emailValid": "Por favor ingresa una dirección de correo electrónico válida",
+      "passwordMin": "La contraseña debe tener al menos 6 caracteres",
+      "passwordUppercase": "La contraseña debe contener al menos una letra mayúscula",
+      "passwordNumber": "La contraseña debe contener al menos un número",
+      "passwordSpecial": "La contraseña debe contener al menos un carácter especial",
+      "confirmPasswordRequired": "Por favor confirma tu contraseña",
+      "passwordsNoMatch": "Las contraseñas no coinciden",
+      "roleInvalid": "Selecciona un rol válido"
+    }
+  },
+  "landingNav": {
+    "home": "Inicio",
+    "features": "Características",
+    "about": "Sobre Nosotros",
+    "stats": "Estadísticas",
+    "joinUs": "Únete",
+    "signIn": "Iniciar Sesión",
+    "signUp": "Registrarse"
+  },
+  "landing": {
+    "hero": {
+      "badge": "🏑 La red social de hockey sobre césped",
+      "title": "Conéctate con el mundo del",
+      "titleHighlight": "Hockey sobre Césped",
+      "subtitle": "Únete a la plataforma definitiva para jugadores, clubes y entrenadores. Comparte tu trayectoria, descubre oportunidades y conéctate con la comunidad global de hockey.",
+      "getStarted": "Comenzar",
+      "explore": "Explorar",
+      "statsPlayers": "Jugadores",
+      "statsClubs": "Clubes",
+      "statsCountries": "Países"
+    },
+    "features": {
+      "title": "Todo lo que necesitas en un solo lugar",
+      "subtitle": "Herramientas diseñadas específicamente para la comunidad de hockey sobre césped",
+      "items": {
+        "connect": {
+          "title": "Conéctate con la Comunidad",
+          "description": "Encuentra y conéctate con jugadores, clubes y entrenadores de todo el mundo."
+        },
+        "opportunities": {
+          "title": "Oportunidades Profesionales",
+          "description": "Descubre ofertas de trabajo, pruebas y oportunidades en clubes de élite."
+        },
+        "journey": {
+          "title": "Comparte tu Trayectoria",
+          "description": "Muestra tus logros, estadísticas y experiencia profesional al mundo."
+        },
+        "messaging": {
+          "title": "Mensajería en Tiempo Real",
+          "description": "Comunícate directamente con otros miembros de la comunidad."
+        },
+        "network": {
+          "title": "Red Global",
+          "description": "Accede a una comunidad internacional de hockey sobre césped."
+        },
+        "achievements": {
+          "title": "Destaca tus Logros",
+          "description": "Publica tus éxitos, partidos y momentos destacados de tu carrera."
+        }
+      }
+    },
+    "about": {
+      "badge": "Sobre Nosotros",
+      "title": "La plataforma que revoluciona el",
+      "titleHighlight": "hockey sobre césped",
+      "description1": "Hockey Connect nació de la pasión por el hockey sobre césped y la necesidad de crear un espacio donde jugadores, clubes y entrenadores puedan conectarse sin barreras.",
+      "description2": "Nuestra misión es democratizar el acceso a oportunidades profesionales y crear una comunidad global donde el talento sea reconocido sin importar la ubicación geográfica.",
+      "benefits": {
+        "network": "Red profesional exclusiva de hockey sobre césped",
+        "verified": "Oportunidades verificadas de clubes reconocidos",
+        "tools": "Herramientas para impulsar tu carrera deportiva",
+        "community": "Comunidad global activa y comprometida"
+      },
+      "badgeMembers": "Miembros Activos"
+    },
+    "stats": {
+      "title": "Nuestra comunidad en números",
+      "subtitle": "Miles de jugadores y clubes ya confían en nosotros",
+      "items": {
+        "players": {
+          "label": "Jugadores Registrados",
+          "description": "Atletas de todos los niveles"
+        },
+        "clubs": {
+          "label": "Clubes Activos",
+          "description": "De todo el mundo"
+        },
+        "countries": {
+          "label": "Países Representados",
+          "description": "Comunidad global"
+        },
+        "opportunities": {
+          "label": "Oportunidades Publicadas",
+          "description": "Ofertas verificadas"
+        }
+      },
+      "connectionsLabel": "conexiones",
+      "connectionsTime": "realizadas este mes"
+    },
+    "cta": {
+      "badge": "Únete a la revolución del hockey",
+      "title": "¿Listo para dar el siguiente paso en tu carrera?",
+      "description": "Únete a miles de jugadores, clubes y entrenadores que ya están conectándose y creciendo juntos en Hockey Connect.",
+      "createAccount": "Crear Cuenta Gratis",
+      "viewProfiles": "Ver Perfiles",
+      "trust1": "Gratis para siempre",
+      "trust2": "No se requiere tarjeta de crédito",
+      "trust3": "Regístrate en 2 minutos"
+    },
+    "footer": {
+      "description": "La plataforma definitiva para conectar jugadores, clubes y entrenadores de hockey sobre césped de todo el mundo.",
+      "product": "Producto",
+      "company": "Empresa",
+      "legal": "Legal",
+      "links": {
+        "features": "Características",
+        "opportunities": "Oportunidades",
+        "explore": "Explorar",
+        "about": "Sobre Nosotros",
+        "contact": "Contacto",
+        "blog": "Blog",
+        "privacy": "Privacidad",
+        "terms": "Términos",
+        "cookies": "Cookies"
+      },
+      "copyright": "Todos los derechos reservados."
+    }
+  },
+  "posts": {
+    "like": "Me gusta",
+    "comment": "Comentar",
+    "share": "Compartir",
+    "newPost": "Crear publicación",
+    "whatAreYouThinking": "¿Qué estás pensando?"
+  }
+}

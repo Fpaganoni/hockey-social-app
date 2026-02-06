@@ -10,46 +10,40 @@ import {
   Trophy,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
 
 export function FeaturesSection() {
+  const t = useTranslations("landing.features");
+
   const features = [
     {
       icon: Users,
-      title: "Connect with the Community",
-      description:
-        "Find and connect with players, clubs, and coaches from around the world.",
+      key: "connect",
       color: "text-primary",
     },
     {
       icon: Briefcase,
-      title: "Professional Opportunities",
-      description:
-        "Discover job offers, trials, and opportunities at elite clubs.",
+      key: "opportunities",
       color: "text-accent",
     },
     {
       icon: TrendingUp,
-      title: "Share Your Journey",
-      description:
-        "Showcase your achievements, statistics, and professional experience to the world.",
+      key: "journey",
       color: "text-primary",
     },
     {
       icon: MessageCircle,
-      title: "Real-Time Messaging",
-      description: "Communicate directly with other members of the community.",
+      key: "messaging",
       color: "text-accent",
     },
     {
       icon: Globe,
-      title: "Global Network",
-      description: "Access an international field hockey community.",
+      key: "network",
       color: "text-primary",
     },
     {
       icon: Trophy,
-      title: "Highlight Your Achievements",
-      description: "Post your successes, matches, and career highlights.",
+      key: "achievements",
       color: "text-accent",
     },
   ];
@@ -66,10 +60,10 @@ export function FeaturesSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Everything you need in one place
+            {t("title")}
           </h2>
           <p className="text-lg text-foreground-muted max-w-2xl mx-auto">
-            Tools designed specifically for the field hockey community
+            {t("subtitle")}
           </p>
         </motion.div>
 
@@ -79,7 +73,7 @@ export function FeaturesSection() {
             const Icon = feature.icon;
             return (
               <motion.div
-                key={feature.title}
+                key={feature.key}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -93,10 +87,10 @@ export function FeaturesSection() {
                       <Icon size={24} className={feature.color} />
                     </div>
                     <h3 className="text-xl font-semibold text-foreground mb-2">
-                      {feature.title}
+                      {t(`items.${feature.key}.title`)}
                     </h3>
                     <p className="text-foreground-muted">
-                      {feature.description}
+                      {t(`items.${feature.key}.description`)}
                     </p>
                   </CardContent>
                 </Card>

@@ -3,38 +3,37 @@
 import { motion } from "framer-motion";
 import { Users, Building2, Globe2, Briefcase } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
 
 export function StatsSection() {
+  const t = useTranslations("landing.stats");
+
   const stats = [
     {
       icon: Users,
       value: "5,000+",
-      label: "Registered Players",
-      description: "Athletes of all levels",
+      key: "players",
       color: "text-primary",
       bgColor: "bg-primary/10",
     },
     {
       icon: Building2,
       value: "200+",
-      label: "Active Clubs",
-      description: "From around the world",
+      key: "clubs",
       color: "text-accent",
       bgColor: "bg-accent/10",
     },
     {
       icon: Globe2,
       value: "30+",
-      label: "Countries Represented",
-      description: "Global community",
+      key: "countries",
       color: "text-primary",
       bgColor: "bg-primary/10",
     },
     {
       icon: Briefcase,
       value: "500+",
-      label: "Posted Opportunities",
-      description: "Verified offers",
+      key: "opportunities",
       color: "text-accent",
       bgColor: "bg-accent/10",
     },
@@ -52,10 +51,10 @@ export function StatsSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Our community in numbers
+            {t("title")}
           </h2>
           <p className="text-lg text-foreground-muted max-w-2xl mx-auto">
-            Thousands of players and clubs already trust us
+            {t("subtitle")}
           </p>
         </motion.div>
 
@@ -65,7 +64,7 @@ export function StatsSection() {
             const Icon = stat.icon;
             return (
               <motion.div
-                key={stat.label}
+                key={stat.key}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -88,10 +87,10 @@ export function StatsSection() {
                       {stat.value}
                     </motion.p>
                     <p className="text-lg font-semibold text-foreground mb-1">
-                      {stat.label}
+                      {t(`items.${stat.key}.label`)}
                     </p>
                     <p className="text-sm text-foreground-muted">
-                      {stat.description}
+                      {t(`items.${stat.key}.description`)}
                     </p>
                   </CardContent>
                 </Card>
@@ -110,9 +109,9 @@ export function StatsSection() {
         >
           <p className="text-foreground-muted">
             <span className="font-semibold text-primary">
-              +2,000 connections
+              +2,000 {t("connectionsLabel")}
             </span>{" "}
-            made this month
+            {t("connectionsTime")}
           </p>
         </motion.div>
       </div>

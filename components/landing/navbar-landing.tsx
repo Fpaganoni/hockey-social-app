@@ -2,20 +2,33 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HockeyXTicks } from "@/components/ui/hockey-xtick";
 import { Button } from "@/components/ui/button";
+import { LanguageSelector } from "@/components/ui/language-selector";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { LoginPage } from "@/components/pages/login-page";
+import { RegisterPage } from "@/components/pages/register-page";
 
 export function NavbarLanding() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [registerOpen, setRegisterOpen] = useState(false);
+  const t = useTranslations("landingNav");
 
   const navLinks = [
-    { href: "#home", label: "Home" },
-    { href: "#features", label: "Features" },
-    { href: "#about", label: "About Us" },
-    { href: "#stats", label: "Stats" },
-    { href: "#cta", label: "Join Us" },
+    { href: "#home", label: t("home") },
+    { href: "#features", label: t("features") },
+    { href: "#about", label: t("about") },
+    { href: "#stats", label: t("stats") },
+    { href: "#cta", label: t("joinUs") },
   ];
 
   return (
@@ -52,24 +65,45 @@ export function NavbarLanding() {
 
         {/* Desktop CTAs */}
         <div className="hidden md:flex items-center gap-4">
-          <Link href="/login">
-            <Button
-              variant="ghost"
-              size="default"
-              className="bg-input/30 hover:bg-input/80 text-foreground "
+          <LanguageSelector />
+
+          <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
+            <DialogTrigger asChild>
+              <Button
+                variant="ghost"
+                size="default"
+                className="bg-input/30 hover:bg-input/80 text-foreground "
+              >
+                {t("signIn")}
+              </Button>
+            </DialogTrigger>
+            <DialogContent
+              className="max-w-md p-0 max-h-[90vh] overflow-y-auto"
+              showCloseButton={false}
             >
-              Sign In
-            </Button>
-          </Link>
-          <Link href="/register">
-            <Button
-              variant="ghost"
-              size="default"
-              className="text-pure-white hover:text-pure-white bg-primary/80 hover:bg-primary"
+              <DialogTitle className="sr-only">Sign In</DialogTitle>
+              <LoginPage />
+            </DialogContent>
+          </Dialog>
+
+          <Dialog open={registerOpen} onOpenChange={setRegisterOpen}>
+            <DialogTrigger asChild>
+              <Button
+                variant="ghost"
+                size="default"
+                className="text-pure-white hover:text-pure-white bg-primary/80 hover:bg-primary"
+              >
+                {t("signUp")}
+              </Button>
+            </DialogTrigger>
+            <DialogContent
+              className="max-w-md p-0 max-h-[90vh] overflow-y-auto"
+              showCloseButton={false}
             >
-              Sign Up
-            </Button>
-          </Link>
+              <DialogTitle className="sr-only">Sign Up</DialogTitle>
+              <RegisterPage />
+            </DialogContent>
+          </Dialog>
         </div>
 
         {/* Mobile Menu Button */}
@@ -107,16 +141,47 @@ export function NavbarLanding() {
                 </a>
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
-                <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" size="default" className="w-full">
-                    Sign In
-                  </Button>
-                </Link>
-                <Link href="/register" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="default" size="default" className="w-full">
-                    Sign Up
-                  </Button>
-                </Link>
+                <LanguageSelector />
+
+                <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="default"
+                      className="w-full"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {t("signIn")}
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent
+                    className="max-w-md p-0 max-h-[90vh] overflow-y-auto"
+                    showCloseButton={false}
+                  >
+                    <DialogTitle className="sr-only">Sign In</DialogTitle>
+                    <LoginPage />
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog open={registerOpen} onOpenChange={setRegisterOpen}>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="default"
+                      size="default"
+                      className="w-full"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {t("signUp")}
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent
+                    className="max-w-md p-0 max-h-[90vh] overflow-y-auto"
+                    showCloseButton={false}
+                  >
+                    <DialogTitle className="sr-only">Sign Up</DialogTitle>
+                    <RegisterPage />
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
           </motion.div>

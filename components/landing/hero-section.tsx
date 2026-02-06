@@ -5,8 +5,11 @@ import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export function HeroSection() {
+  const t = useTranslations("landing.hero");
+
   return (
     <section
       id="home"
@@ -30,25 +33,23 @@ export function HeroSection() {
             className="inline-block mb-4"
           >
             <span className="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-semibold border border-primary/20">
-              🏑 The field hockey social network
+              {t("badge")}
             </span>
           </motion.div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-            Connect with the world of{" "}
-            <span className="text-primary">Field Hockey</span>
+            {t("title")}{" "}
+            <span className="text-primary">{t("titleHighlight")}</span>
           </h1>
 
           <p className="text-lg md:text-xl text-foreground-muted mb-8 max-w-2xl mx-auto lg:mx-0">
-            Join the ultimate platform for players, clubs, and coaches. Share
-            your journey, discover opportunities, and connect with the global
-            hockey community.
+            {t("subtitle")}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <Link href="/register">
               <Button size="lg" className="group text-pure-white px-8">
-                Get Started
+                {t("getStarted")}
                 <ArrowRight
                   size={20}
                   className="ml-2 group-hover:translate-x-1 transition-transform duration-1000"
@@ -61,7 +62,7 @@ export function HeroSection() {
                 size="lg"
                 className="text-base px-8 hover:text-foreground"
               >
-                Explore
+                {t("explore")}
                 <Play size={18} className="ml-2" />
               </Button>
             </Link>
@@ -76,17 +77,21 @@ export function HeroSection() {
           >
             <div className="text-center lg:text-left">
               <p className="text-2xl md:text-3xl font-bold text-primary">5K+</p>
-              <p className="text-sm text-foreground-muted">Players</p>
+              <p className="text-sm text-foreground-muted">
+                {t("statsPlayers")}
+              </p>
             </div>
             <div className="text-center lg:text-left">
               <p className="text-2xl md:text-3xl font-bold text-primary">
                 200+
               </p>
-              <p className="text-sm text-foreground-muted">Clubs</p>
+              <p className="text-sm text-foreground-muted">{t("statsClubs")}</p>
             </div>
             <div className="text-center lg:text-left">
               <p className="text-2xl md:text-3xl font-bold text-primary">30+</p>
-              <p className="text-sm text-foreground-muted">Countries</p>
+              <p className="text-sm text-foreground-muted">
+                {t("statsCountries")}
+              </p>
             </div>
           </motion.div>
         </motion.div>
