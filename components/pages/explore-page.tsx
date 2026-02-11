@@ -6,8 +6,10 @@ import { ProfileCard } from "@/components/explore/profile-card";
 import { FilterButton } from "@/components/explore/filter-button";
 import { Input } from "@/components/ui/input";
 import { Filter } from "@/components/ui/filter";
+import { useTranslations } from "next-intl";
 
 export function ExplorePage() {
+  const t = useTranslations("explore");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilters, setSelectedFilters] = useState<
     Record<string, string>
@@ -15,7 +17,7 @@ export function ExplorePage() {
 
   const profiles = [
     {
-      id: 1,
+      id: "1",
       name: "Alex Johnson",
       role: "Player",
       position: "Left Forward",
@@ -25,7 +27,7 @@ export function ExplorePage() {
       bio: "Skilled forward with 8 years experience",
     },
     {
-      id: 2,
+      id: "2",
       name: "Sarah Mitchell",
       role: "Player",
       position: "Goalkeeper",
@@ -35,7 +37,7 @@ export function ExplorePage() {
       bio: "Dedicated goalkeeper with international experience",
     },
     {
-      id: 3,
+      id: "3",
       name: "HC Amsterdam",
       role: "Club",
       position: "Elite League",
@@ -45,7 +47,7 @@ export function ExplorePage() {
       bio: "Top-tier field hockey club",
     },
     {
-      id: 4,
+      id: "4",
       name: "Coach Mike",
       role: "Coach",
       position: "Head Coach",
@@ -53,6 +55,16 @@ export function ExplorePage() {
       level: "Professional",
       country: "🇬🇧",
       bio: "Experienced coach with 15+ years",
+    },
+    {
+      id: "5",
+      name: "Carlos Mendez",
+      role: "Player",
+      position: "Defense",
+      location: "Spain",
+      level: "Professional",
+      country: "🇪🇸",
+      bio: "Strong defensive player",
     },
   ];
 
@@ -62,15 +74,15 @@ export function ExplorePage() {
         <Filter
           value={searchQuery}
           onChange={setSearchQuery}
-          placeholder="Search by name, club, city..."
+          placeholder={t("searchPlaceholder")}
           className="relative"
         />
 
         <div className="grid grid-cols-4 gap-0">
-          <FilterButton label="Role" />
-          <FilterButton label="Country" />
-          <FilterButton label="Level" />
-          <FilterButton label="Position" />
+          <FilterButton label={t("filters.role")} />
+          <FilterButton label={t("filters.country")} />
+          <FilterButton label={t("filters.level")} />
+          <FilterButton label={t("filters.position")} />
         </div>
       </div>
 
@@ -78,16 +90,16 @@ export function ExplorePage() {
       <div className="px-4 mt-8 mb-28">
         {searchQuery ? (
           profiles.filter((p) =>
-            p.name.toLowerCase().includes(searchQuery.toLowerCase())
+            p.name.toLowerCase().includes(searchQuery.toLowerCase()),
           ).length > 0 ? (
             profiles
               .filter((p) =>
-                p.name.toLowerCase().includes(searchQuery.toLowerCase())
+                p.name.toLowerCase().includes(searchQuery.toLowerCase()),
               )
               .map((profile) => <ProfileCard key={profile.id} {...profile} />)
           ) : (
             <p className="text-center text-foreground py-8">
-              No results for "{searchQuery}"
+              {t("noResults")} "{searchQuery}"
             </p>
           )
         ) : (

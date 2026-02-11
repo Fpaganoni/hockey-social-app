@@ -18,14 +18,6 @@
     "settings": "Settings",
     "logout": "Logout"
   },
-  "profile": {
-    "followers": "Followers",
-    "following": "Following",
-    "editProfile": "Edit Profile",
-    "bio": "Bio",
-    "noBio": "No bio yet",
-    "positionNotSet": "Position not set"
-  },
   "auth": {
     "login": "Login",
     "register": "Register",
@@ -205,6 +197,105 @@
       },
       "copyright": "All rights reserved."
     }
+  },
+  "feed": {
+    "loadingPosts": "Loading posts...",
+    "loadingStories": "Loading stories...",
+    "loadingMorePosts": "Loading more posts...",
+    "errorLoadingStories": "Error loading stories",
+    "noStoriesAvailable": "No stories available",
+    "scrollToLoadMore": "Scroll to load more posts",
+    "noMorePosts": "No more posts to load.",
+    "postContent": "Post content",
+    "scrollLeft": "Scroll left",
+    "scrollRight": "Scroll right",
+    "story": "story",
+    "stories": "stories"
+  },
+  "explore": {
+    "searchPlaceholder": "Search by name, club, city...",
+    "noResults": "No results for",
+    "viewProfile": "View",
+    "level": "Level",
+    "closeDropdown": "Close dropdown",
+    "filters": {
+      "role": "Role",
+      "country": "Country",
+      "level": "Level",
+      "position": "Position",
+      "season": "Season"
+    },
+    "roles": {
+      "player": "Player",
+      "coach": "Coach",
+      "clubManager": "Club Manager"
+    },
+    "levels": {
+      "elite": "Elite",
+      "professional": "Professional",
+      "amateur": "Amateur",
+      "youth": "Youth"
+    },
+    "positions": {
+      "forward": "Forward",
+      "midfielder": "Midfielder",
+      "defender": "Defender",
+      "goalkeeper": "Goalkeeper"
+    },
+    "seasons": {
+      "current": "Current Season",
+      "next": "Next Season",
+      "any": "Any Time"
+    }
+  },
+  "profile": {
+    "followers": "Followers",
+    "editProfile": "Edit Profile",
+    "positionNotSet": "Position not set",
+    "noBio": "No bio yet",
+    "bio": "Bio",
+    "following": "Following",
+    "follow": "Follow",
+    "connect": "Connect",
+    "message": "Message",
+    "errorLoadData": "Error loading data",
+    "tabs": {
+      "trajectory": "Trajectory",
+      "multimedia": "Multimedia",
+      "statistics": "Statistics"
+    },
+    "stats": {
+      "gamesPlayed": "Games Played",
+      "goals": "Goals",
+      "assists": "Assists"
+    },
+    "media": "Media"
+  },
+  "messages": {
+    "searchConversations": "Search conversations...",
+    "noConversationsFound": "No conversations found",
+    "activeNow": "Active now",
+    "typeMessage": "Type a message...",
+    "noConversations": "No conversations yet",
+    "startConversation": "Start a new conversation"
+  },
+  "opportunities": {
+    "availablePositions": "Available Positions",
+    "filters": {
+      "experience": "Experience",
+      "location": "Location",
+      "contract": "Contract",
+      "salary": "Salary"
+    },
+    "loading": "Loading opportunities...",
+    "noData": "No data found",
+    "noOpportunities": "No job opportunities found",
+    "open": "Open",
+    "filled": "Filled",
+    "closed": "Closed",
+    "published": "Published",
+    "applicationSent": "Application Sent",
+    "applyWithProfile": "Apply with Profile"
   },
   "posts": {
     "like": "Like",

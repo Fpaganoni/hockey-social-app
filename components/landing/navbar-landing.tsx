@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HockeyXTicks } from "@/components/ui/hockey-xtick";
@@ -22,6 +22,7 @@ export function NavbarLanding() {
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
   const t = useTranslations("landingNav");
+  const locale = useLocale();
 
   const navLinks = [
     { href: "#home", label: t("home") },
@@ -31,11 +32,14 @@ export function NavbarLanding() {
     { href: "#cta", label: t("joinUs") },
   ];
 
+  // Build locale-aware landing page href
+  const landingHref = locale === "en" ? "/landing" : `/${locale}/landing`;
+
   return (
     <header className="sticky top-0 bg-background/30 backdrop-blur-sm border-b border-border z-50 px-4 py-3">
       <nav className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <Link href="/landing" className="flex items-center gap-2">
+        <Link href={landingHref} className="flex items-center gap-2">
           <motion.div
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.2 }}

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ArrowLeft, Send, Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import { Input } from "../ui/input";
+import { useTranslations } from "next-intl";
 
 interface ChatMessage {
   id: number;
@@ -21,6 +22,7 @@ export function ChatConversation({
   conversationId,
   onBack,
 }: ChatConversationProps) {
+  const t = useTranslations("messages");
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 1,
@@ -79,7 +81,7 @@ export function ChatConversation({
         />
         <div className="flex-1">
           <p className="font-semibold text-foreground">Sarah Mitchell</p>
-          <p className="text-xs text-foreground-muted">Active now</p>
+          <p className="text-xs text-foreground-muted">{t("activeNow")}</p>
         </div>
       </div>
 
@@ -124,7 +126,7 @@ export function ChatConversation({
         </motion.button>
         <Input
           type="text"
-          placeholder="Type a message..."
+          placeholder={t("typeMessage")}
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyPress={(e) => e.key === "Enter" && handleSend()}

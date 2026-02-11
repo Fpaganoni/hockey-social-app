@@ -31,7 +31,7 @@ export function ProfileStats({ userId, userRole }: ProfileStatsProps) {
   if (followersIsLoading || followingIsLoading) return <Loader />;
 
   if (followersError || followingError)
-    return <Error>Error to load data</Error>;
+    return <Error>{t("errorLoadData")}</Error>;
 
   const followersCount = followersData?.followers?.length || 0;
   const followingCount = followingData?.followings?.length || 0;

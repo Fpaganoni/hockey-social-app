@@ -4,6 +4,7 @@ import { ArrowRight, MapPin, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { User } from "@/types/models/user";
+import { useTranslations } from "next-intl";
 
 type ProfileCardProps = Pick<
   User,
@@ -20,6 +21,8 @@ export function ProfileCard({
   level,
   bio,
 }: ProfileCardProps) {
+  const t = useTranslations("explore");
+
   const roleColors: Record<
     string,
     { bg: string; text: string; badge: string }
@@ -70,7 +73,7 @@ export function ProfileCard({
               <div className="flex items-center gap-2">
                 <Star size={14} className="text-warning shrink-0" />
                 <span className="text-xs text-foreground-muted">
-                  {level} Level
+                  {level} {t("level")}
                 </span>
               </div>
             )}
@@ -92,7 +95,7 @@ export function ProfileCard({
           whileTap={{ scale: 0.95 }}
           className="px-4 py-2 rounded-lg bg-background text-foreground font-medium cursor-pointer shrink-0 group-hover:shadow-lg flex items-center gap-2 min-w-fit"
         >
-          View
+          {t("viewProfile")}
           <ArrowRight
             size={16}
             className="group-hover:translate-x-1 transition-transform"

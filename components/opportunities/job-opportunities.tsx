@@ -2,14 +2,16 @@ import { useJobOpportunities } from "@/hooks/useJobOpportunities";
 import { Loader } from "../ui/loader";
 import { Error } from "../ui/error";
 import { OpportunityListCard } from "./opportunity-list-card";
+import { useTranslations } from "next-intl";
 
 export function JobOpportunities() {
+  const t = useTranslations("opportunities");
   const { data, isLoading, error } = useJobOpportunities();
 
   console.log(data);
 
   if (isLoading) {
-    return <Loader />;
+    return <Loader children={t("loading")} />;
   }
 
   if (error) {
@@ -17,7 +19,7 @@ export function JobOpportunities() {
   }
 
   if (!data) {
-    return <Error>No data found</Error>;
+    return <Error>{t("noData")}</Error>;
   }
 
   return (
@@ -27,7 +29,9 @@ export function JobOpportunities() {
           <OpportunityListCard key={jobOpportunity.id} {...jobOpportunity} />
         ))
       ) : (
-        <p>No job opportunities found</p>
+        <p className="text-center text-foreground py-8">
+          {t("noOpportunities")}
+        </p>
       )}
     </div>
   );

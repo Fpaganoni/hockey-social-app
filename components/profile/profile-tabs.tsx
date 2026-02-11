@@ -3,6 +3,7 @@
 import { Play } from "lucide-react";
 import { motion } from "framer-motion";
 import { TrajectoryItem, UserStats } from "@/types/models/user";
+import { useTranslations } from "next-intl";
 
 interface UserData {
   stats: UserStats;
@@ -20,10 +21,12 @@ export function ProfileTabs({
   setActiveTab,
   userData,
 }: ProfileTabsProps) {
+  const t = useTranslations("profile");
+
   const tabs = [
-    { id: "trajectory", label: "Trajectory" },
-    { id: "multimedia", label: "Multimedia" },
-    { id: "statistics", label: "Statistics" },
+    { id: "trajectory", label: t("tabs.trajectory") },
+    { id: "multimedia", label: t("tabs.multimedia") },
+    { id: "statistics", label: t("tabs.statistics") },
   ];
 
   return (
@@ -80,7 +83,7 @@ export function ProfileTabs({
               >
                 <img
                   src={`/generic-placeholder-graphic.png?key=${i}&height=120&width=120&query=field-hockey-moment-${i}`}
-                  alt={`Media ${i}`}
+                  alt={`${t("media")} ${i}`}
                   className="w-full h-full object-cover"
                 />
                 {/* Play button overlay for videos */}
@@ -103,7 +106,7 @@ export function ProfileTabs({
                 {userData.stats.gamesPlayed}
               </p>
               <p className="text-foreground-muted text-sm mt-2 font-medium">
-                Games Played
+                {t("stats.gamesPlayed")}
               </p>
             </motion.div>
             <motion.div
@@ -115,7 +118,7 @@ export function ProfileTabs({
                 {userData.stats.goals}
               </p>
               <p className="text-foreground-muted text-sm mt-2 font-medium">
-                Goals
+                {t("stats.goals")}
               </p>
             </motion.div>
             <motion.div
@@ -127,7 +130,7 @@ export function ProfileTabs({
                 {userData.stats.assists}
               </p>
               <p className="text-foreground-muted text-sm mt-2 font-medium">
-                Assists
+                {t("stats.assists")}
               </p>
             </motion.div>
           </div>

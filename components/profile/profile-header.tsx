@@ -8,6 +8,7 @@ import { User } from "@/types/models/user";
 import { useFollowUser, useFollowingUser } from "@/hooks/useUsers";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { ProfileStats } from "./profile-stats";
+import { useTranslations } from "next-intl";
 
 type ProfileHeaderProps = Pick<
   User,
@@ -22,6 +23,7 @@ export function ProfileHeader({
   bio,
   avatar,
 }: ProfileHeaderProps) {
+  const t = useTranslations("profile");
   const { user } = useAuthStore();
 
   return (
@@ -57,7 +59,7 @@ export function ProfileHeader({
               <div className="flex items-center gap-2 mt-1">
                 <Badge variant="player">{role}</Badge>
                 <span className="text-foreground font-semibold text-sm">
-                  {position || "Position not set"}
+                  {position || t("positionNotSet")}
                 </span>
               </div>
               <div className="mt-1">
@@ -72,7 +74,7 @@ export function ProfileHeader({
 
         {/* Bio */}
         <p className="text-foreground-muted text-sm text-center mb-4 leading-relaxed">
-          {bio || "No bio yet"}
+          {bio || t("noBio")}
         </p>
 
         <div className="flex flex-col gap-2">
@@ -83,7 +85,7 @@ export function ProfileHeader({
             className="w-[90%] mx-auto flex items-center gap-2 justify-center h-(--input-button-height) px-4 py-2 bg-primary text-white-black font-semibold rounded-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer disabled:opacity-50"
           >
             <Edit size={18} />
-            Edit Profile
+            {t("editProfile")}
           </motion.button>
         </div>
       </div>

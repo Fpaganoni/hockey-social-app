@@ -1,28 +1,47 @@
 "use client";
 
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Compass, Target, MessageSquare, User } from "lucide-react";
 
-const navItems = [
-  { href: "/feed", label: "Feed", icon: Home },
-  { href: "/explore", label: "Explore", icon: Compass },
-  { href: "/opportunities", label: "Opportunities", icon: Target },
-  { href: "/messages", label: "Messages", icon: MessageSquare },
-  { href: "/profile", label: "Profile", icon: User },
-];
-
 export function BottomNavigation() {
   const pathname = usePathname();
+  const locale = useLocale();
+  const t = useTranslations("navigation");
+
+  const navItems = [
+    { href: "/feed", label: t("feed"), icon: Home },
+    { href: "/explore", label: t("explore"), icon: Compass },
+    { href: "/opportunities", label: t("opportunities"), icon: Target },
+    { href: "/messages", label: t("messages"), icon: MessageSquare },
+    { href: "/profile", label: t("profile"), icon: User },
+  ];
+
+  // Function to build locale-aware href
+  const getLocalizedHref = (href: string) => {
+    if (locale === "en") {
+      return href; // English doesn't need prefix
+    }
+    return `/${locale}${href}`;
+  };
+
+  // Function to check if active, considering locale prefix
+  const isActiveRoute = (href: string) => {
+    const localizedHref = getLocalizedHref(href);
+    return pathname === localizedHref || pathname === href;
+  };
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-background/30 border-t border-border h-20 flex items-center justify-around px-4 z-40 backdrop-blur-sm">
       {navItems.map(({ href, label, icon: Icon }) => {
-        const isActive = pathname === href;
+        const isActive = isActiveRoute(href);
+        const localizedHref = getLocalizedHref(href);
+
         return (
           <Link
             key={href}
-            href={href}
+            href={localizedHref}
             className={`flex flex-col items-center justify-center gap-1 py-2 px-3 rounded-lg transition-transform duration-200 cursor-pointer hover:scale-105 ${
               isActive
                 ? "text-primary scale-110 "

@@ -4,15 +4,24 @@ import { Filter } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { JobOpportunities } from "@/components/opportunities/job-opportunities";
+import { useTranslations } from "next-intl";
 
 export function OpportunitiesPage() {
+  const t = useTranslations("opportunities");
   const [showFilters, setShowFilters] = useState(false);
+
+  const filters = [
+    t("filters.experience"),
+    t("filters.location"),
+    t("filters.contract"),
+    t("filters.salary"),
+  ];
 
   return (
     <main className="max-w-2xl mx-auto pb-4 mb-22">
       <div className="sticky top-16 bg-background border-b border-border rounded-b-lg shadow-md px-4 py-4 z-20 flex items-center justify-between gap-3">
         <h2 className="text-lg font-semibold text-foreground">
-          Available Positions
+          {t("availablePositions")}
         </h2>
         <motion.button
           whileTap={{ scale: 0.95 }}
@@ -35,7 +44,7 @@ export function OpportunitiesPage() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="bg-background border-b border-border px-4 py-4 grid grid-cols-2 gap-2"
           >
-            {["Experience", "Location", "Contract", "Salary"].map((filter) => (
+            {filters.map((filter) => (
               <button
                 key={filter}
                 className="px-3 py-2 bg-background hover:bg-input text-foreground border border-border-strong rounded-lg cursor-pointer text-sm font-medium"

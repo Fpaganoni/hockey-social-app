@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { formatRelativeTime } from "@/lib/date-utils";
 import { Post } from "@/types/models/post";
 import Image from "next/image";
+import { useTranslations, useLocale } from "next-intl";
 
 type PostCardProps = {
   post: Pick<
@@ -22,6 +23,8 @@ type PostCardProps = {
 };
 
 export function PostCard({ post }: PostCardProps) {
+  const t = useTranslations("feed");
+  const locale = useLocale() as "en" | "es" | "fr";
   const { id, content, imageUrl, createdAt, user, comments, likes, updatedAt } =
     post;
   const [liked, setLiked] = useState(false);
@@ -41,7 +44,7 @@ export function PostCard({ post }: PostCardProps) {
           <div>
             <p className="font-semibold text-foreground">{user.name}</p>
             <p className="text-xs text-foreground-muted">
-              {user.role} • {formatRelativeTime(createdAt)}
+              {user.role} • {formatRelativeTime(createdAt, locale)}
             </p>
           </div>
         </div>
@@ -63,7 +66,7 @@ export function PostCard({ post }: PostCardProps) {
           src={imageUrl}
           width={600}
           height={300}
-          alt="Post content"
+          alt={t("postContent")}
           className="w-full h-[600px] object-cover cursor-pointer"
         />
       )}

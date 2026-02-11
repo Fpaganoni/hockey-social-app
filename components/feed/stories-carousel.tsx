@@ -9,6 +9,7 @@ import { Error } from "../ui/error";
 import { Story } from "@/types/models/story";
 import { StoryViewer } from "./story-viewer";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 // Helper type for grouped stories (like Instagram)
 interface GroupedStory {
@@ -52,6 +53,7 @@ function groupStoriesByUser(stories: Story[]): GroupedStory[] {
 }
 
 export function StoriesCarousel() {
+  const t = useTranslations("feed");
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
@@ -125,12 +127,12 @@ export function StoriesCarousel() {
 
   // Show loading state
   if (isLoading) {
-    return <Loader children="Loading stories..." />;
+    return <Loader children={t("loadingStories")} />;
   }
 
   // Show error state
   if (error) {
-    return <Error children="Error loading stories" />;
+    return <Error children={t("errorLoadingStories")} />;
   }
 
   // Don't render if there are no stories
@@ -138,7 +140,7 @@ export function StoriesCarousel() {
     return (
       <div className="bg-background border-b border-border px-4 py-4">
         <span className="text-center text-foreground">
-          No stories available
+          {t("noStoriesAvailable")}
         </span>
       </div>
     );
@@ -151,7 +153,7 @@ export function StoriesCarousel() {
         <button
           onClick={() => scroll("left")}
           className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-primary/80 hover:bg-primary text-white-black rounded-full p-2 shadow-lg transition-transform duration-300 hover:scale-110 active:scale-95"
-          aria-label="Scroll left"
+          aria-label={t("scrollLeft")}
         >
           <ChevronLeft size={20} />
         </button>
@@ -168,7 +170,7 @@ export function StoriesCarousel() {
             className="flex flex-col items-center gap-2 shrink-0 group cursor-pointer"
             onClick={() => handleStoryClick(group)}
             title={`${group.user.name} - ${group.stories.length} ${
-              group.stories.length === 1 ? "story" : "stories"
+              group.stories.length === 1 ? t("story") : t("stories")
             }`}
           >
             <div className="relative">
@@ -209,7 +211,7 @@ export function StoriesCarousel() {
         <button
           onClick={() => scroll("right")}
           className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-primary/80 hover:bg-primary text-white-black rounded-full p-2 shadow-lg transition-transform duration-300 hover:scale-110 active:scale-95"
-          aria-label="Scroll right"
+          aria-label={t("scrollRight")}
         >
           <ChevronRight size={20} />
         </button>

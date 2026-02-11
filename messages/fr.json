@@ -18,14 +18,6 @@
     "settings": "Paramètres",
     "logout": "Se déconnecter"
   },
-  "profile": {
-    "followers": "Abonnés",
-    "following": "Abonnements",
-    "editProfile": "Modifier le profil",
-    "bio": "Biographie",
-    "noBio": "Pas encore de biographie",
-    "positionNotSet": "Position non définie"
-  },
   "auth": {
     "login": "Se connecter",
     "register": "S'inscrire",
@@ -203,11 +195,110 @@
       "copyright": "Tous droits réservés."
     }
   },
+  "feed": {
+    "loadingPosts": "Chargement des publications...",
+    "loadingStories": "Chargement des stories...",
+    "loadingMorePosts": "Chargement de plus de publications...",
+    "errorLoadingStories": "Erreur lors du chargement des stories",
+    "noStoriesAvailable": "Aucune story disponible",
+    "scrollToLoadMore": "Faites défiler pour charger plus de publications",
+    "noMorePosts": "Plus de publications à charger.",
+    "postContent": "Contenu de la publication",
+    "scrollLeft": "Faire défiler vers la gauche",
+    "scrollRight": "Faire défiler vers la droite",
+    "story": "story",
+    "stories": "stories"
+  },
+  "explore": {
+    "searchPlaceholder": "Rechercher par nom, club, ville...",
+    "noResults": "Aucun résultat pour",
+    "viewProfile": "Voir",
+    "level": "Niveau",
+    "closeDropdown": "Fermer le menu",
+    "filters": {
+      "role": "Rôle",
+      "country": "Pays",
+      "level": "Niveau",
+      "position": "Position",
+      "season": "Saison"
+    },
+    "roles": {
+      "player": "Joueur",
+      "coach": "Entraîneur",
+      "clubManager": "Directeur de Club"
+    },
+    "levels": {
+      "elite": "Élite",
+      "professional": "Professionnel",
+      "amateur": "Amateur",
+      "youth": "Jeunes"
+    },
+    "positions": {
+      "forward": "Attaquant",
+      "midfielder": "Milieu de terrain",
+      "defender": "Défenseur",
+      "goalkeeper": "Gardien de but"
+    },
+    "seasons": {
+      "current": "Saison Actuelle",
+      "next": "Prochaine Saison",
+      "any": "N'importe Quand"
+    }
+  },
+  "profile": {
+    "followers": "Abonnés",
+    "editProfile": "Éditer le Profil",
+    "positionNotSet": "Position non définie",
+    "noBio": "Pas encore de bio",
+    "bio": "Biographie",
+    "following": "Abonné",
+    "follow": "Suivre",
+    "connect": "Connecter",
+    "message": "Message",
+    "errorLoadData": "Erreur de chargement des données",
+    "tabs": {
+      "trajectory": "Trajectoire",
+      "multimedia": "Multimédia",
+      "statistics": "Statistiques"
+    },
+    "stats": {
+      "gamesPlayed": "Matchs Joués",
+      "goals": "Buts",
+      "assists": "Passes Décisives"
+    },
+    "media": "Média"
+  },
+  "messages": {
+    "searchConversations": "Rechercher des conversations...",
+    "noConversationsFound": "Aucune conversation trouvée",
+    "activeNow": "Actif maintenant",
+    "typeMessage": "Écrivez un message...",
+    "noConversations": "Pas encore de conversations",
+    "startConversation": "Démarrer une nouvelle conversation"
+  },
+  "opportunities": {
+    "availablePositions": "Postes Disponibles",
+    "filters": {
+      "experience": "Expérience",
+      "location": "Localisation",
+      "contract": "Contrat",
+      "salary": "Salaire"
+    },
+    "loading": "Chargement des opportunités...",
+    "noData": "Aucune donnée trouvée",
+    "noOpportunities": "Aucune offre d'emploi trouvée",
+    "open": "Ouvert",
+    "filled": "Pourvue",
+    "closed": "Fermé",
+    "published": "Publié",
+    "applicationSent": "Demande Envoyée",
+    "applyWithProfile": "Postuler avec le Profil"
+  },
   "posts": {
     "like": "J'aime",
     "comment": "Commenter",
     "share": "Partager",
-    "newPost": "Créer une publication",
-    "whatAreYouThinking": "À quoi pensez-vous?"
+    "newPost": "Créer une Publication",
+    "whatAreYouThinking": "À quoi pensez-vous ?"
   }
 }

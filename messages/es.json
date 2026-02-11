@@ -18,14 +18,6 @@
     "settings": "Configuración",
     "logout": "Cerrar sesión"
   },
-  "profile": {
-    "followers": "Seguidores",
-    "following": "Siguiendo",
-    "editProfile": "Editar Perfil",
-    "bio": "Biografía",
-    "noBio": "Sin biografía aún",
-    "positionNotSet": "Posición no establecida"
-  },
   "auth": {
     "login": "Iniciar sesión",
     "register": "Registrarse",
@@ -205,6 +197,105 @@
       },
       "copyright": "Todos los derechos reservados."
     }
+  },
+  "feed": {
+    "loadingPosts": "Cargando publicaciones...",
+    "loadingStories": "Cargando historias...",
+    "loadingMorePosts": "Cargando más publicaciones...",
+    "errorLoadingStories": "Error al cargar historias",
+    "noStoriesAvailable": "No hay historias disponibles",
+    "scrollToLoadMore": "Desplázate para cargar más publicaciones",
+    "noMorePosts": "No hay más publicaciones para cargar.",
+    "postContent": "Contenido de la publicación",
+    "scrollLeft": "Desplazar a la izquierda",
+    "scrollRight": "Desplazar a la derecha",
+    "story": "historia",
+    "stories": "historias"
+  },
+  "explore": {
+    "searchPlaceholder": "Buscar por nombre, club, ciudad...",
+    "noResults": "Sin resultados para",
+    "viewProfile": "Ver",
+    "level": "Nivel",
+    "closeDropdown": "Cerrar menú",
+    "filters": {
+      "role": "Rol",
+      "country": "País",
+      "level": "Nivel",
+      "position": "Posición",
+      "season": "Temporada"
+    },
+    "roles": {
+      "player": "Jugador",
+      "coach": "Entrenador",
+      "clubManager": "Director de Club"
+    },
+    "levels": {
+      "elite": "Elite",
+      "professional": "Profesional",
+      "amateur": "Amateur",
+      "youth": "Juvenil"
+    },
+    "positions": {
+      "forward": "Delantero",
+      "midfielder": "Mediocampista",
+      "defender": "Defensor",
+      "goalkeeper": "Portero"
+    },
+    "seasons": {
+      "current": "Temporada Actual",
+      "next": "Próxima Temporada",
+      "any": "Cualquier Momento"
+    }
+  },
+  "profile": {
+    "followers": "Seguidores",
+    "editProfile": "Editar Perfil",
+    "positionNotSet": "Posición no establecida",
+    "noBio": "Sin biografía aún",
+    "bio": "Biografía",
+    "following": "Siguiendo",
+    "follow": "Seguir",
+    "connect": "Conectar",
+    "message": "Mensaje",
+    "errorLoadData": "Error al cargar datos",
+    "tabs": {
+      "trajectory": "Trayectoria",
+      "multimedia": "Multimedia",
+      "statistics": "Estadísticas"
+    },
+    "stats": {
+      "gamesPlayed": "Partidos Jugados",
+      "goals": "Goles",
+      "assists": "Asistencias"
+    },
+    "media": "Multimedia"
+  },
+  "messages": {
+    "searchConversations": "Buscar conversaciones...",
+    "noConversationsFound": "No se encontraron conversaciones",
+    "activeNow": "Activo ahora",
+    "typeMessage": "Escribe un mensaje...",
+    "noConversations": "No hay conversaciones aún",
+    "startConversation": "Iniciar una nueva conversación"
+  },
+  "opportunities": {
+    "availablePositions": "Posiciones Disponibles",
+    "filters": {
+      "experience": "Experiencia",
+      "location": "Ubicación",
+      "contract": "Contrato",
+      "salary": "Salario"
+    },
+    "loading": "Cargando oportunidades...",
+    "noData": "No se encontraron datos",
+    "noOpportunities": "No se encontraron oportunidades laborales",
+    "open": "Abierto",
+    "filled": "Cubierta",
+    "closed": "Cerrado",
+    "published": "Publicado",
+    "applicationSent": "Solicitud Enviada",
+    "applyWithProfile": "Aplicar con Perfil"
   },
   "posts": {
     "like": "Me gusta",
