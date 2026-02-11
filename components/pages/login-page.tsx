@@ -78,7 +78,7 @@ export function LoginPage() {
     <>
       {/* Login Card */}
       <div className="w-full rounded-3xl border border-border bg-background p-6 shadow-xl">
-        <h2 className="text-xl font-medium text-foreground mb-6">
+        <h2 className="text-xl font-medium text-foreground mb-4">
           {t("loginTitle")}
         </h2>
 
@@ -90,7 +90,7 @@ export function LoginPage() {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Email Input */}
-          <div className="mb-5">
+          <div className="mb-4">
             <Label id="email" className="mb-2">
               {t("email")}
             </Label>
@@ -120,7 +120,7 @@ export function LoginPage() {
           </div>
 
           {/* Password Input */}
-          <div className="mb-5">
+          <div className="mb-4">
             <Label id="password" className="mb-2">
               {t("password")}
             </Label>
@@ -159,14 +159,14 @@ export function LoginPage() {
           </div>
 
           {/* Login Button */}
-          <div className="space-y-2 mb-5">
+          <div className="space-y-2 mb-4">
             <motion.button
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
               type="submit"
               disabled={isPending}
-              className="w-full h-(--input-button-height) px-4 py-2 bg-primary text-white-black font-semibold rounded-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer disabled:opacity-50"
+              className="w-full h-(--input-button-height) px-4 py-2 mt-2 bg-primary text-white-black font-semibold rounded-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer disabled:opacity-50"
             >
               {isPending ? t("loggingIn") : t("login")}
             </motion.button>
@@ -174,7 +174,7 @@ export function LoginPage() {
         </form>
 
         {/* Divider */}
-        <div className="flex items-center gap-3 mb-5">
+        <div className="flex items-center gap-3 mb-4">
           <div className="flex-1 h-px bg-border"></div>
           <span className="text-md text-foreground/85">{t("or")}</span>
           <div className="flex-1 h-px bg-border"></div>
@@ -214,15 +214,12 @@ export function LoginPage() {
         </div>
 
         {/* Footer */}
-        <p className="text-xs text-foreground text-center mt-5">
+        {/* <p className="text-xs text-foreground text-center mt-4">
           {t("dontHaveAccount")}{" "}
-          <Link
-            href="/register"
-            className="text-foreground-muted hover:text-foreground cursor-pointer transition-colors"
-          >
+          <span className="text-foreground-muted hover:text-foreground cursor-pointer transition-colors">
             {t("signUp")}
-          </Link>
-        </p>
+          </span>
+        </p> */}
       </div>
     </>
   );
