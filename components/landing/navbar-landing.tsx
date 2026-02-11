@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { HockeyXTicks } from "@/components/ui/hockey-xtick";
 import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "@/components/ui/language-selector";
+import { ThemeToggleControl } from "@/components/ui/theme-provider";
 import {
   Dialog,
   DialogContent,
@@ -70,6 +71,7 @@ export function NavbarLanding() {
         {/* Desktop CTAs */}
         <div className="hidden md:flex items-center gap-4">
           <LanguageSelector />
+          <ThemeToggleControl />
 
           <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
             <DialogTrigger asChild>
@@ -146,6 +148,7 @@ export function NavbarLanding() {
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
                 <LanguageSelector />
+                <ThemeToggleControl />
 
                 <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
                   <DialogTrigger asChild>

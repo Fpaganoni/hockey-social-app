@@ -11,6 +11,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // Drag and Drop state
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 20, y: 120 });
+  const [isMobile, setIsMobile] = useState(true); // Default to mobile for SSR
   const dragRef = useRef<HTMLDivElement>(null);
   const offsetRef = useRef({ x: 0, y: 0 });
   const hasMovedRef = useRef(false); // Track if actually moved during drag
@@ -43,6 +44,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         // Use default position if parsing fails
       }
     }
+
+    // Detect screen size
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const toggleTheme = () => {
@@ -211,30 +221,74 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
     <>
       {children}
-      <div
-        ref={dragRef}
-        onMouseDown={handleMouseDown}
-        onTouchStart={handleTouchStart}
-        style={{
-          position: "fixed",
-          left: `${position.x}px`,
-          top: `${position.y}px`,
-          zIndex: 50,
-          cursor: isDragging ? "grabbing" : "grab",
-          padding: "4px",
-          borderRadius: "12px",
-          transition: isDragging ? "none" : "box-shadow 0.2s",
-        }}
-        className={isDragging ? "ring-2 ring-primary/50" : ""}
-      >
-        <ThemeToggleButton
-          theme={theme}
-          variant="circle-blur"
-          start="top-right"
-          onClick={handleThemeClick}
-          className="w-12 h-12 rounded-full bg-background-gradient border-2 border-primary hover:border-primary text-foreground text-sm hover:bg-primary hover:text-background shadow-lg pointer-events-auto"
-        />
-      </div>
+      {/* Only show draggable toggle on desktop */}
+      {!isMobile && (
+        <div
+          ref={dragRef}
+          onMouseDown={handleMouseDown}
+          onTouchStart={handleTouchStart}
+          style={{
+            position: "fixed",
+            left: `${position.x}px`,
+            top: `${position.y}px`,
+            zIndex: 50,
+            cursor: isDragging ? "grabbing" : "grab",
+            padding: "4px",
+            borderRadius: "12px",
+            transition: isDragging ? "none" : "box-shadow 0.2s",
+          }}
+          className={isDragging ? "ring-2 ring-primary/50" : ""}
+        >
+          <ThemeToggleButton
+            theme={theme}
+            variant="circle-blur"
+            start="top-right"
+            onClick={handleThemeClick}
+            className="w-12 h-12 rounded-full bg-background-gradient border-2 border-primary hover:border-primary text-foreground text-sm hover:bg-primary hover:text-background shadow-lg pointer-events-auto"
+          />
+        </div>
+      )}
     </>
+  );
+}
+
+// Export component for use in header on mobile
+export function useThemeControl() {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const { startTransition } = useThemeTransition();
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark";
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    startTransition(() => {
+      const newTheme = theme === "dark" ? "light" : "dark";
+      setTheme(newTheme);
+      localStorage.setItem("theme", newTheme);
+
+      if (newTheme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    });
+  }, [theme, startTransition]);
+
+  return { theme, toggleTheme };
+}
+
+export function ThemeToggleControl() {
+  const { theme, toggleTheme } = useThemeControl();
+
+  return (
+    <ThemeToggleButton
+      theme={theme}
+      onClick={toggleTheme}
+      className="hover:bg-primary/10 transition-colors"
+    />
   );
 }

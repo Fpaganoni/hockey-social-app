@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { HockeyXTicks } from "../ui/hockey-xtick";
 import { LanguageSelector } from "../ui/language-selector";
+import { ThemeToggleControl } from "../ui/theme-provider";
 import { motion } from "framer-motion";
 import { useAuthStore } from "@/stores/useAuthStore";
 
@@ -37,6 +38,12 @@ export function Header({ title = "Hockey Connect" }: HeaderProps) {
 
       <div className="flex items-center gap-2">
         <LanguageSelector />
+
+        {/* Theme toggle - visible on mobile/tablet */}
+        <div className="lg:hidden">
+          <ThemeToggleControl />
+        </div>
+
         <button className="group p-2 hover:bg-primary rounded-lg transition-colors cursor-pointer relative hover:scale-110">
           <Bell
             size={24}
