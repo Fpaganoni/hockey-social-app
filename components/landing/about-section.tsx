@@ -3,14 +3,12 @@
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export function AboutSection() {
-  const benefits = [
-    "Exclusive professional field hockey network",
-    "Verified opportunities from recognized clubs",
-    "Tools to boost your sports career",
-    "Active and committed global community",
-  ];
+  const t = useTranslations("landing.about");
+
+  const benefits = ["network", "verified", "tools", "community"];
 
   return (
     <section id="about" className="py-20 px-4 bg-background">
@@ -44,7 +42,7 @@ export function AboutSection() {
               className="absolute -bottom-6 -right-6 bg-primary text-white-black px-6 py-4 rounded-xl shadow-lg border-2 border-border"
             >
               <p className="text-3xl font-bold">5000+</p>
-              <p className="text-sm">Active Members</p>
+              <p className="text-sm">{t("badgeMembers")}</p>
             </motion.div>
           </motion.div>
 
@@ -57,25 +55,21 @@ export function AboutSection() {
           >
             <div className="inline-block mb-4">
               <span className="px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-semibold border border-accent/20">
-                About Us
+                {t("badge")}
               </span>
             </div>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-              The platform revolutionizing{" "}
-              <span className="text-primary">field hockey</span>
+              {t("title")}{" "}
+              <span className="text-primary">{t("titleHighlight")}</span>
             </h2>
 
             <p className="text-lg text-foreground-muted mb-6">
-              Hockey Connect was born from a passion for field hockey and the
-              need to create a space where players, clubs, and coaches can
-              connect without barriers.
+              {t("description1")}
             </p>
 
             <p className="text-lg text-foreground-muted mb-8">
-              Our mission is to democratize access to professional opportunities
-              and create a global community where talent is recognized
-              regardless of geographic location.
+              {t("description2")}
             </p>
 
             {/* Benefits List */}
@@ -93,7 +87,7 @@ export function AboutSection() {
                     size={24}
                     className="text-accent shrink-0 mt-0.5"
                   />
-                  <p className="text-foreground">{benefit}</p>
+                  <p className="text-foreground">{t(`benefits.${benefit}`)}</p>
                 </motion.div>
               ))}
             </div>

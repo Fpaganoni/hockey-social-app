@@ -2,7 +2,9 @@
 
 import { Bell, LogOut } from "lucide-react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { HockeyXTicks } from "../ui/hockey-xtick";
+import { LanguageSelector } from "../ui/language-selector";
 import { motion } from "framer-motion";
 import { useAuthStore } from "@/stores/useAuthStore";
 
@@ -13,6 +15,7 @@ interface HeaderProps {
 export function Header({ title = "Hockey Connect" }: HeaderProps) {
   const [showLogout, setShowLogout] = useState(false);
   const { logout, user } = useAuthStore();
+  const t = useTranslations("navigation");
 
   const handleLogout = () => {
     logout();
@@ -33,6 +36,7 @@ export function Header({ title = "Hockey Connect" }: HeaderProps) {
       </motion.div>
 
       <div className="flex items-center gap-2">
+        <LanguageSelector />
         <button className="group p-2 hover:bg-primary rounded-lg transition-colors cursor-pointer relative hover:scale-110">
           <Bell
             size={24}
@@ -57,7 +61,7 @@ export function Header({ title = "Hockey Connect" }: HeaderProps) {
               onClick={handleLogout}
               className="absolute right-0 top-full mt-2 px-4 py-2 bg-background border-2 border-border rounded-lg text-foreground text-sm hover:bg-primary hover:text-background shadow-lg transition-colors cursor-pointer whitespace-nowrap z-50"
             >
-              Logout
+              {t("logout")}
             </button>
           )}
         </div>

@@ -1,0 +1,307 @@
+{
+  "common": {
+    "appName": "FieldLink",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search"
+  },
+  "navigation": {
+    "feed": "Feed",
+    "explore": "Explore",
+    "messages": "Messages",
+    "opportunities": "Opportunities",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "signUp": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "name": "Name",
+    "forgotPassword": "Forgot password?",
+    "dontHaveAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?",
+    "loginTitle": "Welcome",
+    "registerTitle": "Create an Account",
+    "loggingIn": "Logging in...",
+    "loginFailed": "Login failed",
+    "or": "or",
+    "continueWithGoogle": "Continue with Google",
+    "continueWithApple": "Continue with Apple",
+    "validation": {
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email address",
+      "emailValid": "Please enter a valid email address",
+      "passwordMin": "Password must be at least 6 characters long"
+    }
+  },
+  "register": {
+    "title": "Register",
+    "subtitle": "Field Hockey Community Network",
+    "fullName": "Full Name",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "role": "Role",
+    "placeholders": {
+      "fullName": "Billy Backer",
+      "username": "user_name",
+      "email": "your@email.com",
+      "password": "••••••••",
+      "role": "Player | Coach | Trainer"
+    },
+    "submitButton": "Register",
+    "submitting": "Registering...",
+    "alreadyHaveAccount": "Already have an account?",
+    "loginLink": "Login",
+    "registrationFailed": "Registration failed",
+    "validation": {
+      "nameMin": "Full name must be at least 6 characters long",
+      "nameMax": "Full name must be at most 30 characters long",
+      "usernameMin": "Username must be at least 6 characters long",
+      "usernameMax": "Username must be at most 30 characters long",
+      "emailInvalid": "Invalid email address",
+      "emailValid": "Please enter a valid email address",
+      "passwordMin": "Password must be at least 6 characters long",
+      "passwordUppercase": "Password must contain at least one uppercase letter",
+      "passwordNumber": "Password must contain at least one number",
+      "passwordSpecial": "Password must contain at least one special character",
+      "confirmPasswordRequired": "Please confirm your password",
+      "passwordsNoMatch": "Passwords do not match",
+      "roleInvalid": "Select a valid role"
+    }
+  },
+  "landingNav": {
+    "home": "Home",
+    "features": "Features",
+    "about": "About Us",
+    "stats": "Stats",
+    "joinUs": "Join Us",
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
+  },
+  "landing": {
+    "hero": {
+      "badge": "🏑 The field hockey social network",
+      "title": "Connect with the world of",
+      "titleHighlight": "Field Hockey",
+      "subtitle": "Join the ultimate platform for players, clubs, and coaches. Share your journey, discover opportunities, and connect with the global hockey community.",
+      "getStarted": "Get Started",
+      "explore": "Explore",
+      "statsPlayers": "Players",
+      "statsClubs": "Clubs",
+      "statsCountries": "Countries"
+    },
+    "features": {
+      "title": "Everything you need in one place",
+      "subtitle": "Tools designed specifically for the field hockey community",
+      "items": {
+        "connect": {
+          "title": "Connect with the Community",
+          "description": "Find and connect with players, clubs, and coaches from around the world."
+        },
+        "opportunities": {
+          "title": "Professional Opportunities",
+          "description": "Discover job offers, trials, and opportunities at elite clubs."
+        },
+        "journey": {
+          "title": "Share Your Journey",
+          "description": "Showcase your achievements, statistics, and professional experience to the world."
+        },
+        "messaging": {
+          "title": "Real-Time Messaging",
+          "description": "Communicate directly with other members of the community."
+        },
+        "network": {
+          "title": "Global Network",
+          "description": "Access an international field hockey community."
+        },
+        "achievements": {
+          "title": "Highlight Your Achievements",
+          "description": "Post your successes, matches, and career highlights."
+        }
+      }
+    },
+    "about": {
+      "badge": "About Us",
+      "title": "The platform revolutionizing",
+      "titleHighlight": "field hockey",
+      "description1": "Hockey Connect was born from a passion for field hockey and the need to create a space where players, clubs, and coaches can connect without barriers.",
+      "description2": "Our mission is to democratize access to professional opportunities and create a global community where talent is recognized regardless of geographic location.",
+      "benefits": {
+        "network": "Exclusive professional field hockey network",
+        "verified": "Verified opportunities from recognized clubs",
+        "tools": "Tools to boost your sports career",
+        "community": "Active and committed global community"
+      },
+      "badgeMembers": "Active Members"
+    },
+    "stats": {
+      "title": "Our community in numbers",
+      "subtitle": "Thousands of players and clubs already trust us",
+      "items": {
+        "players": {
+          "label": "Registered Players",
+          "description": "Athletes of all levels"
+        },
+        "clubs": {
+          "label": "Active Clubs",
+          "description": "From around the world"
+        },
+        "countries": {
+          "label": "Countries Represented",
+          "description": "Global community"
+        },
+        "opportunities": {
+          "label": "Posted Opportunities",
+          "description": "Verified offers"
+        }
+      },
+      "connectionsLabel": "connections",
+      "connectionsTime": "made this month"
+    },
+    "cta": {
+      "badge": "Join the hockey revolution",
+      "title": "Ready to take the next step in your career?",
+      "description": "Join thousands of players, clubs, and coaches who are already connecting and growing together on Hockey Connect.",
+      "createAccount": "Create Free Account",
+      "viewProfiles": "View Profiles",
+      "trust1": "Free forever",
+      "trust2": "No credit card required",
+      "trust3": "Sign up in 2 minutes"
+    },
+    "footer": {
+      "description": "The ultimate platform to connect field hockey players, clubs, and coaches around the world.",
+      "product": "Product",
+      "company": "Company",
+      "legal": "Legal",
+      "links": {
+        "features": "Features",
+        "opportunities": "Opportunities",
+        "explore": "Explore",
+        "about": "About Us",
+        "contact": "Contact",
+        "blog": "Blog",
+        "privacy": "Privacy",
+        "terms": "Terms",
+        "cookies": "Cookies"
+      },
+      "copyright": "All rights reserved."
+    }
+  },
+  "feed": {
+    "loadingPosts": "Loading posts...",
+    "loadingStories": "Loading stories...",
+    "loadingMorePosts": "Loading more posts...",
+    "errorLoadingStories": "Error loading stories",
+    "noStoriesAvailable": "No stories available",
+    "scrollToLoadMore": "Scroll to load more posts",
+    "noMorePosts": "No more posts to load.",
+    "postContent": "Post content",
+    "scrollLeft": "Scroll left",
+    "scrollRight": "Scroll right",
+    "story": "story",
+    "stories": "stories"
+  },
+  "explore": {
+    "searchPlaceholder": "Search by name, club, city...",
+    "noResults": "No results for",
+    "viewProfile": "View",
+    "level": "Level",
+    "closeDropdown": "Close dropdown",
+    "filters": {
+      "role": "Role",
+      "country": "Country",
+      "level": "Level",
+      "position": "Position",
+      "season": "Season"
+    },
+    "roles": {
+      "player": "Player",
+      "coach": "Coach",
+      "clubManager": "Club Manager"
+    },
+    "levels": {
+      "elite": "Elite",
+      "professional": "Professional",
+      "amateur": "Amateur",
+      "youth": "Youth"
+    },
+    "positions": {
+      "forward": "Forward",
+      "midfielder": "Midfielder",
+      "defender": "Defender",
+      "goalkeeper": "Goalkeeper"
+    },
+    "seasons": {
+      "current": "Current Season",
+      "next": "Next Season",
+      "any": "Any Time"
+    }
+  },
+  "profile": {
+    "followers": "Followers",
+    "editProfile": "Edit Profile",
+    "positionNotSet": "Position not set",
+    "noBio": "No bio yet",
+    "bio": "Bio",
+    "following": "Following",
+    "follow": "Follow",
+    "connect": "Connect",
+    "message": "Message",
+    "errorLoadData": "Error loading data",
+    "tabs": {
+      "trajectory": "Trajectory",
+      "multimedia": "Multimedia",
+      "statistics": "Statistics"
+    },
+    "stats": {
+      "gamesPlayed": "Games Played",
+      "goals": "Goals",
+      "assists": "Assists"
+    },
+    "media": "Media"
+  },
+  "messages": {
+    "searchConversations": "Search conversations...",
+    "noConversationsFound": "No conversations found",
+    "activeNow": "Active now",
+    "typeMessage": "Type a message...",
+    "noConversations": "No conversations yet",
+    "startConversation": "Start a new conversation"
+  },
+  "opportunities": {
+    "availablePositions": "Available Positions",
+    "filters": {
+      "experience": "Experience",
+      "location": "Location",
+      "contract": "Contract",
+      "salary": "Salary"
+    },
+    "loading": "Loading opportunities...",
+    "noData": "No data found",
+    "noOpportunities": "No job opportunities found",
+    "open": "Open",
+    "filled": "Filled",
+    "closed": "Closed",
+    "published": "Published",
+    "applicationSent": "Application Sent",
+    "applyWithProfile": "Apply with Profile"
+  },
+  "posts": {
+    "like": "Like",
+    "comment": "Comment",
+    "share": "Share",
+    "newPost": "Create Post",
+    "whatAreYouThinking": "What's on your mind?"
+  }
+}

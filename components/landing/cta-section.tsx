@@ -4,8 +4,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 export function CtaSection() {
+  const t = useTranslations("landing.cta");
+
   return (
     <section
       id="cta"
@@ -50,25 +53,24 @@ export function CtaSection() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-semibold border border-primary/20 mb-6">
             <Sparkles size={16} />
-            <span>Join the hockey revolution</span>
+            <span>{t("badge")}</span>
           </div>
 
           {/* Heading */}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Ready to take the next step in your career?
+            {t("title")}
           </h2>
 
           {/* Description */}
           <p className="text-lg md:text-xl text-foreground-muted mb-10 max-w-2xl mx-auto">
-            Join thousands of players, clubs, and coaches who are already
-            connecting and growing together on Hockey Connect.
+            {t("description")}
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/register">
               <Button size="lg" className="group px-10 py-6 text-pure-white">
-                Create Free Account
+                {t("createAccount")}
                 <ArrowRight
                   size={20}
                   className="ml-2 group-hover:translate-x-1 transition-transform"
@@ -81,7 +83,7 @@ export function CtaSection() {
                 size="lg"
                 className="px-10 py-6 hover:text-foreground"
               >
-                View Profiles
+                {t("viewProfiles")}
               </Button>
             </Link>
           </div>
@@ -96,15 +98,15 @@ export function CtaSection() {
           >
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-accent rounded-full" />
-              <span>Free forever</span>
+              <span>{t("trust1")}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-accent rounded-full" />
-              <span>No credit card required</span>
+              <span>{t("trust2")}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-accent rounded-full" />
-              <span>Sign up in 2 minutes</span>
+              <span>{t("trust3")}</span>
             </div>
           </motion.div>
         </motion.div>

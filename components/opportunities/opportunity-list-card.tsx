@@ -4,6 +4,7 @@ import { CheckCircle, MapPin, Calendar, Award } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { JobOpportunity } from "@/types/models/job-opportunity";
 import { formatRelativeTime } from "@/lib/date-utils";
+import { useTranslations, useLocale } from "next-intl";
 
 type OpportunityListCardProps = Pick<
   JobOpportunity,
@@ -37,6 +38,9 @@ export function OpportunityListCard({
   createdAt,
   level,
 }: OpportunityListCardProps) {
+  const t = useTranslations("opportunities");
+  const locale = useLocale() as "en" | "es" | "fr";
+
   const tagColorMap: Record<string, string> = {
     Professional: "bg-info/30 text-foreground border-info/40",
     Amateur: "bg-warning/30 text-foreground border-warning/40",
@@ -71,7 +75,7 @@ export function OpportunityListCard({
                           : "bg-error/30 text-foreground border-error/40"
                       }
                     >
-                      {status}
+                      {status == "open" ? t("open") : t("filled")}
                     </Badge>
                     <Badge
                       key={country}
@@ -96,7 +100,7 @@ export function OpportunityListCard({
                           : "bg-danger/30 text-foreground border-danger/40"
                       }
                     >
-                      {status}
+                      {status == "open" ? t("open") : t("filled")}
                     </Badge>
                     <Badge
                       key={country}
@@ -135,7 +139,9 @@ export function OpportunityListCard({
 
           <div className="flex items-center gap-2 text-xs text-foreground-muted mb-4">
             <Calendar size={14} />
-            <span>Published {formatRelativeTime(createdAt)} ago.</span>
+            <span>
+              {t("published")} {formatRelativeTime(createdAt, locale)}.
+            </span>
           </div>
         </div>
 
@@ -145,11 +151,11 @@ export function OpportunityListCard({
             className="w-full py-2 rounded-lg border-2 border-success bg-success/20 font-semibold text-foreground flex items-center justify-center gap-2 transition-colors duration-300 cursor-default"
           >
             <CheckCircle size={18} />
-            Application Sent
+            {t("applicationSent")}
           </button>
         ) : (
           <button className="w-full py-2 rounded-lg bg-success/20 border border-border hover:bg-success text-foreground hover:text-background font-semibold transition-colors duration-300 cursor-pointer hover:shadow-lg">
-            Apply with Profile
+            {t("applyWithProfile")}
           </button>
         )}
       </div>

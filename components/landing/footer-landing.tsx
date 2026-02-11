@@ -8,26 +8,16 @@ import {
   FaLinkedin,
 } from "react-icons/fa6";
 import { HockeyXTicks } from "@/components/ui/hockey-xtick";
+import { useTranslations } from "next-intl";
 
 export function FooterLanding() {
   const currentYear = new Date().getFullYear();
+  const t = useTranslations("landing.footer");
 
   const footerLinks = {
-    product: [
-      { label: "Features", href: "#features" },
-      { label: "Opportunities", href: "/opportunities" },
-      { label: "Explore", href: "/explore" },
-    ],
-    company: [
-      { label: "About Us", href: "#about" },
-      { label: "Contact", href: "#contact" },
-      { label: "Blog", href: "#blog" },
-    ],
-    legal: [
-      { label: "Privacy", href: "#privacy" },
-      { label: "Terms", href: "#terms" },
-      { label: "Cookies", href: "#cookies" },
-    ],
+    product: ["features", "opportunities", "explore"],
+    company: ["about", "contact", "blog"],
+    legal: ["privacy", "terms", "cookies"],
   };
 
   const socialLinks = [
@@ -71,8 +61,7 @@ export function FooterLanding() {
               </h3>
             </div>
             <p className="text-foreground-muted mb-6 max-w-sm">
-              The ultimate platform to connect field hockey players, clubs, and
-              coaches around the world.
+              {t("description")}
             </p>
 
             {/* Social Links */}
@@ -100,15 +89,17 @@ export function FooterLanding() {
 
           {/* Links Columns */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Product</h4>
+            <h4 className="font-semibold text-foreground mb-4">
+              {t("product")}
+            </h4>
             <ul className="space-y-2">
               {footerLinks.product.map((link) => (
-                <li key={link.label}>
+                <li key={link}>
                   <a
-                    href={link.href}
+                    href={`#${link}`}
                     className="text-foreground-muted hover:text-primary transition-colors"
                   >
-                    {link.label}
+                    {t(`links.${link}`)}
                   </a>
                 </li>
               ))}
@@ -116,15 +107,17 @@ export function FooterLanding() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Company</h4>
+            <h4 className="font-semibold text-foreground mb-4">
+              {t("company")}
+            </h4>
             <ul className="space-y-2">
               {footerLinks.company.map((link) => (
-                <li key={link.label}>
+                <li key={link}>
                   <a
-                    href={link.href}
+                    href={`#${link}`}
                     className="text-foreground-muted hover:text-primary transition-colors"
                   >
-                    {link.label}
+                    {t(`links.${link}`)}
                   </a>
                 </li>
               ))}
@@ -132,15 +125,15 @@ export function FooterLanding() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Legal</h4>
+            <h4 className="font-semibold text-foreground mb-4">{t("legal")}</h4>
             <ul className="space-y-2">
               {footerLinks.legal.map((link) => (
-                <li key={link.label}>
+                <li key={link}>
                   <a
-                    href={link.href}
+                    href={`#${link}`}
                     className="text-foreground-muted hover:text-primary transition-colors"
                   >
-                    {link.label}
+                    {t(`links.${link}`)}
                   </a>
                 </li>
               ))}
@@ -151,7 +144,7 @@ export function FooterLanding() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-border">
           <p className="text-center text-foreground-muted text-sm">
-            © {currentYear} Hockey Connect. All rights reserved.
+            © {currentYear} Hockey Connect. {t("copyright")}
           </p>
         </div>
       </div>

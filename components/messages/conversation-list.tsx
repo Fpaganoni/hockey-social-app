@@ -1,8 +1,9 @@
 "use client";
 
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNowLocalized } from "@/lib/date-utils";
 import { Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslations, useLocale } from "next-intl";
 
 interface Conversation {
   id: number;
@@ -23,6 +24,9 @@ export function ConversationList({
   searchQuery,
   onSelectChat,
 }: ConversationListProps) {
+  const t = useTranslations("messages");
+  const locale = useLocale() as "en" | "es" | "fr";
+
   const conversations: Conversation[] = [
     {
       id: 1,
@@ -63,7 +67,7 @@ export function ConversationList({
   ];
 
   const filtered = conversations.filter((conv) =>
-    conv.name.toLowerCase().includes(searchQuery.toLowerCase())
+    conv.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -92,9 +96,10 @@ export function ConversationList({
                     {conversation.name}
                   </p>
                   <span className="text-xs text-foreground shrink-0">
-                    {formatDistanceToNow(conversation.lastMessageTime, {
-                      addSuffix: false,
-                    })}
+                    {formatDistanceToNowLocalized(
+                      conversation.lastMessageTime,
+                      locale,
+                    )}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -128,7 +133,7 @@ export function ConversationList({
       ) : (
         <div className="flex items-center justify-center h-full">
           <p className="text-foreground text-lg text-center">
-            No conversations found
+            {t("noConversationsFound")}
           </p>
         </div>
       )}

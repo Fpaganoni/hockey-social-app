@@ -1,0 +1,304 @@
+{
+  "common": {
+    "appName": "FieldLink",
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "search": "Rechercher"
+  },
+  "navigation": {
+    "feed": "Fil",
+    "explore": "Explorer",
+    "messages": "Messages",
+    "opportunities": "Opportunités",
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "logout": "Se déconnecter"
+  },
+  "auth": {
+    "login": "Se connecter",
+    "register": "S'inscrire",
+    "signUp": "S'inscrire",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "name": "Nom",
+    "forgotPassword": "Mot de passe oublié?",
+    "dontHaveAccount": "Vous n'avez pas de compte?",
+    "alreadyHaveAccount": "Vous avez déjà un compte?",
+    "loginTitle": "Bienvenue",
+    "registerTitle": "Créer un compte",
+    "loggingIn": "Connexion...",
+    "loginFailed": "Échec de la connexion",
+    "or": "ou",
+    "continueWithGoogle": "Continuer avec Google",
+    "continueWithApple": "Continuer avec Apple",
+    "validation": {
+      "emailRequired": "L'e-mail est obligatoire",
+      "emailInvalid": "Adresse e-mail invalide",
+      "emailValid": "Veuillez entrer une adresse e-mail valide",
+      "passwordMin": "Le mot de passe doit contenir au moins 6 caractères"
+    }
+  },
+  "register": {
+    "title": "S'inscrire",
+    "subtitle": "Réseau Communautaire de Hockey sur Gazon",
+    "fullName": "Nom Complet",
+    "username": "Nom d'utilisateur",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le Mot de passe",
+    "role": "Rôle",
+    "placeholders": {
+      "fullName": "Nom Complet",
+      "username": "nom_utilisateur",
+      "email": "votre@email.com",
+      "password": "••••••••",
+      "role": "Joueur | Entraîneur | Coach"
+    },
+    "submitButton": "S'inscrire",
+    "submitting": "Inscription...",
+    "alreadyHaveAccount": "Vous avez déjà un compte?",
+    "loginLink": "Se connecter",
+    "registrationFailed": "Échec de l'inscription",
+    "validation": {
+      "nameMin": "Le nom complet doit contenir au moins 6 caractères",
+      "nameMax": "Le nom complet doit contenir au maximum 30 caractères",
+      "usernameMin": "Le nom d'utilisateur doit contenir au moins 6 caractères",
+      "usernameMax": "Le nom d'utilisateur doit contenir au maximum 30 caractères",
+      "emailInvalid": "Adresse e-mail invalide",
+      "emailValid": "Veuillez entrer une adresse e-mail valide",
+      "passwordMin": "Le mot de passe doit contenir au moins 6 caractères",
+      "passwordUppercase": "Le mot de passe doit contenir au moins une lettre majuscule",
+      "passwordNumber": "Le mot de passe doit contenir au moins un chiffre",
+      "passwordSpecial": "Le mot de passe doit contenir au moins un caractère spécial",
+      "confirmPasswordRequired": "Veuillez confirmer votre mot de passe",
+      "passwordsNoMatch": "Les mots de passe ne correspondent pas",
+      "roleInvalid": "Sélectionnez un rôle valide"
+    }
+  },
+  "landingNav": {
+    "home": "Accueil",
+    "features": "Fonctionnalités",
+    "about": "À Propos",
+    "stats": "Statistiques",
+    "joinUs": "Rejoignez-Nous",
+    "signIn": "Se Connecter",
+    "signUp": "S'inscrire"
+  },
+  "landing": {
+    "hero": {
+      "badge": "🏑 Le réseau social de hockey sur gazon",
+      "title": "Connectez-vous avec le monde du",
+      "titleHighlight": "Hockey sur Gazon",
+      "subtitle": "Rejoignez la plateforme ultime pour les joueurs, clubs et entraîneurs. Partagez votre parcours, découvrez des opportunités et connectez-vous avec la communauté mondiale de hockey.",
+      "getStarted": "Commencer",
+      "explore": "Explorer",
+      "statsPlayers": "Joueurs",
+      "statsClubs": "Clubs",
+      "statsCountries": "Pays"
+    },
+    "features": {
+      "title": "Tout ce dont vous avez besoin en un seul endroit",
+      "subtitle": "Outils conçus spécifiquement pour la communauté de hockey sur gazon",
+      "items": {
+        "connect": {
+          "title": "Connectez-vous avec la Communauté",
+          "description": "Trouvez et connectez-vous avec des joueurs, clubs et entraîneurs du monde entier."
+        },
+        "opportunities": {
+          "title": "Opportunités Professionnelles",
+          "description": "Découvrez des offres d'emploi, essais et opportunités dans des clubs d'élite."
+        },
+        "journey": {
+          "title": "Partagez votre Parcours",
+          "description": "Mettez en valeur vos réussites, statistiques et expérience professionnelle au monde."
+        },
+        "messaging": {
+          "title": "Messagerie en Temps Réel",
+          "description": "Communiquez directement avec d'autres membres de la communauté."
+        },
+        "network": {
+          "title": "Réseau Mondial",
+          "description": "Accédez à une communauté internationale de hockey sur gazon."
+        },
+        "achievements": {
+          "title": "Mettez en Avant vos Réussites",
+          "description": "Publiez vos succès, matchs et moments forts de votre carrière."
+        }
+      }
+    },
+    "about": {
+      "badge": "À Propos",
+      "title": "La plateforme qui révolutionne le",
+      "titleHighlight": "hockey sur gazon",
+      "description1": "Hockey Connect est né d'une passion pour le hockey sur gazon et du besoin de créer un espace où joueurs, clubs et entraîneurs peuvent se connecter sans barrières.",
+      "description2": "Notre mission est de démocratiser l'accès aux opportunités professionnelles et de créer une communauté mondiale où le talent est reconnu indépendamment de la localisation géographique.",
+      "benefits": {
+        "network": "Réseau professionnel exclusif de hockey sur gazon",
+        "verified": "Opportunités vérifiées de clubs reconnus",
+        "tools": "Outils pour booster votre carrière sportive",
+        "community": "Communauté mondiale active et engagée"
+      },
+      "badgeMembers": "Membres Actifs"
+    },
+    "stats": {
+      "title": "Notre communauté en chiffres",
+      "subtitle": "Des milliers de joueurs et clubs nous font déjà confiance",
+      "items": {
+        "players": {
+          "label": "Joueurs Inscrits",
+          "description": "Athlètes de tous niveaux"
+        },
+        "clubs": { "label": "Clubs Actifs", "description": "Du monde entier" },
+        "countries": {
+          "label": "Pays Représentés",
+          "description": "Communauté mondiale"
+        },
+        "opportunities": {
+          "label": "Opportunités Publiées",
+          "description": "Offres vérifiées"
+        }
+      },
+      "connectionsLabel": "connexions",
+      "connectionsTime": "réalisées ce mois-ci"
+    },
+    "cta": {
+      "badge": "Rejoignez la révolution du hockey",
+      "title": "Prêt à franchir la prochaine étape de votre carrière ?",
+      "description": "Rejoignez des milliers de joueurs, clubs et entraîneurs qui se connectent et grandissent déjà ensemble sur Hockey Connect.",
+      "createAccount": "Créer un Compte Gratuit",
+      "viewProfiles": "Voir les Profils",
+      "trust1": "Gratuit pour toujours",
+      "trust2": "Aucune carte de crédit requise",
+      "trust3": "Inscrivez-vous en 2 minutes"
+    },
+    "footer": {
+      "description": "La plateforme ultime pour connecter les joueurs, clubs et entraîneurs de hockey sur gazon du monde entier.",
+      "product": "Produit",
+      "company": "Entreprise",
+      "legal": "Légal",
+      "links": {
+        "features": "Fonctionnalités",
+        "opportunities": "Opportunités",
+        "explore": "Explorer",
+        "about": "À Propos",
+        "contact": "Contact",
+        "blog": "Blog",
+        "privacy": "Confidentialité",
+        "terms": "Conditions",
+        "cookies": "Cookies"
+      },
+      "copyright": "Tous droits réservés."
+    }
+  },
+  "feed": {
+    "loadingPosts": "Chargement des publications...",
+    "loadingStories": "Chargement des stories...",
+    "loadingMorePosts": "Chargement de plus de publications...",
+    "errorLoadingStories": "Erreur lors du chargement des stories",
+    "noStoriesAvailable": "Aucune story disponible",
+    "scrollToLoadMore": "Faites défiler pour charger plus de publications",
+    "noMorePosts": "Plus de publications à charger.",
+    "postContent": "Contenu de la publication",
+    "scrollLeft": "Faire défiler vers la gauche",
+    "scrollRight": "Faire défiler vers la droite",
+    "story": "story",
+    "stories": "stories"
+  },
+  "explore": {
+    "searchPlaceholder": "Rechercher par nom, club, ville...",
+    "noResults": "Aucun résultat pour",
+    "viewProfile": "Voir",
+    "level": "Niveau",
+    "closeDropdown": "Fermer le menu",
+    "filters": {
+      "role": "Rôle",
+      "country": "Pays",
+      "level": "Niveau",
+      "position": "Position",
+      "season": "Saison"
+    },
+    "roles": {
+      "player": "Joueur",
+      "coach": "Entraîneur",
+      "clubManager": "Directeur de Club"
+    },
+    "levels": {
+      "elite": "Élite",
+      "professional": "Professionnel",
+      "amateur": "Amateur",
+      "youth": "Jeunes"
+    },
+    "positions": {
+      "forward": "Attaquant",
+      "midfielder": "Milieu de terrain",
+      "defender": "Défenseur",
+      "goalkeeper": "Gardien de but"
+    },
+    "seasons": {
+      "current": "Saison Actuelle",
+      "next": "Prochaine Saison",
+      "any": "N'importe Quand"
+    }
+  },
+  "profile": {
+    "followers": "Abonnés",
+    "editProfile": "Éditer le Profil",
+    "positionNotSet": "Position non définie",
+    "noBio": "Pas encore de bio",
+    "bio": "Biographie",
+    "following": "Abonné",
+    "follow": "Suivre",
+    "connect": "Connecter",
+    "message": "Message",
+    "errorLoadData": "Erreur de chargement des données",
+    "tabs": {
+      "trajectory": "Trajectoire",
+      "multimedia": "Multimédia",
+      "statistics": "Statistiques"
+    },
+    "stats": {
+      "gamesPlayed": "Matchs Joués",
+      "goals": "Buts",
+      "assists": "Passes Décisives"
+    },
+    "media": "Média"
+  },
+  "messages": {
+    "searchConversations": "Rechercher des conversations...",
+    "noConversationsFound": "Aucune conversation trouvée",
+    "activeNow": "Actif maintenant",
+    "typeMessage": "Écrivez un message...",
+    "noConversations": "Pas encore de conversations",
+    "startConversation": "Démarrer une nouvelle conversation"
+  },
+  "opportunities": {
+    "availablePositions": "Postes Disponibles",
+    "filters": {
+      "experience": "Expérience",
+      "location": "Localisation",
+      "contract": "Contrat",
+      "salary": "Salaire"
+    },
+    "loading": "Chargement des opportunités...",
+    "noData": "Aucune donnée trouvée",
+    "noOpportunities": "Aucune offre d'emploi trouvée",
+    "open": "Ouvert",
+    "filled": "Pourvue",
+    "closed": "Fermé",
+    "published": "Publié",
+    "applicationSent": "Demande Envoyée",
+    "applyWithProfile": "Postuler avec le Profil"
+  },
+  "posts": {
+    "like": "J'aime",
+    "comment": "Commenter",
+    "share": "Partager",
+    "newPost": "Créer une Publication",
+    "whatAreYouThinking": "À quoi pensez-vous ?"
+  }
+}

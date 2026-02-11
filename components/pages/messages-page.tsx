@@ -6,8 +6,10 @@ import { ChatConversation } from "@/components/messages/chat-conversation";
 import { ConversationList } from "@/components/messages/conversation-list";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 export function MessagesPage() {
+  const t = useTranslations("messages");
   const [activeChat, setActiveChat] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -31,7 +33,7 @@ export function MessagesPage() {
             />
             <Input
               type="text"
-              placeholder="Search conversations..."
+              placeholder={t("searchConversations")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"

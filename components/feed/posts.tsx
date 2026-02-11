@@ -1,11 +1,15 @@
+"use client";
+
 import { PostCard } from "./post-card";
 import { usePosts } from "@/hooks/usePosts";
 import { Loader } from "@/components/ui/loader";
 import { Error } from "@/components/ui/error";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 export function Posts() {
+  const t = useTranslations("feed");
   const {
     data,
     isLoading,
@@ -27,7 +31,7 @@ export function Posts() {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   if (isLoading) {
-    return <Loader children="Loading posts..." />;
+    return <Loader children={t("loadingPosts")} />;
   }
 
   if (error) {
@@ -45,10 +49,10 @@ export function Posts() {
       {hasNextPage && (
         <div ref={ref} className="py-4 text-center">
           {isFetchingNextPage ? (
-            <Loader children="Loading more posts..." />
+            <Loader children={t("loadingMorePosts")} />
           ) : (
             <span className="text-muted-foreground">
-              Scroll to load more posts
+              {t("scrollToLoadMore")}
             </span>
           )}
         </div>
@@ -56,7 +60,7 @@ export function Posts() {
 
       {!hasNextPage && allPost.length > 0 && (
         <div className="py-8 text-center text-muted-foreground">
-          No more posts to load.
+          {t("noMorePosts")}
         </div>
       )}
     </div>

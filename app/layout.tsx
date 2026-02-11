@@ -1,41 +1,9 @@
 import type React from "react";
-import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "@/components/ui/theme-provider";
-import { QueryProvider } from "@/lib/query-client";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "FieldLink - Field Hockey Community Network",
-  description:
-    "Connect with field hockey players, coaches, and clubs worldwide",
-  generator: "v0.app",
-};
-
-export const viewport: Viewport = {
-  themeColor: "#18283E",
-  userScalable: false,
-};
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* Preconnect to ImageKit CDN for faster image loading */}
-        {/* <link rel="preconnect" href="https://ik.imagekit.io" />
-        <link rel="dns-prefetch" href="https://ik.imagekit.io" /> */}
-      </head>
-      <body className={`${inter.className} min-h-screen`}>
-        <QueryProvider>
-          <ThemeProvider>{children}</ThemeProvider>
-        </QueryProvider>
-      </body>
-    </html>
-  );
+  return children;
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useFollowUser, useFollowingUser } from "@/hooks/useUsers";
+import { useTranslations } from "next-intl";
 import { Loader } from "../ui/loader";
 import { Error } from "../ui/error";
 import { mapRoleToEntityType } from "@/lib/utils/entity-type";
@@ -11,6 +12,8 @@ interface ProfileStatsProps {
 }
 
 export function ProfileStats({ userId, userRole }: ProfileStatsProps) {
+  const t = useTranslations("profile");
+
   // Convert role (PLAYER, COACH, CLUB) to entity type (USER, CLUB)
   const entityType = mapRoleToEntityType(userRole);
 
@@ -28,7 +31,7 @@ export function ProfileStats({ userId, userRole }: ProfileStatsProps) {
   if (followersIsLoading || followingIsLoading) return <Loader />;
 
   if (followersError || followingError)
-    return <Error>Error to load data</Error>;
+    return <Error>{t("errorLoadData")}</Error>;
 
   const followersCount = followersData?.followers?.length || 0;
   const followingCount = followingData?.followings?.length || 0;
@@ -37,11 +40,11 @@ export function ProfileStats({ userId, userRole }: ProfileStatsProps) {
     <div className="flex gap-4">
       <div className="flex items-center gap-2">
         <span className="font-semibold">{followersCount}</span>
-        <span className="text-foreground-muted">Followers</span>
+        <span className="text-foreground-muted">{t("followers")}</span>
       </div>
       <div className="flex items-center gap-2">
         <span className="font-semibold">{followingCount}</span>
-        <span className="text-foreground-muted">Following</span>
+        <span className="text-foreground-muted">{t("following")}</span>
       </div>
     </div>
   );

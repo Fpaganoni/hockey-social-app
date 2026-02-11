@@ -2,6 +2,7 @@
 
 import { ChevronDown, X } from "lucide-react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface FilterButtonProps {
   label: string;
@@ -14,35 +15,64 @@ export function FilterButton({
   options = [],
   onSelect,
 }: FilterButtonProps) {
+  const t = useTranslations("explore");
   const [isOpen, setIsOpen] = useState(false);
 
-  const defaultOptions: Record<string, string[]> = {
-    Role: ["Player", "Coach", "Club Manager"],
-    Country: [
-      "ca Canada",
-      "us USA",
-      "nl Netherlands",
-      "uk UK",
-      "be Belgium",
-      "fr France",
-      "de Germany",
-      "es Spain",
-      "it Italy",
-      "pt Portugal",
-      "ch Switzerland",
-      "dk Denmark",
-      "ar Argentina",
-      "se Sweden",
-      "fi Finland",
-      "cl Chile",
-      "at Austria",
-    ],
-    Level: ["Elite", "Professional", "Amateur", "Youth"],
-    Position: ["Forward", "Midfielder", "Defender", "Goalkeeper"],
-    Season: ["Current Season", "Next Season", "Any Time"],
+  const getDefaultOptions = (): string[] => {
+    const filterKey = label.toLowerCase();
+
+    if (filterKey === t("filters.role").toLowerCase()) {
+      return [t("roles.player"), t("roles.coach"), t("roles.clubManager")];
+    }
+
+    if (filterKey === t("filters.country").toLowerCase()) {
+      return [
+        "ca Canada",
+        "us USA",
+        "nl Netherlands",
+        "uk UK",
+        "be Belgium",
+        "fr France",
+        "de Germany",
+        "es Spain",
+        "it Italy",
+        "pt Portugal",
+        "ch Switzerland",
+        "dk Denmark",
+        "ar Argentina",
+        "se Sweden",
+        "fi Finland",
+        "cl Chile",
+        "at Austria",
+      ];
+    }
+
+    if (filterKey === t("filters.level").toLowerCase()) {
+      return [
+        t("levels.elite"),
+        t("levels.professional"),
+        t("levels.amateur"),
+        t("levels.youth"),
+      ];
+    }
+
+    if (filterKey === t("filters.position").toLowerCase()) {
+      return [
+        t("positions.forward"),
+        t("positions.midfielder"),
+        t("positions.defender"),
+        t("positions.goalkeeper"),
+      ];
+    }
+
+    if (filterKey === t("filters.season").toLowerCase()) {
+      return [t("seasons.current"), t("seasons.next"), t("seasons.any")];
+    }
+
+    return [];
   };
 
-  const items = options.length > 0 ? options : defaultOptions[label] || [];
+  const items = options.length > 0 ? options : getDefaultOptions();
 
   return (
     <div className="relative">
@@ -79,7 +109,7 @@ export function FilterButton({
         <button
           onClick={() => setIsOpen(false)}
           className="fixed inset-0 z-40"
-          aria-label="Close dropdown"
+          aria-label={t("closeDropdown")}
         />
       )}
     </div>
