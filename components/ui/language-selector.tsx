@@ -58,7 +58,7 @@ export function LanguageSelector() {
         <Languages size={20} />
         <span className="hidden md:inline">{currentLanguage?.flag}</span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-input/30" align="end">
+      <DropdownMenuContent className="bg-input" align="end">
         {languages.map((language) => (
           <DropdownMenuItem
             key={language.code}

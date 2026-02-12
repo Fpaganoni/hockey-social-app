@@ -8,13 +8,22 @@ import { useTranslations } from "next-intl";
 
 type ProfileCardProps = Pick<
   User,
-  "id" | "name" | "role" | "position" | "country" | "city" | "level" | "bio"
+  | "id"
+  | "name"
+  | "role"
+  | "position"
+  | "country"
+  | "city"
+  | "level"
+  | "bio"
+  | "avatar"
 >;
 
 export function ProfileCard({
   id,
   name,
   role,
+  avatar,
   position,
   city,
   country,
@@ -27,24 +36,24 @@ export function ProfileCard({
     string,
     { bg: string; text: string; badge: string }
   > = {
-    Player: {
-      bg: "bg-info/20",
-      text: "text-info",
-      badge: "bg-info/20 text-foreground border-info",
-    },
-    Coach: {
-      bg: "bg-warning/20",
-      text: "text-warning",
-      badge: "bg-warning/20 text-foreground border-warning",
-    },
-    Club: {
+    PLAYER: {
       bg: "bg-success/20",
       text: "text-success",
       badge: "bg-success/20 text-foreground border-success",
     },
+    COACH: {
+      bg: "bg-warning/20",
+      text: "text-warning",
+      badge: "bg-warning/20 text-foreground border-warning",
+    },
+    CLUB: {
+      bg: "bg-info/20",
+      text: "text-info",
+      badge: "bg-info/20 text-foreground border-info",
+    },
   };
 
-  const colors = roleColors[role] || roleColors.Player;
+  const colors = roleColors[role] || roleColors.PLAYER;
 
   return (
     <motion.div
@@ -56,7 +65,7 @@ export function ProfileCard({
         {/* Profile Info */}
         <div className="flex items-start gap-3 flex-1 min-w-0">
           <img
-            src="/user.png"
+            src={avatar || "/user.png"}
             alt={name}
             className="w-14 h-14 rounded-full object-cover cursor-pointer shrink-0"
           />
@@ -69,19 +78,15 @@ export function ProfileCard({
             <p className="text-sm text-foreground-muted mb-1 truncate">
               {position}
             </p>
-            {level && (
-              <div className="flex items-center gap-2">
-                <Star size={14} className="text-warning shrink-0" />
-                <span className="text-xs text-foreground-muted">
-                  {level} {t("level")}
-                </span>
-              </div>
-            )}
-            {bio && (
-              <p className="text-xs text-foreground-muted mt-1 line-clamp-1">
-                {bio}
-              </p>
-            )}
+            <div className="flex items-center gap-2">
+              <Star size={14} className="text-warning shrink-0" />
+              <span className="text-xs text-foreground-muted">
+                {level} {t("level")}
+              </span>
+            </div>
+            <p className="text-xs text-foreground-muted mt-1 line-clamp-1">
+              {bio}
+            </p>
             <div className="flex items-center gap-1 text-xs text-foreground-muted mt-1">
               <MapPin size={12} />
               <span>

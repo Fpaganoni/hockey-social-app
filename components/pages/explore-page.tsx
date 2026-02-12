@@ -7,6 +7,9 @@ import { FilterButton } from "@/components/explore/filter-button";
 import { Input } from "@/components/ui/input";
 import { Filter } from "@/components/ui/filter";
 import { useTranslations } from "next-intl";
+import { useExploreUsers } from "@/hooks/useExplore";
+import { Loader } from "../ui/loader";
+import { Error } from "../ui/error";
 
 export function ExplorePage() {
   const t = useTranslations("explore");
@@ -15,58 +18,25 @@ export function ExplorePage() {
     Record<string, string>
   >({});
 
-  const profiles = [
-    {
-      id: "1",
-      name: "Alex Johnson",
-      role: "Player",
-      position: "Left Forward",
-      location: "Canada",
-      level: "Elite",
-      country: "🇨🇦",
-      bio: "Skilled forward with 8 years experience",
-    },
-    {
-      id: "2",
-      name: "Sarah Mitchell",
-      role: "Player",
-      position: "Goalkeeper",
-      location: "USA",
-      level: "Professional",
-      country: "🇺🇸",
-      bio: "Dedicated goalkeeper with international experience",
-    },
-    {
-      id: "3",
-      name: "HC Amsterdam",
-      role: "Club",
-      position: "Elite League",
-      location: "Netherlands",
-      level: "Elite",
-      country: "🇳🇱",
-      bio: "Top-tier field hockey club",
-    },
-    {
-      id: "4",
-      name: "Coach Mike",
-      role: "Coach",
-      position: "Head Coach",
-      location: "UK",
-      level: "Professional",
-      country: "🇬🇧",
-      bio: "Experienced coach with 15+ years",
-    },
-    {
-      id: "5",
-      name: "Carlos Mendez",
-      role: "Player",
-      position: "Defense",
-      location: "Spain",
-      level: "Professional",
-      country: "🇪🇸",
-      bio: "Strong defensive player",
-    },
-  ];
+  const {
+    data: players,
+    isLoading: playersLoading,
+    error: playersError,
+  } = useExploreUsers("PLAYER", 50);
+
+  const {
+    data: coaches,
+    isLoading: coachesLoading,
+    error: coachesError,
+  } = useExploreUsers("COACH", 50);
+
+  if (playersLoading && coachesLoading) return <Loader children="Loading" />;
+
+  if (playersError || coachesError)
+    return <Error children="Error loading users" />;
+
+  if (players?.exploreUsers.length === 0 && coaches?.exploreUsers.length === 0)
+    return <p>No users found</p>;
 
   return (
     <main className="max-w-2xl mx-auto pb-4">
@@ -89,10 +59,10 @@ export function ExplorePage() {
       {/* Results */}
       <div className="px-4 mt-8 mb-28">
         {searchQuery ? (
-          profiles.filter((p) =>
+          (players?.exploreUsers.filter((p) =>
             p.name.toLowerCase().includes(searchQuery.toLowerCase()),
-          ).length > 0 ? (
-            profiles
+          ).length ?? 0 > 0) ? (
+            players?.exploreUsers
               .filter((p) =>
                 p.name.toLowerCase().includes(searchQuery.toLowerCase()),
               )
@@ -103,9 +73,10 @@ export function ExplorePage() {
             </p>
           )
         ) : (
-          profiles.map((profile) => (
-            <ProfileCard key={profile.id} {...profile} />
-          ))
+          [
+            ...(players?.exploreUsers ?? []),
+            ...(coaches?.exploreUsers ?? []),
+          ].map((profile) => <ProfileCard key={profile.id} {...profile} />)
         )}
       </div>
     </main>

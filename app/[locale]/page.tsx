@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <FeedPage userType={user?.role || "player"} />
+      <FeedPage />
       <BottomNavigation />
     </>
   );

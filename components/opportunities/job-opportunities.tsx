@@ -8,8 +8,6 @@ export function JobOpportunities() {
   const t = useTranslations("opportunities");
   const { data, isLoading, error } = useJobOpportunities();
 
-  console.log(data);
-
   if (isLoading) {
     return <Loader children={t("loading")} />;
   }

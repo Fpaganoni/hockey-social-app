@@ -51,6 +51,22 @@ export type UserCard = Pick<
 >;
 export type UserProfile = Omit<User, "email" | "isEmailVerified">;
 
+// Para explore/discovery
+export type ExploreUser = Pick<
+  User,
+  | "id"
+  | "name"
+  | "role"
+  | "position"
+  | "country"
+  | "city"
+  | "avatar"
+  | "bio"
+  | "level"
+> & {
+  isVerified?: boolean; // Este campo no está en User principal, lo agregamos aquí
+};
+
 // Para crear/actualizar
 export type CreateUserInput = Omit<User, "id" | "createdAt" | "updatedAt">;
 export type UpdateUserInput = Partial<Omit<User, "id" | "email" | "role">>;

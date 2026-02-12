@@ -36,15 +36,11 @@ export function Header({ title = "Hockey Connect" }: HeaderProps) {
         <h1 className="text-xl font-bold text-foreground">{title}</h1>
       </motion.div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <LanguageSelector />
+        <ThemeToggleControl />
 
-        {/* Theme toggle - visible on mobile/tablet */}
-        <div className="lg:hidden">
-          <ThemeToggleControl />
-        </div>
-
-        <button className="group p-2 hover:bg-primary rounded-lg transition-colors cursor-pointer relative hover:scale-110">
+        <button className="group p-2 hover:bg-primary/85 rounded-lg transition-colors cursor-pointer relative">
           <Bell
             size={24}
             className="text-foreground group-hover:text-white-black transition-colors"
@@ -53,10 +49,11 @@ export function Header({ title = "Hockey Connect" }: HeaderProps) {
             3
           </span>
         </button>
-        <div className="relative ">
+
+        <div className="relative">
           <button
             onClick={() => setShowLogout(!showLogout)}
-            className="p-2 hover:bg-primary group group-hover:text-white-black rounded-lg transition-colors cursor-pointer"
+            className="p-2 hover:bg-primary/85 group group-hover:text-white-black rounded-lg transition-colors cursor-pointer"
           >
             <LogOut
               size={20}

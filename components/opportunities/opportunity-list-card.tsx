@@ -41,6 +41,9 @@ export function OpportunityListCard({
   const t = useTranslations("opportunities");
   const locale = useLocale() as "en" | "es" | "fr";
 
+  // Normalize status to lowercase for comparison
+  const normalizedStatus = status.toLowerCase() as "open" | "closed" | "filled";
+
   const tagColorMap: Record<string, string> = {
     Professional: "bg-info/30 text-foreground border-info/40",
     Amateur: "bg-warning/30 text-foreground border-warning/40",
@@ -65,17 +68,17 @@ export function OpportunityListCard({
             </div>
             {level && (
               <>
-                {level == "professional" ? (
+                {level === "professional" ? (
                   <div className="flex flex-wrap gap-2 mb-4">
                     <Badge
                       key={status}
                       className={
-                        status == "open"
+                        normalizedStatus === "open"
                           ? "bg-success/30 text-foreground border-success/40"
                           : "bg-error/30 text-foreground border-error/40"
                       }
                     >
-                      {status == "open" ? t("open") : t("filled")}
+                      {normalizedStatus === "open" ? t("open") : t("filled")}
                     </Badge>
                     <Badge
                       key={country}
@@ -95,12 +98,12 @@ export function OpportunityListCard({
                     <Badge
                       key={status}
                       className={
-                        status == "open"
+                        normalizedStatus === "open"
                           ? "bg-success/30 text-foreground border-success/40"
                           : "bg-danger/30 text-foreground border-danger/40"
                       }
                     >
-                      {status == "open" ? t("open") : t("filled")}
+                      {normalizedStatus === "open" ? t("open") : t("filled")}
                     </Badge>
                     <Badge
                       key={country}
@@ -145,7 +148,7 @@ export function OpportunityListCard({
           </div>
         </div>
 
-        {status == "filled" ? (
+        {normalizedStatus === "filled" ? (
           <button
             disabled
             className="w-full py-2 rounded-lg border-2 border-success bg-success/20 font-semibold text-foreground flex items-center justify-center gap-2 transition-colors duration-300 cursor-default"

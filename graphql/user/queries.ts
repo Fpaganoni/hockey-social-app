@@ -113,3 +113,20 @@ export const GET_FOLLOWING = gql`
     }
   }
 `;
+
+export const EXPLORE_USERS_QUERY = gql`
+  query ExploreUsers($role: String!, $limit: Int!) {
+    exploreUsers(role: $role, limit: $limit) {
+      id
+      name
+      role
+      position
+      country
+      city
+      avatar
+      isVerified
+      bio
+      level
+    }
+  }
+`;

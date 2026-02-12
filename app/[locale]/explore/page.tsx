@@ -11,7 +11,7 @@ export default function ExploreRoute() {
 
   return (
     <>
-      <Header title="Explore" onLogout={handleLogout} />
+      <Header title="Explore" />
       <ExplorePage />
       <BottomNavigation />
     </>
