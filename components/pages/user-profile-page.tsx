@@ -26,6 +26,7 @@ export function UserProfilePage({
     country: user.country,
     avatar: user.avatar || "/user.png",
     bio: user.bio,
+    cvUrl: user.cvUrl,
     stats: user.statistics || { gamesPlayed: 0, goals: 0, assists: 0 },
     trajectories:
       user.trajectories?.map((t) => ({
@@ -38,7 +39,7 @@ export function UserProfilePage({
 
   return (
     <main className="bg-overlay max-w-2xl mx-auto pb-24">
-      <ProfileHeader {...userData} />
+      <ProfileHeader {...userData} isOwnProfile={isOwnProfile} />
       <ProfileTabs
         activeTab={activeTab}
         setActiveTab={setActiveTab}

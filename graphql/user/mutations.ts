@@ -74,3 +74,19 @@ export const UNFOLLOW_USER = gql`
     }
   }
 `;
+
+// ============================================
+// CV MUTATIONS
+// ============================================
+
+export const UPLOAD_CV = gql`
+  mutation UploadCV($userId: ID!, $base64: String!) {
+    uploadCV(userId: $userId, base64: $base64)
+  }
+`;
+
+export const DELETE_CV = gql`
+  mutation DeleteCV($userId: ID!) {
+    deleteCV(userId: $userId)
+  }
+`;

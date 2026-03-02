@@ -274,7 +274,19 @@
       "goals": "Goles",
       "assists": "Asistencias"
     },
-    "media": "Multimedia"
+    "media": "Multimedia",
+    "cv": {
+      "label": "CV:",
+      "upload": "Subir CV",
+      "download": "Descargar",
+      "change": "Cambiar CV",
+      "remove": "Eliminar",
+      "uploadSuccess": "CV subido",
+      "uploadError": "Error al subir el CV",
+      "removeSuccess": "CV eliminado",
+      "fileTooLarge": "El archivo supera 5 MB",
+      "invalidType": "Solo se aceptan PDF"
+    }
   },
   "messages": {
     "searchConversations": "Buscar conversaciones...",

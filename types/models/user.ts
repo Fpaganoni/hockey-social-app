@@ -30,6 +30,7 @@ export interface User {
   country?: string;
   city?: string;
   level?: string;
+  cvUrl?: string;
 
   // Relations
   clubId?: string;
@@ -85,6 +86,24 @@ export interface UpdateUserVariables {
   avatar?: string;
   position?: string;
   clubId?: string;
+  cvUrl?: string;
+}
+
+export interface UploadCvVariables {
+  userId: string;
+  base64: string;
+}
+
+export interface UploadCvResponse {
+  uploadCV: string; // returns the public cvUrl
+}
+
+export interface DeleteCvVariables {
+  userId: string;
+}
+
+export interface DeleteCvResponse {
+  deleteCV: boolean;
 }
 
 export interface LoginVariables {

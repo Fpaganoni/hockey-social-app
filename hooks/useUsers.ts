@@ -1,13 +1,22 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
 import { GET_USERS, GET_USER } from "@/graphql/user/queries";
-import { LOGIN, REGISTER } from "@/graphql/user/mutations";
+import {
+  LOGIN,
+  REGISTER,
+  UPLOAD_CV,
+  DELETE_CV,
+} from "@/graphql/user/mutations";
 import { GET_FOLLOWERS, GET_FOLLOWING } from "@/graphql/user/queries";
 import {
   LoginVariables,
   LoginResponse,
   RegisterVariables,
   RegisterResponse,
+  UploadCvVariables,
+  UploadCvResponse,
+  DeleteCvVariables,
+  DeleteCvResponse,
 } from "@/types/models/user";
 import {
   User,
@@ -95,5 +104,31 @@ export function useFollowingUser(entityType: string, entityId: string) {
     queryKey: ["following", entityType, entityId],
     queryFn: async () =>
       graphqlClient.request(GET_FOLLOWING, { entityType, entityId }),
+  });
+}
+
+// ==================
+// CV
+// ==================
+
+export function useUploadCv() {
+  const queryClient = useQueryClient();
+  return useMutation<UploadCvResponse, Error, UploadCvVariables>({
+    mutationFn: async (variables) =>
+      graphqlClient.request(UPLOAD_CV, variables),
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["user", variables.userId] });
+    },
+  });
+}
+
+export function useDeleteCv() {
+  const queryClient = useQueryClient();
+  return useMutation<DeleteCvResponse, Error, DeleteCvVariables>({
+    mutationFn: async (variables) =>
+      graphqlClient.request(DELETE_CV, variables),
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["user", variables.userId] });
+    },
   });
 }

@@ -271,7 +271,19 @@
       "goals": "Buts",
       "assists": "Passes Décisives"
     },
-    "media": "Média"
+    "media": "Média",
+    "cv": {
+      "label": "CV :",
+      "upload": "Téléverser CV",
+      "download": "Télécharger",
+      "change": "Changer CV",
+      "remove": "Supprimer",
+      "uploadSuccess": "CV téléversé",
+      "uploadError": "Erreur lors du téléversement",
+      "removeSuccess": "CV supprimé",
+      "fileTooLarge": "Fichier dépasse 5 Mo",
+      "invalidType": "Seuls les PDF sont acceptés"
+    }
   },
   "messages": {
     "searchConversations": "Rechercher des conversations...",

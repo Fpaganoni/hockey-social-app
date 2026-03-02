@@ -32,6 +32,7 @@ export const GET_USER_FOR_LOGIN = gql`
       clubId
       country
       city
+      cvUrl
       club {
         name
         logo
@@ -64,6 +65,7 @@ export const GET_USER = gql`
       bio
       position
       clubId
+      cvUrl
       club {
         id
         name

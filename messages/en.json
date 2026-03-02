@@ -274,7 +274,19 @@
       "goals": "Goals",
       "assists": "Assists"
     },
-    "media": "Media"
+    "media": "Media",
+    "cv": {
+      "label": "CV:",
+      "upload": "Upload CV",
+      "download": "Download",
+      "change": "Change CV",
+      "remove": "Remove",
+      "uploadSuccess": "CV uploaded",
+      "uploadError": "Error uploading CV",
+      "removeSuccess": "CV removed",
+      "fileTooLarge": "File exceeds 5 MB",
+      "invalidType": "Only PDF files accepted"
+    }
   },
   "messages": {
     "searchConversations": "Search conversations...",
