@@ -78,6 +78,11 @@
       "confirmPasswordRequired": "Por favor confirma tu contraseña",
       "passwordsNoMatch": "Las contraseñas no coinciden",
       "roleInvalid": "Selecciona un rol válido"
+    },
+    "roles": {
+      "player": "Jugador",
+      "club": "Club",
+      "coach": "Entrenador"
     }
   },
   "landingNav": {

@@ -78,6 +78,11 @@
       "confirmPasswordRequired": "Please confirm your password",
       "passwordsNoMatch": "Passwords do not match",
       "roleInvalid": "Select a valid role"
+    },
+    "roles": {
+      "player": "Player",
+      "club": "Club",
+      "coach": "Coach"
     }
   },
   "landingNav": {

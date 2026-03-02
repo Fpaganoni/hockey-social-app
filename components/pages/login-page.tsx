@@ -91,7 +91,7 @@ export function LoginPage() {
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Email Input */}
           <div className="mb-4">
-            <Label id="email" className="mb-2">
+            <Label htmlFor="email" className="mb-2">
               {t("email")}
             </Label>
             <div className="relative">
@@ -101,6 +101,7 @@ export function LoginPage() {
               />
               <Input
                 {...register("email", { required: true })}
+                id="email"
                 type="email"
                 placeholder="your@email.com"
                 className="pl-10"
@@ -121,7 +122,7 @@ export function LoginPage() {
 
           {/* Password Input */}
           <div className="mb-4">
-            <Label id="password" className="mb-2">
+            <Label htmlFor="password" className="mb-2">
               {t("password")}
             </Label>
             <div className="relative">
@@ -131,15 +132,15 @@ export function LoginPage() {
               />
               <Input
                 {...register("password", { required: true })}
+                id="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
-                className="pl-10"
+                className="pl-10 pr-10"
               />
               <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowPassword(!showPassword);
-                }}
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground bg-input cursor-pointer"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -183,6 +184,7 @@ export function LoginPage() {
         {/* Social Login */}
         <div className="space-y-2">
           <motion.button
+            type="button"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
@@ -197,6 +199,7 @@ export function LoginPage() {
             {t("continueWithGoogle")}
           </motion.button>
           <motion.button
+            type="button"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}

@@ -33,7 +33,7 @@ type RegisterData = {
   email: string;
   password: string;
   confirmPassword: string;
-  role: "player" | "club" | "Coach";
+  role: "player" | "club_admin" | "Coach";
 };
 
 export const RegisterPage = () => {
@@ -67,7 +67,7 @@ export const RegisterPage = () => {
       confirmPassword: z
         .string()
         .min(6, tValidation("confirmPasswordRequired")),
-      role: z.enum(["player", "club", "Coach"], {
+      role: z.enum(["player", "club_admin", "Coach"], {
         message: tValidation("roleInvalid"),
       }),
     })
@@ -136,7 +136,7 @@ export const RegisterPage = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Name input */}
           <div className="mb-4">
-            <Label id="name" className="mb-2">
+            <Label htmlFor="name" className="mb-2">
               {t("fullName")}
             </Label>
             <div className="relative">
@@ -153,6 +153,7 @@ export const RegisterPage = () => {
                   minLength: 6,
                   maxLength: 30,
                 })}
+                id="name"
                 placeholder={t("placeholders.fullName")}
                 className="pl-10"
               />
@@ -172,7 +173,7 @@ export const RegisterPage = () => {
 
           {/* Username input */}
           <div className="mb-4">
-            <Label id="username" className="mb-2">
+            <Label htmlFor="username" className="mb-2">
               {t("username")}
             </Label>
             <div className="relative">
@@ -182,6 +183,7 @@ export const RegisterPage = () => {
               />
               <Input
                 {...register("username", { required: true })}
+                id="username"
                 type="text"
                 placeholder={t("placeholders.username")}
                 className="pl-10"
@@ -202,7 +204,7 @@ export const RegisterPage = () => {
 
           {/* Email Input */}
           <div className="mb-4">
-            <Label id="email" className="mb-2">
+            <Label htmlFor="reg-email" className="mb-2">
               {t("email")}
             </Label>
             <div className="relative">
@@ -212,6 +214,7 @@ export const RegisterPage = () => {
               />
               <Input
                 {...register("email", { required: true })}
+                id="reg-email"
                 type="email"
                 placeholder={t("placeholders.email")}
                 className="pl-10"
@@ -232,7 +235,7 @@ export const RegisterPage = () => {
 
           {/* Password Input */}
           <div className="mb-4">
-            <Label id="password" className="mb-2">
+            <Label htmlFor="reg-password" className="mb-2">
               {t("password")}
             </Label>
             <div className="relative">
@@ -242,15 +245,15 @@ export const RegisterPage = () => {
               />
               <Input
                 {...register("password", { required: true })}
+                id="reg-password"
                 type={showPassword ? "text" : "password"}
                 placeholder={t("placeholders.password")}
-                className="pl-10"
+                className="pl-10 pr-10"
               />
               <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowPassword(!showPassword);
-                }}
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground transition-colors cursor-pointer"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -271,7 +274,7 @@ export const RegisterPage = () => {
 
           {/* Repeat Password Input */}
           <div className="mb-4">
-            <Label id="confirm-password" className="mb-2">
+            <Label htmlFor="confirmPassword" className="mb-2">
               {t("confirmPassword")}
             </Label>
             <div className="relative">
@@ -281,15 +284,19 @@ export const RegisterPage = () => {
               />
               <Input
                 {...register("confirmPassword", { required: true })}
+                id="confirmPassword"
                 type={showConfirmPassword ? "text" : "password"}
                 placeholder={t("placeholders.password")}
-                className="pl-10"
+                className="pl-10 pr-10"
               />
               <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowConfirmPassword(!showConfirmPassword);
-                }}
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                aria-label={
+                  showConfirmPassword
+                    ? "Hide confirm password"
+                    : "Show confirm password"
+                }
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground transition-colors cursor-pointer"
               >
                 {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -310,20 +317,26 @@ export const RegisterPage = () => {
 
           {/* Role Input */}
           <div className="mb-4">
-            <Label id="role" className="mb-2">
+            <Label htmlFor="role" className="mb-2">
               {t("role")}
             </Label>
             <div className="relative">
               <ClipboardList
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground pointer-events-none"
                 size={18}
               />
-              <Input
+              <select
                 {...register("role", { required: true })}
-                type="text"
-                placeholder={t("placeholders.role")}
-                className="pl-10"
-              />
+                id="role"
+                className="w-full pl-10 h-(--input-button-height) rounded-md border border-input bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring appearance-none cursor-pointer"
+              >
+                <option value="" disabled>
+                  {t("placeholders.role")}
+                </option>
+                <option value="player">{t("roles.player")}</option>
+                <option value="club_admin">{t("roles.club")}</option>
+                <option value="Coach">{t("roles.coach")}</option>
+              </select>
             </div>
             {errors.role && (
               <motion.p

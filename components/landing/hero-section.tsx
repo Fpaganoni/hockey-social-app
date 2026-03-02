@@ -104,7 +104,7 @@ export function HeroSection() {
               <Image
                 src="/hero-field-hockey-players.avif"
                 alt="Field Hockey Players"
-                width={500}
+                width={600}
                 height={500}
                 className="rounded-2xl"
                 priority
