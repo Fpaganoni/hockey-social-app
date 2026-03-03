@@ -56,7 +56,7 @@ export function ProfileTabs({
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.2, ease: "easeInOut" }}
                 key={idx}
-                className="bg-background rounded-xl p-4 border border-border hover:shadow-lg group"
+                className="bg-background rounded-xl py-4 px-8 border border-border hover:shadow-lg group"
               >
                 <h3 className="font-semibold text-foreground text-lg mb-1 transition-colors">
                   {item.club?.name || item.title}

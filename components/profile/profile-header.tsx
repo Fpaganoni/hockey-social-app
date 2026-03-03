@@ -81,14 +81,14 @@ export function ProfileHeader({
                 cvUrl={cvUrl}
                 isOwnProfile={isOwnProfile}
               />
+
+              {/* Bio */}
+              <p className="text-foreground-muted text-sm text-center mb-4 leading-relaxed">
+                {bio || t("noBio")}
+              </p>
             </div>
           </div>
         </div>
-
-        {/* Bio */}
-        <p className="text-foreground-muted text-sm text-center mb-4 leading-relaxed">
-          {bio || t("noBio")}
-        </p>
 
         <div className="flex flex-col gap-2">
           {isOwnProfile && (
@@ -96,7 +96,7 @@ export function ProfileHeader({
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="w-[90%] mx-auto flex items-center gap-2 justify-center h-(--input-button-height) px-4 py-2 bg-primary text-white-black font-semibold rounded-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer disabled:opacity-50"
+              className="w-[50%] mx-auto flex items-center gap-2 justify-center h-(--input-button-height) px-4 py-2 bg-primary text-white-black font-semibold rounded-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer disabled:opacity-50"
             >
               <Edit size={18} />
               {t("editProfile")}

@@ -38,7 +38,7 @@ export function UserProfilePage({
   };
 
   return (
-    <main className="bg-overlay max-w-2xl mx-auto pb-24">
+    <main className="bg-overlay max-w-4xl mx-auto pb-24">
       <ProfileHeader {...userData} isOwnProfile={isOwnProfile} />
       <ProfileTabs
         activeTab={activeTab}

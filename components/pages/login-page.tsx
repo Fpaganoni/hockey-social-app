@@ -188,6 +188,11 @@ export function LoginPage() {
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
+            onClick={() => {
+              const backendUrl =
+                process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
+              window.location.href = `${backendUrl}/auth/google`;
+            }}
             className="w-full h-(var(--input-button-height)) px-4 py-2 border-2 border-border-strong rounded-lg text-foreground hover:text-white-black hover:bg-foreground transition-colors cursor-pointer flex items-center justify-center gap-2"
           >
             <img
