@@ -8,7 +8,19 @@ import { useTranslations } from "next-intl";
 interface UserData {
   stats: UserStats;
   trajectories: TrajectoryItem[];
+  multimedia?: string[];
 }
+
+// Helper function to extract YouTube video ID and create an embed URL
+const getYouTubeEmbedUrl = (url: string) => {
+  if (!url) return null;
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  if (match && match[2].length === 11) {
+    return `https://www.youtube.com/embed/${match[2]}`;
+  }
+  return null;
+};
 
 interface ProfileTabsProps {
   activeTab: string;
@@ -73,25 +85,40 @@ export function ProfileTabs({
         )}
 
         {activeTab === "multimedia" && (
-          <div className="grid grid-cols-3 gap-3">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <motion.div
-                whileHover={{ scale: 1.04 }}
-                transition={{ duration: 0.2, ease: "easeInOut" }}
-                key={i}
-                className="aspect-square rounded-lg border border-border overflow-hidden cursor-pointer group relative"
-              >
-                <img
-                  src={`/generic-placeholder-graphic.png?key=${i}&height=120&width=120&query=field-hockey-moment-${i}`}
-                  alt={`${t("media")} ${i}`}
-                  className="w-full h-full object-cover"
-                />
-                {/* Play button overlay for videos */}
-                <div className="absolute inset-0 bg-background/20 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                  <Play size={24} className="text-white fill-white" />
-                </div>
-              </motion.div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {userData.multimedia && userData.multimedia.length > 0 ? (
+              userData.multimedia.map((url, i) => {
+                const embedUrl = getYouTubeEmbedUrl(url);
+                if (!embedUrl) return null;
+
+                return (
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                    key={i}
+                    className="aspect-video rounded-xl border border-border overflow-hidden bg-black shadow-md"
+                  >
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={embedUrl}
+                      title={`Video highlight ${i + 1}`}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                      className="w-full h-full object-cover"
+                    ></iframe>
+                  </motion.div>
+                );
+              })
+            ) : (
+              <div className="col-span-full py-8 text-center border-2 border-dashed border-border rounded-xl">
+                <p className="text-foreground-muted font-medium">
+                  No multimedia available
+                </p>
+              </div>
+            )}
           </div>
         )}
 

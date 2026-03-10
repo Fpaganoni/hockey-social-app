@@ -9,10 +9,16 @@ export interface UserStats {
 }
 
 export interface TrajectoryItem {
-  club: Club;
+  id?: string;
   title: string;
+  organization?: string;
   period: string;
   description: string;
+  startDate?: string;
+  endDate?: string;
+  isCurrent?: boolean;
+  order?: number;
+  club?: Club;
 }
 
 export interface User {
@@ -30,7 +36,9 @@ export interface User {
   country?: string;
   city?: string;
   level?: string;
+  yearsOfExperience?: number;
   cvUrl?: string;
+  multimedia?: string[];
 
   // Relations
   clubId?: string;
@@ -87,6 +95,7 @@ export interface UpdateUserVariables {
   position?: string;
   clubId?: string;
   cvUrl?: string;
+  multimedia?: string[];
 }
 
 export interface UploadCvVariables {

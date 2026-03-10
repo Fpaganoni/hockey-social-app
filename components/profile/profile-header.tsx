@@ -9,6 +9,7 @@ import { ProfileStats } from "./profile-stats";
 import { CvSection } from "./cv-section";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import Link from "next/link";
 
 type ProfileHeaderProps = Pick<
   User,
@@ -92,15 +93,17 @@ export function ProfileHeader({
 
         <div className="flex flex-col gap-2">
           {isOwnProfile && (
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="w-[50%] mx-auto flex items-center gap-2 justify-center h-(--input-button-height) px-4 py-2 bg-primary text-white-black font-semibold rounded-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer disabled:opacity-50"
-            >
-              <Edit size={18} />
-              {t("editProfile")}
-            </motion.button>
+            <Link href="/profile/edit" className="w-[50%] mx-auto block">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
+                className="w-full flex items-center gap-2 justify-center h-(--input-button-height) px-4 py-2 bg-primary text-white-black font-semibold rounded-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer disabled:opacity-50"
+              >
+                <Edit size={18} />
+                {t("editProfile")}
+              </motion.button>
+            </Link>
           )}
         </div>
       </div>

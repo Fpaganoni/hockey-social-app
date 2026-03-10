@@ -2,7 +2,7 @@
 
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
-import { Languages } from "lucide-react";
+import { Globe } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -55,7 +55,7 @@ export function LanguageSelector() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center gap-2 h-9 px-4 py-2 rounded-lg bg-input/30 hover:bg-input/80 text-foreground transition-colors">
-        <Languages size={20} />
+        <Globe size={20} />
         <span className="hidden md:inline">{currentLanguage?.flag}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-input" align="end">
