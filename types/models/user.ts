@@ -96,6 +96,15 @@ export interface UpdateUserVariables {
   clubId?: string;
   cvUrl?: string;
   multimedia?: string[];
+  country?: string;
+  city?: string;
+  yearsOfExperience?: number;
+  trajectories?: any[]; // Using any[] or specific TrajectoryInput type if exists
+  statistics?: {
+    gamesPlayed?: number;
+    goals?: number;
+    assists?: number;
+  };
 }
 
 export interface UploadCvVariables {

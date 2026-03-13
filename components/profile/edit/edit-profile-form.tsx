@@ -5,6 +5,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useAuthStore } from "@/stores/useAuthStore";
+import { useUpdateUser } from "@/hooks/useUsers";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 
@@ -75,6 +76,11 @@ const createProfileFormSchema = (t: any) =>
         }),
       )
       .optional(),
+    statistics: z.object({
+      gamesPlayed: z.coerce.number().min(0).optional(),
+      goals: z.coerce.number().min(0).optional(),
+      assists: z.coerce.number().min(0).optional(),
+    }).optional(),
   });
 
 type ProfileFormValues = z.infer<ReturnType<typeof createProfileFormSchema>>;
@@ -84,6 +90,7 @@ export function EditProfileForm() {
   const t = useTranslations("profile");
   const tCommon = useTranslations("common");
   const { user, updateUser } = useAuthStore();
+  const { mutateAsync: updateProfile } = useUpdateUser();
   const [isSaving, setIsSaving] = useState(false);
 
   const profileFormSchema = createProfileFormSchema(t);
@@ -112,14 +119,41 @@ export function EditProfileForm() {
           isCurrent: t.isCurrent || false,
         })) || [],
       multimedia: user?.multimedia?.map((m) => ({ url: m })) || [],
+      statistics: {
+        gamesPlayed: user?.statistics?.gamesPlayed || 0,
+        goals: user?.statistics?.goals || 0,
+        assists: user?.statistics?.assists || 0,
+      },
     },
   });
 
   async function onSubmit(data: ProfileFormValues) {
     setIsSaving(true);
     try {
-      // Typically, you would make an API call here.
-      // e.g. await updateUserData(data);
+      const multimediaUrls = data.multimedia?.map((m) => m.url) || [];
+      const updatedTrajectories = data.trajectories?.map(t => ({
+          title: t.title,
+          organization: t.organization,
+          period: t.period,
+          description: t.description,
+          startDate: t.startDate,
+          endDate: t.endDate,
+          isCurrent: t.isCurrent
+      }));
+
+      // Make the API call via React Query hook
+      await updateProfile({
+        name: data.name,
+        bio: data.bio,
+        avatar: data.avatar,
+        position: data.position,
+        country: data.country,
+        city: data.city,
+        yearsOfExperience: data.yearsOfExperience,
+        multimedia: multimediaUrls,
+        trajectories: updatedTrajectories,
+        statistics: data.statistics,
+      });
 
       // We update the local state to see changes immediately
       updateUser({
@@ -132,13 +166,14 @@ export function EditProfileForm() {
         country: data.country,
         city: data.city,
         trajectories: data.trajectories as any,
-        multimedia: data.multimedia?.map((m) => m.url),
+        multimedia: multimediaUrls,
+        statistics: data.statistics as any,
       });
 
       toast.success(t("editSuccess") || "Profile updated successfully!");
       router.push("/profile");
     } catch (error) {
-      console.error(error);
+      console.error("Error updating profile via GraphQL:", error);
       toast.error(
         t("editError") || "Failed to update profile. Please try again.",
       );
@@ -301,6 +336,69 @@ export function EditProfileForm() {
                     <FormControl>
                       <Input
                         placeholder={t("editForm.placeholders.city")}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Statistics Information */}
+        <Card className="bg-background">
+          <CardHeader>
+            <CardTitle>{t("editForm.statistics") || "Statistics"}</CardTitle>
+            <CardDescription>{t("editForm.statisticsDesc") || "Update your hockey stats"}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <FormField
+                control={form.control}
+                name="statistics.gamesPlayed"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("stats.gamesPlayed") || "Games Played"}</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="0"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="statistics.goals"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("stats.goals") || "Goals"}</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="0"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="statistics.assists"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("stats.assists") || "Assists"}</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="0"
                         {...field}
                       />
                     </FormControl>

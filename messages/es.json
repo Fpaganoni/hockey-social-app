@@ -288,6 +288,8 @@
       "trajectoriesDesc": "Añade tus clubes actuales y pasados o roles.",
       "multimedia": "Multimedia",
       "multimediaDesc": "Añade enlaces de YouTube para mostrar tus mejores momentos.",
+      "statistics": "Estadísticas",
+      "statisticsDesc": "Actualiza tus estadísticas de hockey.",
       "addYoutubeUrl": "Añadir URL de YouTube",
       "addTrajectory": "Añadir Trayectoria",
       "trajectoryFields": {

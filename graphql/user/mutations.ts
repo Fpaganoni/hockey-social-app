@@ -35,6 +35,12 @@ export const UPDATE_USER = gql`
     $avatar: String
     $position: String
     $clubId: ID
+    $multimedia: [String!]
+    $country: String
+    $city: String
+    $yearsOfExperience: Int
+    $trajectories: [TrajectoryInput!]
+    $statistics: StatisticsInput
   ) {
     updateUser(
       name: $name
@@ -42,6 +48,12 @@ export const UPDATE_USER = gql`
       avatar: $avatar
       position: $position
       clubId: $clubId
+      multimedia: $multimedia
+      country: $country
+      city: $city
+      yearsOfExperience: $yearsOfExperience
+      trajectories: $trajectories
+      statistics: $statistics
     ) {
       id
       name
@@ -49,6 +61,24 @@ export const UPDATE_USER = gql`
       avatar
       position
       clubId
+      multimedia
+      country
+      city
+      yearsOfExperience
+      trajectories {
+        title
+        organization
+        period
+        description
+        startDate
+        endDate
+        isCurrent
+      }
+      statistics {
+        gamesPlayed
+        goals
+        assists
+      }
     }
   }
 `;

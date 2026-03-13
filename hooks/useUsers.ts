@@ -6,6 +6,7 @@ import {
   REGISTER,
   UPLOAD_CV,
   DELETE_CV,
+  UPDATE_USER,
 } from "@/graphql/user/mutations";
 import { GET_FOLLOWERS, GET_FOLLOWING } from "@/graphql/user/queries";
 import {
@@ -17,6 +18,7 @@ import {
   UploadCvResponse,
   DeleteCvVariables,
   DeleteCvResponse,
+  UpdateUserVariables,
 } from "@/types/models/user";
 import {
   User,
@@ -61,6 +63,26 @@ export function useUserLogin() {
 export function useUserRegister() {
   return useMutation<RegisterResponse, Error, RegisterVariables>({
     mutationFn: async (variables) => graphqlClient.request(REGISTER, variables),
+  });
+}
+
+/**
+ * Update user profile
+ */
+export function useUpdateUser() {
+  const queryClient = useQueryClient();
+
+  return useMutation<{ updateUser: User }, Error, UpdateUserVariables>({
+    mutationFn: async (variables) =>
+      graphqlClient.request(UPDATE_USER, variables),
+    onSuccess: (data) => {
+      if (data?.updateUser?.id) {
+        queryClient.invalidateQueries({ queryKey: ["user", data.updateUser.id] });
+      }
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+      // We could also invalidate the current authenticated user query if there is one
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
   });
 }
 

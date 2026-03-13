@@ -35,6 +35,7 @@ export function UserProfilePage({
         description: t.description,
         title: t.title,
       })) || [],
+    multimedia: user.multimedia || [],
   };
 
   return (

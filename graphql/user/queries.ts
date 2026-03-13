@@ -33,6 +33,7 @@ export const GET_USER_FOR_LOGIN = gql`
       country
       city
       cvUrl
+      multimedia
       club {
         name
         logo
@@ -66,6 +67,7 @@ export const GET_USER = gql`
       position
       clubId
       cvUrl
+      multimedia
       club {
         id
         name

@@ -4,23 +4,13 @@ import { Play } from "lucide-react";
 import { motion } from "framer-motion";
 import { TrajectoryItem, UserStats } from "@/types/models/user";
 import { useTranslations } from "next-intl";
+import { YoutubeWidget } from "@/components/ui/youtube-widget";
 
 interface UserData {
   stats: UserStats;
   trajectories: TrajectoryItem[];
   multimedia?: string[];
 }
-
-// Helper function to extract YouTube video ID and create an embed URL
-const getYouTubeEmbedUrl = (url: string) => {
-  if (!url) return null;
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-  const match = url.match(regExp);
-  if (match && match[2].length === 11) {
-    return `https://www.youtube.com/embed/${match[2]}`;
-  }
-  return null;
-};
 
 interface ProfileTabsProps {
   activeTab: string;
@@ -43,7 +33,7 @@ export function ProfileTabs({
 
   return (
     <>
-      <div className="flex border-t border-border sticky top-16 z-20 overflow-x-auto ">
+      <div className="flex bg-background border-t border-border sticky top-16 z-20 overflow-x-auto ">
         {tabs.map((tab) => (
           <button
             key={tab.id}
@@ -87,31 +77,9 @@ export function ProfileTabs({
         {activeTab === "multimedia" && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {userData.multimedia && userData.multimedia.length > 0 ? (
-              userData.multimedia.map((url, i) => {
-                const embedUrl = getYouTubeEmbedUrl(url);
-                if (!embedUrl) return null;
-
-                return (
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.2, ease: "easeInOut" }}
-                    key={i}
-                    className="aspect-video rounded-xl border border-border overflow-hidden bg-black shadow-md"
-                  >
-                    <iframe
-                      width="100%"
-                      height="100%"
-                      src={embedUrl}
-                      title={`Video highlight ${i + 1}`}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                      className="w-full h-full object-cover"
-                    ></iframe>
-                  </motion.div>
-                );
-              })
+              userData.multimedia.map((url, i) => (
+                <YoutubeWidget key={i} url={url} title={`Video highlight ${i + 1}`} />
+              ))
             ) : (
               <div className="col-span-full py-8 text-center border-2 border-dashed border-border rounded-xl">
                 <p className="text-foreground-muted font-medium">
