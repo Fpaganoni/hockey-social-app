@@ -128,6 +128,8 @@ export function EditProfileForm() {
   });
 
   async function onSubmit(data: ProfileFormValues) {
+    if (!user) return;
+    
     setIsSaving(true);
     try {
       const multimediaUrls = data.multimedia?.map((m) => m.url) || [];
@@ -143,6 +145,7 @@ export function EditProfileForm() {
 
       // Make the API call via React Query hook
       await updateProfile({
+        id: user.id,
         name: data.name,
         bio: data.bio,
         avatar: data.avatar,
@@ -151,7 +154,6 @@ export function EditProfileForm() {
         city: data.city,
         yearsOfExperience: data.yearsOfExperience,
         multimedia: multimediaUrls,
-        trajectories: updatedTrajectories,
         statistics: data.statistics,
       });
 

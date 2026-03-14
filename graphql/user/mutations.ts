@@ -30,6 +30,7 @@ export const REGISTER = gql`
 
 export const UPDATE_USER = gql`
   mutation UpdateUser(
+    $id: ID!
     $name: String
     $bio: String
     $avatar: String
@@ -39,10 +40,10 @@ export const UPDATE_USER = gql`
     $country: String
     $city: String
     $yearsOfExperience: Int
-    $trajectories: [TrajectoryInput!]
     $statistics: StatisticsInput
   ) {
     updateUser(
+      id: $id
       name: $name
       bio: $bio
       avatar: $avatar
@@ -52,7 +53,6 @@ export const UPDATE_USER = gql`
       country: $country
       city: $city
       yearsOfExperience: $yearsOfExperience
-      trajectories: $trajectories
       statistics: $statistics
     ) {
       id

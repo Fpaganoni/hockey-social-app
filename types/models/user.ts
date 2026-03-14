@@ -89,6 +89,7 @@ export interface FollowUserVariables {
 }
 
 export interface UpdateUserVariables {
+  id: string;
   name?: string;
   bio?: string;
   avatar?: string;
@@ -99,7 +100,6 @@ export interface UpdateUserVariables {
   country?: string;
   city?: string;
   yearsOfExperience?: number;
-  trajectories?: any[]; // Using any[] or specific TrajectoryInput type if exists
   statistics?: {
     gamesPlayed?: number;
     goals?: number;
