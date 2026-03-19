@@ -118,6 +118,43 @@ export const GET_FOLLOWING = gql`
   }
 `;
 
+export const GET_USER_BY_USERNAME = gql`
+  query GetUserByUsername($username: String!) {
+    getUserByUsername(username: $username) {
+      id
+      email
+      name
+      username
+      avatar
+      bio
+      position
+      role
+      country
+      city
+      cvUrl
+      multimedia
+      statistics {
+        gamesPlayed
+        goals
+        assists
+      }
+      trajectories {
+        title
+        organization
+        period
+        description
+        startDate
+        endDate
+        isCurrent
+        club {
+          name
+          logo
+        }
+      }
+    }
+  }
+`;
+
 export const EXPLORE_USERS_QUERY = gql`
   query ExploreUsers($role: String!, $limit: Int!) {
     exploreUsers(role: $role, limit: $limit) {

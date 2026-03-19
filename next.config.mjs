@@ -27,7 +27,7 @@ const nextConfig = {
     ],
   },
   turbopack: {
-    root: process.cwd(), // Usa el directorio actual como raíz
+    root: process.cwd(),
   },
 };
 

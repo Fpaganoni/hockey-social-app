@@ -147,6 +147,7 @@ export function EditProfileForm() {
       await updateProfile({
         id: user.id,
         name: data.name,
+        username: data.username,
         bio: data.bio,
         avatar: data.avatar,
         position: data.position,

@@ -3,28 +3,42 @@
 import { useState } from "react";
 import { ProfileHeader } from "@/components/profile/profile-header";
 import { ProfileTabs } from "@/components/profile/profile-tabs";
-import { useAuthStore } from "@/stores/useAuthStore";
+import { useUserByUsername } from "@/hooks/useUsers";
+import { Loader } from "@/components/ui/loader";
+import { Error } from "@/components/ui/error";
 
-interface UserProfilePageProps {
-  isOwnProfile?: boolean;
+interface PublicUserProfilePageProps {
+  username: string;
 }
 
-export function UserProfilePage({
-  isOwnProfile = false,
-}: UserProfilePageProps) {
+export function PublicUserProfilePage({ username }: PublicUserProfilePageProps) {
   const [activeTab, setActiveTab] = useState("trajectory");
-  const { user } = useAuthStore();
+  const { data, isLoading, error } = useUserByUsername(username);
 
-  if (!user) {
-    return <div>PLEASE LOGIN</div>;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader />
+      </div>
+    );
   }
+
+  if (error || !data?.getUserByUsername) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Error>User not found</Error>
+      </div>
+    );
+  }
+
+  const user = data.getUserByUsername;
 
   const userData = {
     id: user.id,
     name: user.name,
     role: user.role,
     position: user.position,
-    country: user.country,
+    country: user.country || "🌍",
     avatar: user.avatar || "/user.png",
     bio: user.bio,
     cvUrl: user.cvUrl,
@@ -41,7 +55,7 @@ export function UserProfilePage({
 
   return (
     <main className="bg-overlay max-w-4xl mx-auto pb-24">
-      <ProfileHeader {...userData} isOwnProfile={isOwnProfile} />
+      <ProfileHeader {...userData} isOwnProfile={false} />
       <ProfileTabs
         activeTab={activeTab}
         setActiveTab={setActiveTab}

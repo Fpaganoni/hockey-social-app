@@ -14,6 +14,10 @@ type CreatePostVariables = Pick<Post, "content" | "imageUrl">;
 type UpdatePostVariables = Pick<Post, "id" | "content" | "imageUrl">;
 type DeletePostVariables = Pick<Post, "id">;
 
+type PostMutationContext = {
+  previousPosts?: { posts: Post[] };
+};
+
 /**
  * Hook to create a new post with optimistic updates
  */
@@ -25,7 +29,12 @@ export function useCreatePost() {
     throw new Error("User not found");
   }
 
-  return useMutation<{ createPost: Post }, Error, CreatePostVariables>({
+  return useMutation<
+    { createPost: Post },
+    Error,
+    CreatePostVariables,
+    PostMutationContext
+  >({
     mutationFn: async (variables) =>
       graphqlClient.request(CREATE_POST, variables),
 
@@ -35,7 +44,7 @@ export function useCreatePost() {
       await queryClient.cancelQueries({ queryKey: ["posts"] });
 
       // Snapshot previous value
-      const previousPosts = queryClient.getQueryData(["posts"]);
+      const previousPosts = queryClient.getQueryData<{ posts: Post[] }>(["posts"]);
 
       // Optimistically update to the new value
       queryClient.setQueryData<{ posts: Post[] }>(["posts"], (old) => {

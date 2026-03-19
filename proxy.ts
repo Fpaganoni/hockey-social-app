@@ -16,8 +16,13 @@ export default createMiddleware({
 });
 
 export const config = {
-  // Match all pathnames except for
-  // - … if they start with `/api`, `/_next` or `/_vercel`
-  // - … the ones containing a dot (e.g. `favicon.ico`)
-  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
+  // Match all routes EXCEPT:
+  // - /api/...
+  // - /_next/... and /_vercel/...
+  // - Real static asset files ending with a known extension
+  // IMPORTANT: We do NOT exclude paths that merely contain a dot
+  // (e.g. usernames like "franco.paganoni"). Only real file extensions are excluded.
+  matcher: [
+    "/((?!api|_next|_vercel)(?!.*\\.(?:ico|png|jpg|jpeg|gif|webp|svg|css|js|ts|json|txt|xml|woff2?|ttf|eot|map)(?:\\?.*)?$).*)",
+  ],
 };

@@ -32,6 +32,7 @@ export const UPDATE_USER = gql`
   mutation UpdateUser(
     $id: ID!
     $name: String
+    $username: String
     $bio: String
     $avatar: String
     $position: String
@@ -45,6 +46,7 @@ export const UPDATE_USER = gql`
     updateUser(
       id: $id
       name: $name
+      username: $username
       bio: $bio
       avatar: $avatar
       position: $position

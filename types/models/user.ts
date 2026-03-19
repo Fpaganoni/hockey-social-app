@@ -91,6 +91,7 @@ export interface FollowUserVariables {
 export interface UpdateUserVariables {
   id: string;
   name?: string;
+  username?: string;
   bio?: string;
   avatar?: string;
   position?: string;
