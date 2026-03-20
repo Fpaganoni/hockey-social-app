@@ -320,6 +320,7 @@
     "bio": "Biographie",
     "following": "Abonné",
     "follow": "Suivre",
+    "unfollow": "Ne plus suivre",
     "connect": "Connecter",
     "message": "Message",
     "errorLoadData": "Erreur de chargement des données",

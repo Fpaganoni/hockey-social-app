@@ -90,8 +90,18 @@ export const UPDATE_USER = gql`
 // ============================================
 
 export const FOLLOW_USER = gql`
-  mutation FollowUser($userId: ID!) {
-    followUser(userId: $userId) {
+  mutation Follow(
+    $followerType: String!
+    $followerId: String!
+    $followingType: String!
+    $followingId: String!
+  ) {
+    follow(
+      followerType: $followerType
+      followerId: $followerId
+      followingType: $followingType
+      followingId: $followingId
+    ) {
       id
       followerId
       followingId
@@ -100,10 +110,18 @@ export const FOLLOW_USER = gql`
 `;
 
 export const UNFOLLOW_USER = gql`
-  mutation UnfollowUser($userId: ID!) {
-    unfollowUser(userId: $userId) {
-      id
-    }
+  mutation Unfollow(
+    $followerType: String!
+    $followerId: String!
+    $followingType: String!
+    $followingId: String!
+  ) {
+    unfollow(
+      followerType: $followerType
+      followerId: $followerId
+      followingType: $followingType
+      followingId: $followingId
+    )
   }
 `;
 

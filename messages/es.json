@@ -323,6 +323,7 @@
     "bio": "Biografía",
     "following": "Siguiendo",
     "follow": "Seguir",
+    "unfollow": "Dejar de seguir",
     "connect": "Conectar",
     "message": "Mensaje",
     "errorLoadData": "Error al cargar datos",

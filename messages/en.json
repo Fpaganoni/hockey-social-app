@@ -323,6 +323,7 @@
     "bio": "Bio",
     "following": "Following",
     "follow": "Follow",
+    "unfollow": "Unfollow",
     "connect": "Connect",
     "message": "Message",
     "errorLoadData": "Error loading data",

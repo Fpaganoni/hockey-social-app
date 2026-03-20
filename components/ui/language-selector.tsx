@@ -16,10 +16,17 @@ const languages = [
   { code: "fr", name: "Français", flag: "🇫🇷" },
 ];
 
+import { useState, useEffect } from "react";
+
 export function LanguageSelector() {
+  const [mounted, setMounted] = useState(false);
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleLanguageChange = (newLocale: string) => {
     // Get the current path without any locale prefix
@@ -51,6 +58,14 @@ export function LanguageSelector() {
   };
 
   const currentLanguage = languages.find((lang) => lang.code === locale);
+
+  if (!mounted) {
+    return (
+      <div className="flex items-center gap-2 h-9 px-4 py-2 rounded-lg bg-input/30 text-foreground opacity-50">
+        <Globe size={20} />
+      </div>
+    );
+  }
 
   return (
     <DropdownMenu>

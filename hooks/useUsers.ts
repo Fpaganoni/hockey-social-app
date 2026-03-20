@@ -29,14 +29,11 @@ import {
 import {
   User,
   FollowUserResponse,
-  FollowUserVariables,
+  FollowMutationVariables,
   FollowingUserResponse,
 } from "@/types/models/user";
 
 // Define Follow mutation variables if not in types/models/user
-interface FollowMutationVariables {
-  userId: string;
-}
 
 
 /**
@@ -160,7 +157,7 @@ export function useFollowingUser(entityType: string, entityId: string) {
 
 export function useFollowMutation() {
   const queryClient = useQueryClient();
-  return useMutation<{ followUser: any }, Error, FollowMutationVariables>({
+  return useMutation<{ follow: any }, Error, FollowMutationVariables>({
     mutationFn: async (variables) =>
       graphqlClient.request(FOLLOW_USER, variables),
     onSuccess: () => {
@@ -173,7 +170,7 @@ export function useFollowMutation() {
 
 export function useUnfollowMutation() {
   const queryClient = useQueryClient();
-  return useMutation<{ unfollowUser: any }, Error, FollowMutationVariables>({
+  return useMutation<{ unfollow: any }, Error, FollowMutationVariables>({
     mutationFn: async (variables) =>
       graphqlClient.request(UNFOLLOW_USER, variables),
     onSuccess: () => {

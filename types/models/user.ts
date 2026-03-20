@@ -84,8 +84,11 @@ export type UpdateUserInput = Partial<Omit<User, "id" | "email" | "role">>;
 // TYPE DEFINITIONS FOR MUTATION VARIABLES
 // ===========================================
 
-export interface FollowUserVariables {
-  userId: string;
+export interface FollowMutationVariables {
+  followerType: string;
+  followerId: string;
+  followingType: string;
+  followingId: string;
 }
 
 export interface UpdateUserVariables {
@@ -172,10 +175,10 @@ type Following = {
 };
 
 export interface FollowingUserResponse {
-  followings: Following[];
+  following: Following[];
 }
 
-export interface FollowUserVariables {
+export interface FollowQueryVariables {
   entityType: string;
   entityId: string;
 }

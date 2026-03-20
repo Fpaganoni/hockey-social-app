@@ -34,7 +34,7 @@ export function ProfileStats({ userId, userRole }: ProfileStatsProps) {
     return <Error>{t("errorLoadData")}</Error>;
 
   const followersCount = followersData?.followers?.length || 0;
-  const followingCount = followingData?.followings?.length || 0;
+  const followingCount = followingData?.following?.length || 0;
 
   return (
     <div className="flex gap-4">

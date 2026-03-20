@@ -59,9 +59,19 @@ export function ProfileHeader({
   const unfollowMutation = useUnfollowMutation();
 
   const handleToggleFollow = () => {
+    if (!currentUser) {
+      toast.error("You must be logged in to follow users");
+      return;
+    }
+
+    const followerId = currentUser.id;
+    const followerType = mapRoleToEntityType(currentUser.role);
+    const followingId = id;
+    const followingType = entityType;
+
     if (isFollowing) {
       unfollowMutation.mutate(
-        { userId: id },
+        { followerId, followerType, followingId, followingType },
         {
           onSuccess: () => toast.success(`Unfollowed ${name}`),
           onError: () => toast.error("Failed to unfollow"),
@@ -69,7 +79,7 @@ export function ProfileHeader({
       );
     } else {
       followMutation.mutate(
-        { userId: id },
+        { followerId, followerType, followingId, followingType },
         {
           onSuccess: () => toast.success(`Now following ${name}`),
           onError: () => toast.error("Failed to follow"),
