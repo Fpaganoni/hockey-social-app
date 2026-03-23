@@ -14,6 +14,7 @@ export const GET_USERS = gql`
       bio
       position
       clubId
+      cvUrl
     }
   }
 `;
@@ -188,6 +189,7 @@ export const EXPLORE_USERS_QUERY = gql`
       isVerified
       bio
       level
+      cvUrl
     }
   }
 `;

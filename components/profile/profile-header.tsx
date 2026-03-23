@@ -108,7 +108,7 @@ export function ProfileHeader({
         <img
           src={coverImage || "/hockey-stadium.jpg"}
           alt="Cover"
-          className="w-full h-full object-cover absolute inset-0 image-render-auto"
+          className="w-full h-full object-cover absolute inset-0"
         />
         <div className="absolute inset-0 bg-linear-to-t from-background via-background/10 to-transparent"></div>
       </div>
@@ -180,10 +180,10 @@ export function ProfileHeader({
                 }
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={`p-3 rounded-full border transition-colors flex items-center justify-center shadow-sm ${
+                className={`p-3 rounded-full border-2 transition-colors flex items-center justify-center shadow-sm ${
                   isFollowing
-                    ? "bg-accent text-accent-foreground border-border"
-                    : "bg-primary text-white border-primary hover:bg-primary-hover"
+                    ? "bg-success text-accent-foreground border-2 border-success"
+                    : "text-foreground border-primary hover:bg-primary-hover"
                 }`}
                 title={
                   isFollowing
@@ -204,7 +204,7 @@ export function ProfileHeader({
                 onClick={handleMessage}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="p-3 rounded-full border border-border text-foreground hover:bg-accent transition-colors flex items-center justify-center shadow-sm"
+                className="p-3 rounded-full border-2 border-primary text-foreground hover:bg-primary transition-colors flex items-center justify-center shadow-sm"
                 title={t("message")}
               >
                 <MessageCircle className="w-5 h-5" />

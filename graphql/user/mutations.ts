@@ -38,6 +38,7 @@ export const UPDATE_USER = gql`
     $coverImage: String
     $position: String
     $clubId: ID
+    $cvUrl: String
     $multimedia: [String!]
     $country: String
     $city: String
@@ -54,6 +55,7 @@ export const UPDATE_USER = gql`
       coverImage: $coverImage
       position: $position
       clubId: $clubId
+      cvUrl: $cvUrl
       multimedia: $multimedia
       country: $country
       city: $city
@@ -68,6 +70,7 @@ export const UPDATE_USER = gql`
       coverImage
       position
       clubId
+      cvUrl
       multimedia
       country
       city

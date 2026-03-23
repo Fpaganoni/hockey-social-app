@@ -5,9 +5,21 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { useUpdateUser } from "@/hooks/useUsers";
+import { useUpdateUser, useUploadCv, useDeleteCv } from "@/hooks/useUsers";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { useRef } from "react";
+import { Upload, Trash2, FileText } from "lucide-react";
+import { motion } from "framer-motion";
+
+async function toBase64(file: File): Promise<string> {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result as string);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
 
 import {
   Form,
@@ -81,11 +93,13 @@ const createProfileFormSchema = (t: any) =>
         }),
       )
       .optional(),
-    statistics: z.object({
-      gamesPlayed: z.coerce.number().min(0).optional(),
-      goals: z.coerce.number().min(0).optional(),
-      assists: z.coerce.number().min(0).optional(),
-    }).optional(),
+    statistics: z
+      .object({
+        gamesPlayed: z.coerce.number().min(0).optional(),
+        goals: z.coerce.number().min(0).optional(),
+        assists: z.coerce.number().min(0).optional(),
+      })
+      .optional(),
   });
 
 type ProfileFormValues = z.infer<ReturnType<typeof createProfileFormSchema>>;
@@ -96,6 +110,11 @@ export function EditProfileForm() {
   const tCommon = useTranslations("common");
   const { user, updateUser } = useAuthStore();
   const { mutateAsync: updateProfile } = useUpdateUser();
+  const uploadCv = useUploadCv();
+  const removeCv = useDeleteCv();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [cvFile, setCvFile] = useState<File | null>(null);
+  const [cvDeleted, setCvDeleted] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
   const profileFormSchema = createProfileFormSchema(t);
@@ -135,19 +154,32 @@ export function EditProfileForm() {
 
   async function onSubmit(data: ProfileFormValues) {
     if (!user) return;
-    
+
     setIsSaving(true);
     try {
       const multimediaUrls = data.multimedia?.map((m) => m.url) || [];
-      const updatedTrajectories = data.trajectories?.map(t => ({
-          title: t.title,
-          organization: t.organization,
-          period: t.period,
-          description: t.description,
-          startDate: t.startDate,
-          endDate: t.endDate,
-          isCurrent: t.isCurrent
+      const updatedTrajectories = data.trajectories?.map((t) => ({
+        title: t.title,
+        organization: t.organization,
+        period: t.period,
+        description: t.description,
+        startDate: t.startDate,
+        endDate: t.endDate,
+        isCurrent: t.isCurrent,
       }));
+
+      let finalCvUrl = user.cvUrl;
+
+      if (cvDeleted && !cvFile) {
+        await removeCv.mutateAsync({ userId: user.id });
+        finalCvUrl = undefined;
+      } else if (cvFile) {
+        const base64 = await toBase64(cvFile);
+        const res = await uploadCv.mutateAsync({ userId: user.id, base64 });
+        if (res.uploadCV) {
+          finalCvUrl = res.uploadCV;
+        }
+      }
 
       // Make the API call via React Query hook
       await updateProfile({
@@ -160,6 +192,7 @@ export function EditProfileForm() {
         position: data.position,
         country: data.country,
         city: data.city,
+        cvUrl: finalCvUrl,
         yearsOfExperience: data.yearsOfExperience,
         multimedia: multimediaUrls,
         statistics: data.statistics,
@@ -177,6 +210,7 @@ export function EditProfileForm() {
         yearsOfExperience: data.yearsOfExperience,
         country: data.country,
         city: data.city,
+        cvUrl: finalCvUrl,
         trajectories: data.trajectories as any,
         multimedia: multimediaUrls,
         statistics: data.statistics as any,
@@ -318,10 +352,15 @@ export function EditProfileForm() {
               name="coverImage"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("editForm.coverImageUrl") || "Cover Image URL"}</FormLabel>
+                  <FormLabel>
+                    {t("editForm.coverImageUrl") || "Cover Image URL"}
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={t("editForm.placeholders.coverImageUrl") || "https://example.com/cover.jpg"}
+                      placeholder={
+                        t("editForm.placeholders.coverImageUrl") ||
+                        "https://example.com/cover.jpg"
+                      }
                       {...field}
                     />
                   </FormControl>
@@ -376,11 +415,116 @@ export function EditProfileForm() {
           </CardContent>
         </Card>
 
+        {/* CV Upload */}
+        <Card className="bg-background">
+          <CardHeader>
+            <CardTitle>
+              {t("cv.label", { fallback: "Curriculum Vitae" })}
+            </CardTitle>
+            <CardDescription>
+              {t("cv.upload", { fallback: "Upload your CV in PDF format" })}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center gap-4 border border-input rounded-md p-4 bg-muted/20">
+              <input
+                ref={inputRef}
+                type="file"
+                accept=".pdf,application/pdf"
+                className="hidden"
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  if (f) {
+                    if (f.size > 5 * 1024 * 1024) {
+                      toast.error("File too large. Maximum 5MB.");
+                      return;
+                    }
+                    if (f.type !== "application/pdf") {
+                      toast.error("Invalid file format. Please upload a PDF.");
+                      return;
+                    }
+                    setCvFile(f);
+                    setCvDeleted(false);
+                  }
+                  e.target.value = "";
+                }}
+              />
+              {cvFile ? (
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-primary" />
+                    <span className="text-sm font-medium">{cvFile.name}</span>
+                  </div>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    type="button"
+                    className="border border-error py-2.5 px-3 rounded-md hover:bg-error/10 transition-colors"
+                    onClick={() => setCvFile(null)}
+                  >
+                    <Trash2 className="w-4 h-4 text-error " />
+                  </motion.button>
+                </div>
+              ) : user.cvUrl && !cvDeleted ? (
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-primary" />
+                    <a
+                      href={user.cvUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-medium hover:underline text-primary truncate max-w-[200px] md:max-w-xs block"
+                    >
+                      {t("cv.download", { fallback: "Download existing CV" })}
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => inputRef.current?.click()}
+                    >
+                      <Upload className="w-4 h-4 mr-2" />
+                      {t("cv.change", { fallback: "Change" })}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setCvDeleted(true)}
+                    >
+                      <Trash2 className="w-4 h-4 text-error hover:text-error/70 transition-colors" />
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full border-dashed py-10"
+                  onClick={() => inputRef.current?.click()}
+                >
+                  <div className="flex flex-col items-center gap-1 text-foreground-muted hover:text-foreground">
+                    <Upload className="w-6 h-6 mb-1 text-primary" />
+                    <span className="font-semibold text-primary">
+                      {t("cv.upload", { fallback: "Upload CV (PDF)" })}
+                    </span>
+                    <span className="text-xs">Max size: 5MB</span>
+                  </div>
+                </Button>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Statistics Information */}
         <Card className="bg-background">
           <CardHeader>
             <CardTitle>{t("editForm.statistics") || "Statistics"}</CardTitle>
-            <CardDescription>{t("editForm.statisticsDesc") || "Update your hockey stats"}</CardDescription>
+            <CardDescription>
+              {t("editForm.statisticsDesc") || "Update your hockey stats"}
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -389,13 +533,11 @@ export function EditProfileForm() {
                 name="statistics.gamesPlayed"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("stats.gamesPlayed") || "Games Played"}</FormLabel>
+                    <FormLabel>
+                      {t("stats.gamesPlayed") || "Games Played"}
+                    </FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="0"
-                        {...field}
-                      />
+                      <Input type="number" placeholder="0" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -408,11 +550,7 @@ export function EditProfileForm() {
                   <FormItem>
                     <FormLabel>{t("stats.goals") || "Goals"}</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="0"
-                        {...field}
-                      />
+                      <Input type="number" placeholder="0" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -425,11 +563,7 @@ export function EditProfileForm() {
                   <FormItem>
                     <FormLabel>{t("stats.assists") || "Assists"}</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="0"
-                        {...field}
-                      />
+                      <Input type="number" placeholder="0" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
