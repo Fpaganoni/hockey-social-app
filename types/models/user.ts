@@ -31,6 +31,7 @@ export interface User {
 
   // Profile
   avatar?: string;
+  coverImage?: string;
   bio?: string;
   position?: Position;
   country?: string;
@@ -97,6 +98,7 @@ export interface UpdateUserVariables {
   username?: string;
   bio?: string;
   avatar?: string;
+  coverImage?: string;
   position?: string;
   clubId?: string;
   cvUrl?: string;
@@ -109,6 +111,7 @@ export interface UpdateUserVariables {
     goals?: number;
     assists?: number;
   };
+  trajectories?: any[];
 }
 
 export interface UploadCvVariables {

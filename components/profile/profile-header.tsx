@@ -28,7 +28,15 @@ import { toast } from "sonner";
 
 type ProfileHeaderProps = Pick<
   User,
-  "id" | "name" | "role" | "avatar" | "position" | "country" | "bio" | "cvUrl"
+  | "id"
+  | "name"
+  | "role"
+  | "avatar"
+  | "coverImage"
+  | "position"
+  | "country"
+  | "bio"
+  | "cvUrl"
 > & {
   isOwnProfile?: boolean;
 };
@@ -41,6 +49,7 @@ export function ProfileHeader({
   country,
   bio,
   avatar,
+  coverImage,
   cvUrl,
   isOwnProfile = false,
 }: ProfileHeaderProps) {
@@ -95,12 +104,11 @@ export function ProfileHeader({
 
   return (
     <div className="bg-background">
-      <div className="h-60 relative overflow-hidden">
-        <Image
-          src="/hockey-stadium.jpg"
+      <div className="h-86 relative overflow-hidden">
+        <img
+          src={coverImage || "/hockey-stadium.jpg"}
           alt="Cover"
-          fill
-          className="object-cover"
+          className="w-full h-full object-cover absolute inset-0 image-render-auto"
         />
         <div className="absolute inset-0 bg-linear-to-t from-background via-background/10 to-transparent"></div>
       </div>

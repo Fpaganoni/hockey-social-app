@@ -43,6 +43,11 @@ const createProfileFormSchema = (t: any) =>
       .url({ message: t("editForm.validation.urlInvalid") })
       .optional()
       .or(z.literal("")),
+    coverImage: z
+      .string()
+      .url({ message: t("editForm.validation.urlInvalid") })
+      .optional()
+      .or(z.literal("")),
     bio: z
       .string()
       .max(500, { message: t("editForm.validation.bioMax") })
@@ -102,6 +107,7 @@ export function EditProfileForm() {
       name: user?.name || "",
       username: user?.username || "",
       avatar: user?.avatar || "",
+      coverImage: user?.coverImage || "",
       bio: user?.bio || "",
       position: user?.position || "",
       yearsOfExperience: user?.yearsOfExperience || 0,
@@ -150,12 +156,14 @@ export function EditProfileForm() {
         username: data.username,
         bio: data.bio,
         avatar: data.avatar,
+        coverImage: data.coverImage,
         position: data.position,
         country: data.country,
         city: data.city,
         yearsOfExperience: data.yearsOfExperience,
         multimedia: multimediaUrls,
         statistics: data.statistics,
+        trajectories: updatedTrajectories,
       });
 
       // We update the local state to see changes immediately
@@ -163,6 +171,7 @@ export function EditProfileForm() {
         name: data.name,
         username: data.username,
         avatar: data.avatar,
+        coverImage: data.coverImage,
         bio: data.bio,
         position: data.position as any,
         yearsOfExperience: data.yearsOfExperience,
@@ -296,6 +305,23 @@ export function EditProfileForm() {
                   <FormControl>
                     <Input
                       placeholder={t("editForm.placeholders.avatarUrl")}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="coverImage"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("editForm.coverImageUrl") || "Cover Image URL"}</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={t("editForm.placeholders.coverImageUrl") || "https://example.com/cover.jpg"}
                       {...field}
                     />
                   </FormControl>

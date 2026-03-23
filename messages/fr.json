@@ -266,6 +266,7 @@
       "yearsOfExperience": "Années d'Expérience",
       "bio": "Biographie",
       "avatarUrl": "URL de l'Avatar",
+      "coverImageUrl": "URL de la photo de couverture",
       "placeholders": {
         "name": "Votre nom complet",
         "username": "nom_utilisateur",
@@ -273,6 +274,7 @@
         "yearsOfExperience": "12",
         "bio": "Parlez-nous un peu de vous",
         "avatarUrl": "https://exemple.com/avatar.jpg",
+        "coverImageUrl": "https://exemple.com/couverture.jpg",
         "countryCode": "ex. FR, ES",
         "city": "ex. Paris",
         "multimedia": "https://www.youtube.com/watch?v=..."

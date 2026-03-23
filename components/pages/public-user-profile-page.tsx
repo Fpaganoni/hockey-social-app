@@ -40,6 +40,7 @@ export function PublicUserProfilePage({ username }: PublicUserProfilePageProps) 
     position: user.position,
     country: user.country || "🌍",
     avatar: user.avatar || "/user.png",
+    coverImage: user.coverImage || "",
     bio: user.bio,
     cvUrl: user.cvUrl,
     stats: user.statistics || { gamesPlayed: 0, goals: 0, assists: 0 },

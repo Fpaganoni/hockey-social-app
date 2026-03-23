@@ -26,6 +26,7 @@ export const GET_USER_FOR_LOGIN = gql`
       name
       username
       avatar
+      coverImage
       bio
       position
       role
@@ -44,13 +45,17 @@ export const GET_USER_FOR_LOGIN = gql`
         assists
       }
       trajectories {
+        title
+        organization
+        period
+        description
+        startDate
+        endDate
+        isCurrent
         club {
           name
           logo
         }
-        period
-        description
-        title
       }
     }
   }
@@ -63,6 +68,7 @@ export const GET_USER = gql`
       email
       name
       avatar
+      coverImage
       bio
       position
       clubId
@@ -87,6 +93,19 @@ export const GET_USER = gql`
         id
         name
         avatar
+      }
+      trajectories {
+        title
+        organization
+        period
+        description
+        startDate
+        endDate
+        isCurrent
+        club {
+          name
+          logo
+        }
       }
     }
   }
@@ -126,6 +145,7 @@ export const GET_USER_BY_USERNAME = gql`
       name
       username
       avatar
+      coverImage
       bio
       position
       role
