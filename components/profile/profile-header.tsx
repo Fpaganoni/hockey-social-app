@@ -182,7 +182,7 @@ export function ProfileHeader({
                 whileTap={{ scale: 0.95 }}
                 className={`p-3 rounded-full border-2 transition-colors flex items-center justify-center shadow-sm ${
                   isFollowing
-                    ? "bg-success text-accent-foreground border-2 border-success"
+                    ? "bg-primary text-foreground border-2 border-primary"
                     : "text-foreground border-primary hover:bg-primary-hover"
                 }`}
                 title={
@@ -218,7 +218,7 @@ export function ProfileHeader({
                   download
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="p-3 rounded-full border border-border text-foreground hover:bg-accent transition-colors flex items-center justify-center shadow-sm"
+                  className="p-3 rounded-full border-2 border-primary text-foreground hover:bg-primary-hover transition-colors flex items-center justify-center shadow-sm"
                   title={t("cv.download", { fallback: "Download CV" })}
                 >
                   <Download className="w-5 h-5" />

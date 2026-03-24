@@ -82,11 +82,11 @@ export function PostCard({ post }: PostCardProps) {
           }`}
         >
           <Heart size={18} fill={liked ? "currentColor" : "none"} />
-          <span className="text-sm font-medium">{likes.length}</span>
+          <span className="text-sm font-medium">{likes?.length}</span>
         </button>
         <button className="flex items-center gap-2 px-4 py-2 hover:bg-foreground-muted/30 rounded-lg transition-colors duration-300 cursor-pointer">
           <MessageCircle size={18} />
-          <span className="text-sm font-medium">{comments.length}</span>
+          <span className="text-sm font-medium">{comments?.length}</span>
         </button>
         <button className="flex items-center gap-2 px-4 py-2 hover:bg-foreground-muted/30 rounded-lg transition-colors duration-300 cursor-pointer">
           <Share2 size={18} />

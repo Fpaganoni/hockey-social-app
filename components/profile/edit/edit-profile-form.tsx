@@ -158,15 +158,31 @@ export function EditProfileForm() {
     setIsSaving(true);
     try {
       const multimediaUrls = data.multimedia?.map((m) => m.url) || [];
-      const updatedTrajectories = data.trajectories?.map((t) => ({
-        title: t.title,
-        organization: t.organization,
-        period: t.period,
-        description: t.description,
-        startDate: t.startDate,
-        endDate: t.endDate,
-        isCurrent: t.isCurrent,
-      }));
+      const updatedTrajectories = data.trajectories?.map((t) => {
+        let formattedStartDate = undefined;
+        if (t.startDate && t.startDate.trim() !== "") {
+          formattedStartDate = !isNaN(Number(t.startDate)) 
+            ? new Date(Number(t.startDate)).toISOString() 
+            : t.startDate;
+        }
+
+        let formattedEndDate = undefined;
+        if (t.endDate && t.endDate.trim() !== "") {
+          formattedEndDate = !isNaN(Number(t.endDate)) 
+            ? new Date(Number(t.endDate)).toISOString() 
+            : t.endDate;
+        }
+
+        return {
+          title: t.title,
+          organization: t.organization,
+          period: t.period,
+          description: t.description,
+          startDate: formattedStartDate,
+          endDate: formattedEndDate,
+          isCurrent: t.isCurrent,
+        };
+      });
 
       let finalCvUrl = user.cvUrl;
 

@@ -20,7 +20,7 @@ export const GET_USERS = gql`
 `;
 
 export const GET_USER_FOR_LOGIN = gql`
-  query GetUserForLogin($id: String!) {
+  query GetUserForLogin($id: ID!) {
     user(id: $id) {
       id
       email
@@ -63,7 +63,7 @@ export const GET_USER_FOR_LOGIN = gql`
 `;
 
 export const GET_USER = gql`
-  query GetUser($id: String!) {
+  query GetUser($id: ID!) {
     user(id: $id) {
       id
       email
@@ -79,11 +79,6 @@ export const GET_USER = gql`
         id
         name
         logo
-      }
-      posts {
-        id
-        content
-        createdAt
       }
       followers {
         id

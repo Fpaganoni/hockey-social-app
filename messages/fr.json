@@ -327,10 +327,12 @@
     "message": "Message",
     "errorLoadData": "Erreur de chargement des données",
     "tabs": {
+      "posts": "Publications",
       "trajectory": "Trajectoire",
       "multimedia": "Multimédia",
       "statistics": "Statistiques"
     },
+    "noPosts": "Pas encore de publications",
     "stats": {
       "gamesPlayed": "Matchs Joués",
       "goals": "Buts",

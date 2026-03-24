@@ -330,10 +330,12 @@
     "message": "Mensaje",
     "errorLoadData": "Error al cargar datos",
     "tabs": {
+      "posts": "Publicaciones",
       "trajectory": "Trayectoria",
       "multimedia": "Multimedia",
       "statistics": "Estadísticas"
     },
+    "noPosts": "Aún no hay publicaciones",
     "stats": {
       "gamesPlayed": "Partidos Jugados",
       "goals": "Goles",

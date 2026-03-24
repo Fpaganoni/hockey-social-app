@@ -32,6 +32,11 @@ export interface Post {
 
   // Relations
   user: User;
+  club?: {
+    id: string;
+    name: string;
+    logo?: string | null;
+  };
   comments: Comment[];
   likes: Like[];
   likesCount?: number;

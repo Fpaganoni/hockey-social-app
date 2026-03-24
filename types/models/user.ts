@@ -1,5 +1,6 @@
 import { Role, Position } from "../enums";
 import { Club } from "./club";
+import { Post } from "./post";
 
 // Tipos relacionados con User
 export interface UserStats {
@@ -46,6 +47,7 @@ export interface User {
   club?: Club;
   statistics?: UserStats;
   trajectories?: TrajectoryItem[];
+  posts?: Post[];
 
   // Metadata (opcional)
   createdAt?: string;
