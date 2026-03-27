@@ -1,15 +1,12 @@
 "use client";
 
 import { FeedPage } from "@/components/pages/feed-page";
-import { Header } from "@/components/layout/header";
-import { BottomNavigation } from "@/components/layout/bottom-navigation";
+import { AppShell } from "@/components/layout/app-shell";
 
 export default function FeedRoute() {
   return (
-    <>
-      <Header title="Feed" />
+    <AppShell title="Feed">
       <FeedPage />
-      <BottomNavigation />
-    </>
+    </AppShell>
   );
 }
