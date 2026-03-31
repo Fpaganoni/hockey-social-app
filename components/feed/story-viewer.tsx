@@ -2,13 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
-import { Story } from "@/types/models/story";
+import { Story, GroupedStory } from "@/types/models/story";
+import { useStoryStore } from "@/stores/useStoryStore";
 import Image from "next/image";
 
 interface StoryViewerProps {
-  stories: Story[]; // Array of stories from the same user
+  groups: GroupedStory[];
+  initialGroupIndex?: number;
+  initialStoryIndex?: number;
   onClose: () => void;
-  initialIndex?: number;
 }
 
 /**
@@ -22,17 +24,31 @@ interface StoryViewerProps {
  * />
  */
 export function StoryViewer({
-  stories,
+  groups,
+  initialGroupIndex = 0,
+  initialStoryIndex = 0,
   onClose,
-  initialIndex = 0,
 }: StoryViewerProps) {
-  const [currentIndex, setCurrentIndex] = useState(initialIndex);
-  const currentStory = stories[currentIndex];
+  const [groupIndex, setGroupIndex] = useState(initialGroupIndex);
+  const [storyIndex, setStoryIndex] = useState(initialStoryIndex);
+  const { markAsSeen } = useStoryStore();
+
+  const currentGroup = groups[groupIndex];
+  const currentStory = currentGroup?.stories[storyIndex];
+
+  useEffect(() => {
+    if (currentStory) {
+      markAsSeen(currentStory.id);
+    }
+  }, [currentStory, markAsSeen]);
 
   // Navigate to next story
   const goToNext = () => {
-    if (currentIndex < stories.length - 1) {
-      setCurrentIndex(currentIndex + 1);
+    if (storyIndex < currentGroup.stories.length - 1) {
+      setStoryIndex(storyIndex + 1);
+    } else if (groupIndex < groups.length - 1) {
+      setGroupIndex(groupIndex + 1);
+      setStoryIndex(0);
     } else {
       onClose(); // Close viewer when reaching the end
     }
@@ -40,8 +56,11 @@ export function StoryViewer({
 
   // Navigate to previous story
   const goToPrevious = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
+    if (storyIndex > 0) {
+      setStoryIndex(storyIndex - 1);
+    } else if (groupIndex > 0) {
+      setGroupIndex(groupIndex - 1);
+      setStoryIndex(groups[groupIndex - 1].stories.length - 1);
     }
   };
 
@@ -52,7 +71,7 @@ export function StoryViewer({
     }, 5000);
 
     return () => clearTimeout(timer);
-  }, [currentIndex]);
+  }, [groupIndex, storyIndex]);
 
   // Handle keyboard navigation
   useEffect(() => {
@@ -64,23 +83,23 @@ export function StoryViewer({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentIndex]);
+  }, [groupIndex, storyIndex]);
 
   return (
     <div className="fixed inset-0 z-50 bg-overlay flex items-center justify-center">
       <div className="relative w-full max-w-md h-full md:h-[90vh] bg-background">
         {/* Progress Bars */}
         <div className="absolute top-0 left-0 right-0 z-20 flex gap-1 p-2">
-          {stories.map((_, index) => (
+          {currentGroup.stories.map((_, index) => (
             <div
               key={index}
               className="flex-1 h-1 bg-white/30 rounded-full overflow-hidden"
             >
               <div
                 className={`h-full bg-white transition-all duration-300 ${
-                  index < currentIndex
+                  index < storyIndex
                     ? "w-full"
-                    : index === currentIndex
+                    : index === storyIndex
                       ? "w-full animate-progress"
                       : "w-0"
                 }`}
@@ -131,7 +150,7 @@ export function StoryViewer({
         {/* Navigation Areas (tap left/right to navigate) */}
         <div className="absolute inset-0 flex">
           {/* Left tap area */}
-          {currentIndex > 0 && (
+          {(groupIndex > 0 || storyIndex > 0) && (
             <button
               onClick={goToPrevious}
               className="flex-1 group cursor-pointer"
@@ -149,7 +168,7 @@ export function StoryViewer({
             className="flex-1 group cursor-pointer"
             aria-label="Next story"
           >
-            {currentIndex < stories.length - 1 && (
+            {(groupIndex < groups.length - 1 || storyIndex < currentGroup.stories.length - 1) && (
               <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
                 <ChevronRight size={32} className="text-white drop-shadow-lg" />
               </div>

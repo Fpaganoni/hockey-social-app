@@ -1,10 +1,7 @@
-"use client";
-
-import { use } from "react";
-import { AppShell } from "@/components/layout/app-shell";
-import { PublicUserProfilePage } from "@/components/pages/public-user-profile-page";
-import { useAuthStore } from "@/stores/useAuthStore";
-import { UserProfilePage } from "@/components/pages/user-profile-page";
+import { graphqlClient } from "@/lib/graphql-client";
+import { GET_USER_BY_USERNAME } from "@/graphql/user/queries";
+import { Metadata } from "next";
+import { ProfileSlugWrapper } from "@/components/profile/profile-slug-wrapper";
 
 interface PublicProfileRouteProps {
   params: Promise<{
@@ -12,20 +9,37 @@ interface PublicProfileRouteProps {
   }>;
 }
 
-export default function PublicProfileRoute({ params }: PublicProfileRouteProps) {
-  const { slug } = use(params);
+export async function generateMetadata({ params }: PublicProfileRouteProps): Promise<Metadata> {
+  const { slug } = await params;
   const username = slug.join(".");
-  const { user: currentUser } = useAuthStore();
 
-  const isOwnProfile = currentUser?.username === username;
+  try {
+    const data: any = await graphqlClient.request(GET_USER_BY_USERNAME, { username });
+    if (data?.getUserByUsername) {
+      const user = data.getUserByUsername;
+      return {
+        title: `${user.name} (@${username}) | Hockey Social`,
+        description: user.bio || `Check out ${user.name}'s hockey profile!`,
+        openGraph: {
+          title: `${user.name} | Hockey Social`,
+          description: user.bio || `Check out ${user.name}'s hockey profile!`,
+          images: [user.avatar || "/hockey-stadium.jpg"],
+        },
+      };
+    }
+  } catch (error) {
+    console.error("Error generating metadata for profile", error);
+  }
 
-  return (
-    <AppShell title={isOwnProfile ? "My Profile" : username}>
-      {isOwnProfile ? (
-        <UserProfilePage isOwnProfile={true} />
-      ) : (
-        <PublicUserProfilePage username={username} />
-      )}
-    </AppShell>
-  );
+  return {
+    title: `${username} | Hockey Social`,
+  };
+}
+
+export default async function PublicProfileRoute({ params }: PublicProfileRouteProps) {
+  const { slug } = await params;
+  const username = slug.join(".");
+
+  // The actual UI logic with useAuthStore is handled in a Client Component Wrapper
+  return <ProfileSlugWrapper username={username} />;
 }

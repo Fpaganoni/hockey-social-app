@@ -1,5 +1,3 @@
-"use client";
-
 import { FeedPage } from "@/components/pages/feed-page";
 import { AppShell } from "@/components/layout/app-shell";
 

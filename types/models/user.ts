@@ -113,7 +113,7 @@ export interface UpdateUserVariables {
     goals?: number;
     assists?: number;
   };
-  trajectories?: any[];
+  trajectories?: TrajectoryItem[];
 }
 
 export interface UploadCvVariables {

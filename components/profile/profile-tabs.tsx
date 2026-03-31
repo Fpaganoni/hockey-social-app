@@ -1,5 +1,8 @@
 "use client";
 
+import Image from "next/image";
+
+// Keep existing imports below...
 import { motion } from "framer-motion";
 import { TrajectoryItem, UserStats } from "@/types/models/user";
 import { Post } from "@/types/models/post";
@@ -88,7 +91,7 @@ export function ProfileTabs({
                   return (
                     <div key={post.id} className="relative aspect-square bg-foreground-muted/10 group overflow-hidden cursor-pointer">
                       {imageUrl ? (
-                        <img src={imageUrl} alt="Post" className="object-cover w-full h-full" />
+                        <Image src={imageUrl} alt="Post" fill sizes="(max-width: 768px) 33vw, 25vw" className="object-cover" />
                       ) : (
                         <div className="flex items-center justify-center w-full h-full p-4 text-xs md:text-sm text-center text-foreground break-all overflow-hidden">
                           {post.content.length > 80 ? post.content.substring(0, 80) + "..." : post.content}

@@ -6,18 +6,13 @@ import { useActiveStories } from "@/hooks/useStories";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { Loader } from "../ui/loader";
 import { Error } from "../ui/error";
-import { Story } from "@/types/models/story";
+import { Story, GroupedStory } from "@/types/models/story";
 import { StoryViewer } from "./story-viewer";
+import { useStoryStore } from "@/stores/useStoryStore";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
-// Helper type for grouped stories (like Instagram)
-interface GroupedStory {
-  userId: string;
-  user: Story["user"];
-  stories: Story[];
-  hasMultiple: boolean;
-}
+
 
 // Helper function to group stories by user
 function groupStoriesByUser(stories: Story[]): GroupedStory[] {
@@ -57,15 +52,22 @@ export function StoriesCarousel() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
-  const [selectedStories, setSelectedStories] = useState<GroupedStory | null>(
+  const [selectedGroupIndex, setSelectedGroupIndex] = useState<number | null>(
     null,
   );
+  const [selectedStoryIndex, setSelectedStoryIndex] = useState<number>(0);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
+  
+  const { seenStories } = useStoryStore();
 
   // Open viewer function
 
-  const handleStoryClick = (group: GroupedStory) => {
-    setSelectedStories(group);
+  const handleStoryClick = (index: number) => {
+    const group = groupedStories[index];
+    const firstUnseen = group.stories.findIndex(s => !seenStories.includes(s.id));
+    
+    setSelectedGroupIndex(index);
+    setSelectedStoryIndex(firstUnseen !== -1 ? firstUnseen : 0);
     setIsViewerOpen(true);
   };
 
@@ -164,11 +166,14 @@ export function StoriesCarousel() {
         ref={scrollContainerRef}
         className="flex gap-6 overflow-x-auto hide-scrollbar p-2"
       >
-        {groupedStories.map((group) => (
+        {groupedStories.map((group, index) => {
+          const allViewed = group.stories.every(s => seenStories.includes(s.id));
+          
+          return (
           <button
             key={group.userId}
-            className="flex flex-col items-center gap-2 shrink-0 group cursor-pointer"
-            onClick={() => handleStoryClick(group)}
+            className={`flex flex-col items-center gap-2 shrink-0 group cursor-pointer ${allViewed ? "opacity-75" : ""}`}
+            onClick={() => handleStoryClick(index)}
             title={`${group.user.name} - ${group.stories.length} ${
               group.stories.length === 1 ? t("story") : t("stories")
             }`}
@@ -177,9 +182,11 @@ export function StoriesCarousel() {
               {/* Avatar with border (indicates unviewed stories) */}
               <div
                 className={`relative w-16 h-16 rounded-full overflow-hidden active:scale-95 transition-transform duration-300 hover:scale-110 shadow-md hover:shadow-lg ${
-                  group.hasMultiple
-                    ? "border-3 border-primary ring-2 ring-primary/30"
-                    : "border-3 border-primary"
+                  allViewed 
+                    ? "border-2 border-muted ring-2 ring-transparent opacity-70 grayscale" 
+                    : group.hasMultiple
+                      ? "border-3 border-primary ring-2 ring-primary/30"
+                      : "border-3 border-primary"
                 }`}
               >
                 <Image
@@ -191,19 +198,19 @@ export function StoriesCarousel() {
                 />
               </div>
 
-              {/* Multiple stories indicator */}
-              {group.hasMultiple && (
+              {/* Multiple stories indicator - hidden if viewed */}
+              {group.hasMultiple && !allViewed && (
                 <div className="absolute -bottom-1 -right-1 bg-primary text-primary-foreground text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-background">
                   {group.stories.length}
                 </div>
               )}
             </div>
 
-            <span className="text-xs text-foreground truncate w-16 text-center group-hover:text-foreground group-hover:font-semibold transition-transform duration-300">
+            <span className={`text-xs truncate w-16 text-center group-hover:font-semibold transition-all duration-300 ${allViewed ? "text-muted-foreground" : "text-foreground"}`}>
               {group.user.name}
             </span>
           </button>
-        ))}
+        )})}
       </div>
 
       {/* Right Arrow */}
@@ -217,9 +224,11 @@ export function StoriesCarousel() {
         </button>
       )}
 
-      {isViewerOpen && selectedStories && (
+      {isViewerOpen && selectedGroupIndex !== null && (
         <StoryViewer
-          stories={selectedStories?.stories || []}
+          groups={groupedStories}
+          initialGroupIndex={selectedGroupIndex}
+          initialStoryIndex={selectedStoryIndex}
           onClose={() => setIsViewerOpen(false)}
         />
       )}

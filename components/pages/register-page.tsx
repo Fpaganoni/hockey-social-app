@@ -33,7 +33,7 @@ type RegisterData = {
   email: string;
   password: string;
   confirmPassword: string;
-  role: "player" | "club_admin" | "Coach";
+  role: "player" | "club" | "coach";
 };
 
 export const RegisterPage = () => {
@@ -67,7 +67,7 @@ export const RegisterPage = () => {
       confirmPassword: z
         .string()
         .min(6, tValidation("confirmPasswordRequired")),
-      role: z.enum(["player", "club_admin", "Coach"], {
+      role: z.enum(["player", "club", "coach"], {
         message: tValidation("roleInvalid"),
       }),
     })
@@ -86,10 +86,13 @@ export const RegisterPage = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<RegisterData>({
     resolver: zodResolver(registerSchema),
   });
+
+  const selectedRole = watch("role");
 
   const onSubmit: SubmitHandler<RegisterData> = (data) => {
     const { email, name, username, password, role } = data;
@@ -134,10 +137,47 @@ export const RegisterPage = () => {
         )}
 
         <form onSubmit={handleSubmit(onSubmit)}>
+          {/* Role Input - Moved to top for better UX */}
+          <div className="mb-4">
+            <Label htmlFor="role" className="mb-2">
+              {t("role")}
+            </Label>
+            <div className="relative">
+              <ClipboardList
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground pointer-events-none"
+                size={18}
+              />
+              <select
+                {...register("role", { required: true })}
+                id="role"
+                defaultValue={""}
+                className="w-full pl-10 h-(--input-button-height) rounded-md border border-input bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring appearance-none cursor-pointer"
+              >
+                <option value="" disabled>
+                  {t("placeholders.role")}
+                </option>
+                <option value="player">{t("roles.player")}</option>
+                <option value="club">{t("roles.club")}</option>
+                <option value="coach">{t("roles.coach")}</option>
+              </select>
+            </div>
+            {errors.role && (
+              <motion.p
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="flex gap-1 text-error bg-error/20 font-semibold p-1 text-xs mt-2"
+              >
+                <ArrowUpIcon size={16} />
+                {errors.role.message}
+              </motion.p>
+            )}
+          </div>
+
           {/* Name input */}
           <div className="mb-4">
             <Label htmlFor="name" className="mb-2">
-              {t("fullName")}
+              {selectedRole === "club" ? "Club Name" : t("fullName")}
             </Label>
             <div className="relative">
               <User
@@ -154,7 +194,7 @@ export const RegisterPage = () => {
                   maxLength: 30,
                 })}
                 id="name"
-                placeholder={t("placeholders.fullName")}
+                placeholder={selectedRole === "club" ? "Club Name" : t("placeholders.fullName")}
                 className="pl-10"
               />
             </div>
@@ -315,41 +355,7 @@ export const RegisterPage = () => {
             )}
           </div>
 
-          {/* Role Input */}
-          <div className="mb-4">
-            <Label htmlFor="role" className="mb-2">
-              {t("role")}
-            </Label>
-            <div className="relative">
-              <ClipboardList
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground pointer-events-none"
-                size={18}
-              />
-              <select
-                {...register("role", { required: true })}
-                id="role"
-                className="w-full pl-10 h-(--input-button-height) rounded-md border border-input bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring appearance-none cursor-pointer"
-              >
-                <option value="" disabled>
-                  {t("placeholders.role")}
-                </option>
-                <option value="player">{t("roles.player")}</option>
-                <option value="club_admin">{t("roles.club")}</option>
-                <option value="Coach">{t("roles.coach")}</option>
-              </select>
-            </div>
-            {errors.role && (
-              <motion.p
-                initial={{ opacity: 0, y: -5 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="flex gap-1 text-error bg-error/20 font-semibold p-1 text-xs mt-2"
-              >
-                <ArrowUpIcon size={16} />
-                {errors.role.message}
-              </motion.p>
-            )}
-          </div>
+
 
           {/* Register button */}
           <motion.button

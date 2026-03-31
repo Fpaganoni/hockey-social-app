@@ -105,12 +105,15 @@ export function ProfileHeader({
   return (
     <div className="bg-background">
       <div className="h-86 relative overflow-hidden">
-        <img
+        <Image
           src={coverImage || "/hockey-stadium.jpg"}
           alt="Cover"
-          className="w-full h-full object-cover absolute inset-0"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-background via-background/10 to-transparent"></div>
+        <div className="absolute inset-0 bg-linear-to-t from-background via-background/10 to-transparent z-10"></div>
       </div>
 
       {/* Profile Content */}
@@ -118,13 +121,20 @@ export function ProfileHeader({
         {/* Profile Picture and Info */}
         <div className="flex justify-between items-start mb-4">
           <div className="flex items-start gap-3 flex-1 -mt-24 relative z-10">
-            <motion.img
+            <motion.div
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              src={avatar}
-              alt={name}
-              className="w-32 h-32 rounded-full border-2 border-border shadow-lg cursor-pointer mx-2"
-            />
+              className="w-32 h-32 rounded-full border-2 border-border shadow-lg cursor-pointer mx-2 relative overflow-hidden shrink-0 bg-muted"
+            >
+              <Image
+                src={avatar || "/hockey-stadium.jpg"}
+                alt={name}
+                fill
+                priority
+                sizes="128px"
+                className="object-cover"
+              />
+            </motion.div>
             <div className="pt-6">
               <div className="flex items-center gap-2 flex-wrap">
                 <h1 className="text-2xl font-bold text-foreground">{name}</h1>

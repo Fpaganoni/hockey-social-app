@@ -11,10 +11,14 @@ interface GetJobOpportunitiesVariables {
   offset?: number;
 }
 
-export function useJobOpportunities(variables?: GetJobOpportunitiesVariables) {
+export function useJobOpportunities(
+  variables?: GetJobOpportunitiesVariables,
+  initialData?: { jobOpportunities: JobOpportunity[] }
+) {
   return useQuery<{ jobOpportunities: JobOpportunity[] }>({
     queryKey: ["jobOpportunities", variables],
     queryFn: async () =>
       graphqlClient.request(GET_JOB_OPPORTUNITIES, variables),
+    initialData,
   });
 }

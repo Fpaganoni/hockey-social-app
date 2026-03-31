@@ -24,7 +24,7 @@ export function Header({ title = "Hockey Connect" }: HeaderProps) {
   return (
     <header className="sticky top-0 bg-background/30 backdrop-blur-sm border-b border-border z-30 px-4 py-3 flex items-center justify-between">
       {/* Page title */}
-      <h1 className="text-xl font-bold text-foreground">{title}</h1>
+      <h1 className="text-xl ml-8 font-bold text-foreground">{title}</h1>
 
       <div className="flex items-center gap-3">
         <LanguageSelector />
