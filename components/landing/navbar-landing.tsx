@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { Menu, X } from "lucide-react";
@@ -22,8 +22,13 @@ export function NavbarLanding() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const t = useTranslations("landingNav");
   const locale = useLocale();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const navLinks = [
     { href: "#home", label: t("home") },
@@ -73,27 +78,15 @@ export function NavbarLanding() {
           <LanguageSelector />
           <ThemeToggleControl />
 
-          <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
-            <DialogTrigger asChild>
+          {!mounted ? (
+            <>
               <Button
                 variant="ghost"
                 size="default"
-                className="bg-input/30 hover:bg-input/80 text-foreground "
+                className="bg-input/30 hover:bg-input/80 text-foreground"
               >
                 {t("signIn")}
               </Button>
-            </DialogTrigger>
-            <DialogContent
-              className="max-w-md p-0 max-h-[90vh] overflow-y-auto"
-              showCloseButton={false}
-            >
-              <DialogTitle className="sr-only">Sign In</DialogTitle>
-              <LoginPage />
-            </DialogContent>
-          </Dialog>
-
-          <Dialog open={registerOpen} onOpenChange={setRegisterOpen}>
-            <DialogTrigger asChild>
               <Button
                 variant="ghost"
                 size="default"
@@ -101,15 +94,48 @@ export function NavbarLanding() {
               >
                 {t("signUp")}
               </Button>
-            </DialogTrigger>
-            <DialogContent
-              className="max-w-md p-0 max-h-[90vh] overflow-y-auto"
-              showCloseButton={false}
-            >
-              <DialogTitle className="sr-only">Sign Up</DialogTitle>
-              <RegisterPage />
-            </DialogContent>
-          </Dialog>
+            </>
+          ) : (
+            <>
+              <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="default"
+                    className="bg-input/30 hover:bg-input/80 text-foreground "
+                  >
+                    {t("signIn")}
+                  </Button>
+                </DialogTrigger>
+                <DialogContent
+                  className="max-w-md p-0 max-h-[90vh] overflow-y-auto"
+                  showCloseButton={false}
+                >
+                  <DialogTitle className="sr-only">Sign In</DialogTitle>
+                  <LoginPage />
+                </DialogContent>
+              </Dialog>
+
+              <Dialog open={registerOpen} onOpenChange={setRegisterOpen}>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="default"
+                    className="text-pure-white hover:text-pure-white bg-primary/80 hover:bg-primary"
+                  >
+                    {t("signUp")}
+                  </Button>
+                </DialogTrigger>
+                <DialogContent
+                  className="max-w-md p-0 max-h-[90vh] overflow-y-auto"
+                  showCloseButton={false}
+                >
+                  <DialogTitle className="sr-only">Sign Up</DialogTitle>
+                  <RegisterPage />
+                </DialogContent>
+              </Dialog>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -150,45 +176,66 @@ export function NavbarLanding() {
                 <LanguageSelector />
                 <ThemeToggleControl />
 
-                <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
-                  <DialogTrigger asChild>
+                {!mounted ? (
+                  <>
                     <Button
                       variant="ghost"
                       size="default"
                       className="w-full"
-                      onClick={() => setIsMenuOpen(false)}
                     >
                       {t("signIn")}
                     </Button>
-                  </DialogTrigger>
-                  <DialogContent
-                    className="max-w-md p-0 max-h-[90vh] overflow-y-auto"
-                    showCloseButton={false}
-                  >
-                    <DialogTitle className="sr-only">Sign In</DialogTitle>
-                    <LoginPage />
-                  </DialogContent>
-                </Dialog>
-
-                <Dialog open={registerOpen} onOpenChange={setRegisterOpen}>
-                  <DialogTrigger asChild>
                     <Button
                       variant="default"
                       size="default"
                       className="w-full"
-                      onClick={() => setIsMenuOpen(false)}
                     >
                       {t("signUp")}
                     </Button>
-                  </DialogTrigger>
-                  <DialogContent
-                    className="max-w-md p-0 max-h-[90vh] overflow-y-auto"
-                    showCloseButton={false}
-                  >
-                    <DialogTitle className="sr-only">Sign Up</DialogTitle>
-                    <RegisterPage />
-                  </DialogContent>
-                </Dialog>
+                  </>
+                ) : (
+                  <>
+                    <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
+                      <DialogTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="default"
+                          className="w-full"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          {t("signIn")}
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent
+                        className="max-w-md p-0 max-h-[90vh] overflow-y-auto"
+                        showCloseButton={false}
+                      >
+                        <DialogTitle className="sr-only">Sign In</DialogTitle>
+                        <LoginPage />
+                      </DialogContent>
+                    </Dialog>
+
+                    <Dialog open={registerOpen} onOpenChange={setRegisterOpen}>
+                      <DialogTrigger asChild>
+                        <Button
+                          variant="default"
+                          size="default"
+                          className="w-full"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          {t("signUp")}
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent
+                        className="max-w-md p-0 max-h-[90vh] overflow-y-auto"
+                        showCloseButton={false}
+                      >
+                        <DialogTitle className="sr-only">Sign Up</DialogTitle>
+                        <RegisterPage />
+                      </DialogContent>
+                    </Dialog>
+                  </>
+                )}
               </div>
             </div>
           </motion.div>

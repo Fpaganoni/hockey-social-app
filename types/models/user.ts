@@ -1,5 +1,6 @@
 import { Role, Position } from "../enums";
 import { Club } from "./club";
+import { Post } from "./post";
 
 // Tipos relacionados con User
 export interface UserStats {
@@ -9,10 +10,16 @@ export interface UserStats {
 }
 
 export interface TrajectoryItem {
-  club: Club;
+  id?: string;
   title: string;
+  organization?: string;
   period: string;
   description: string;
+  startDate?: string;
+  endDate?: string;
+  isCurrent?: boolean;
+  order?: number;
+  club?: Club;
 }
 
 export interface User {
@@ -25,18 +32,22 @@ export interface User {
 
   // Profile
   avatar?: string;
+  coverImage?: string;
   bio?: string;
   position?: Position;
   country?: string;
   city?: string;
   level?: string;
+  yearsOfExperience?: number;
   cvUrl?: string;
+  multimedia?: string[];
 
   // Relations
   clubId?: string;
   club?: Club;
   statistics?: UserStats;
   trajectories?: TrajectoryItem[];
+  posts?: Post[];
 
   // Metadata (opcional)
   createdAt?: string;
@@ -76,17 +87,33 @@ export type UpdateUserInput = Partial<Omit<User, "id" | "email" | "role">>;
 // TYPE DEFINITIONS FOR MUTATION VARIABLES
 // ===========================================
 
-export interface FollowUserVariables {
-  userId: string;
+export interface FollowMutationVariables {
+  followerType: string;
+  followerId: string;
+  followingType: string;
+  followingId: string;
 }
 
 export interface UpdateUserVariables {
+  id: string;
   name?: string;
+  username?: string;
   bio?: string;
   avatar?: string;
+  coverImage?: string;
   position?: string;
   clubId?: string;
   cvUrl?: string;
+  multimedia?: string[];
+  country?: string;
+  city?: string;
+  yearsOfExperience?: number;
+  statistics?: {
+    gamesPlayed?: number;
+    goals?: number;
+    assists?: number;
+  };
+  trajectories?: TrajectoryItem[];
 }
 
 export interface UploadCvVariables {
@@ -153,10 +180,10 @@ type Following = {
 };
 
 export interface FollowingUserResponse {
-  followings: Following[];
+  following: Following[];
 }
 
-export interface FollowUserVariables {
+export interface FollowQueryVariables {
   entityType: string;
   entityId: string;
 }

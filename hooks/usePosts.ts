@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
-import { GET_POSTS, GET_POST } from "@/graphql/post/queries";
+import { GET_POSTS, GET_POST, GET_POSTS_BY_USER } from "@/graphql/post/queries";
 import { Post } from "@/types/models/post";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
@@ -36,6 +36,18 @@ export function usePost(postId: string | null) {
     queryKey: ["post", postId],
     queryFn: async () => graphqlClient.request(GET_POST, { id: postId }),
     enabled: !!postId,
+  });
+}
+
+/**
+ * Hook to fetch all posts from a specific user
+ */
+export function usePostsByUser(userId: string | null) {
+  return useQuery<{ postsByUser: Post[] }>({
+    queryKey: ["posts", "byUser", userId],
+    queryFn: async () =>
+      graphqlClient.request(GET_POSTS_BY_USER, { userId }),
+    enabled: !!userId,
   });
 }
 

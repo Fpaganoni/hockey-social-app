@@ -12,3 +12,11 @@ export interface Story {
     avatar: string;
   };
 }
+
+export interface GroupedStory {
+  userId: string;
+  user: Story["user"];
+  stories: Story[];
+  hasMultiple: boolean;
+}
+

@@ -14,18 +14,20 @@ export const GET_USERS = gql`
       bio
       position
       clubId
+      cvUrl
     }
   }
 `;
 
 export const GET_USER_FOR_LOGIN = gql`
-  query GetUserForLogin($id: String!) {
+  query GetUserForLogin($id: ID!) {
     user(id: $id) {
       id
       email
       name
       username
       avatar
+      coverImage
       bio
       position
       role
@@ -33,6 +35,7 @@ export const GET_USER_FOR_LOGIN = gql`
       country
       city
       cvUrl
+      multimedia
       club {
         name
         logo
@@ -43,38 +46,39 @@ export const GET_USER_FOR_LOGIN = gql`
         assists
       }
       trajectories {
+        title
+        organization
+        period
+        description
+        startDate
+        endDate
+        isCurrent
         club {
           name
           logo
         }
-        period
-        description
-        title
       }
     }
   }
 `;
 
 export const GET_USER = gql`
-  query GetUser($id: String!) {
+  query GetUser($id: ID!) {
     user(id: $id) {
       id
       email
       name
       avatar
+      coverImage
       bio
       position
       clubId
       cvUrl
+      multimedia
       club {
         id
         name
         logo
-      }
-      posts {
-        id
-        content
-        createdAt
       }
       followers {
         id
@@ -85,6 +89,19 @@ export const GET_USER = gql`
         id
         name
         avatar
+      }
+      trajectories {
+        title
+        organization
+        period
+        description
+        startDate
+        endDate
+        isCurrent
+        club {
+          name
+          logo
+        }
       }
     }
   }
@@ -116,6 +133,44 @@ export const GET_FOLLOWING = gql`
   }
 `;
 
+export const GET_USER_BY_USERNAME = gql`
+  query GetUserByUsername($username: String!) {
+    getUserByUsername(username: $username) {
+      id
+      email
+      name
+      username
+      avatar
+      coverImage
+      bio
+      position
+      role
+      country
+      city
+      cvUrl
+      multimedia
+      statistics {
+        gamesPlayed
+        goals
+        assists
+      }
+      trajectories {
+        title
+        organization
+        period
+        description
+        startDate
+        endDate
+        isCurrent
+        club {
+          name
+          logo
+        }
+      }
+    }
+  }
+`;
+
 export const EXPLORE_USERS_QUERY = gql`
   query ExploreUsers($role: String!, $limit: Int!) {
     exploreUsers(role: $role, limit: $limit) {
@@ -129,6 +184,7 @@ export const EXPLORE_USERS_QUERY = gql`
       isVerified
       bio
       level
+      cvUrl
     }
   }
 `;

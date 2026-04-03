@@ -7,3 +7,9 @@ coverage
 npm-debug.log
 yarn-error.log
 .next
+tsconfig.tsbuildinfo
+.env.local
+.env.production
+.env.development
+.env.example
+.env

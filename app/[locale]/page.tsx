@@ -1,23 +1,20 @@
 "use client";
 
 import { LandingPage } from "@/components/pages/landing-page";
-import { Header } from "@/components/layout/header";
-import { BottomNavigation } from "@/components/layout/bottom-navigation";
+import { AppShell } from "@/components/layout/app-shell";
 import { FeedPage } from "@/components/pages/feed-page";
 import { useAuthStore } from "@/stores/useAuthStore";
 
 export default function Home() {
-  const { isLoggedIn, user } = useAuthStore();
+  const { isLoggedIn } = useAuthStore();
 
   if (!isLoggedIn) {
     return <LandingPage />;
   }
 
   return (
-    <>
-      <Header />
+    <AppShell title="Feed">
       <FeedPage />
-      <BottomNavigation />
-    </>
+    </AppShell>
   );
 }

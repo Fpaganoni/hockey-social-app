@@ -3,10 +3,8 @@
 import { Bell, LogOut } from "lucide-react";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { HockeyXTicks } from "../ui/hockey-xtick";
 import { LanguageSelector } from "../ui/language-selector";
 import { ThemeToggleControl } from "../ui/theme-provider";
-import { motion } from "framer-motion";
 import { useAuthStore } from "@/stores/useAuthStore";
 
 interface HeaderProps {
@@ -15,7 +13,7 @@ interface HeaderProps {
 
 export function Header({ title = "Hockey Connect" }: HeaderProps) {
   const [showLogout, setShowLogout] = useState(false);
-  const { logout, user } = useAuthStore();
+  const { logout } = useAuthStore();
   const t = useTranslations("navigation");
 
   const handleLogout = () => {
@@ -25,16 +23,8 @@ export function Header({ title = "Hockey Connect" }: HeaderProps) {
 
   return (
     <header className="sticky top-0 bg-background/30 backdrop-blur-sm border-b border-border z-30 px-4 py-3 flex items-center justify-between">
-      <motion.div
-        whileHover={{ scale: 1.1 }}
-        transition={{ duration: 0.2 }}
-        className="flex items-center gap-2 ml-2 cursor-pointer"
-      >
-        <div className="w-8 h-8 flex items-center justify-center cursor-pointer transition-transform">
-          <HockeyXTicks size={28} className="text-foreground" />
-        </div>
-        <h1 className="text-xl font-bold text-foreground">{title}</h1>
-      </motion.div>
+      {/* Page title */}
+      <h1 className="text-xl ml-8 font-bold text-foreground">{title}</h1>
 
       <div className="flex items-center gap-3">
         <LanguageSelector />

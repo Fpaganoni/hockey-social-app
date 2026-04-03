@@ -11,13 +11,21 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "**",
+      },
+      {
+        protocol: "http",
+        hostname: "**",
+      },
+      {
+        protocol: "https",
         hostname: "ik.imagekit.io",
         pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
-        pathname: "/**", // Permite cualquier ruta dentro de Cloudinary
+        pathname: "/**",
       },
       {
         protocol: "https",
@@ -27,7 +35,7 @@ const nextConfig = {
     ],
   },
   turbopack: {
-    root: process.cwd(), // Usa el directorio actual como raíz
+    root: process.cwd(),
   },
 };
 

@@ -37,6 +37,33 @@ export const GET_POSTS = gql`
   }
 `;
 
+export const GET_POSTS_BY_USER = gql`
+  query GetPostsByUser($userId: ID!) {
+    postsByUser(userId: $userId) {
+      id
+      content
+      imageUrl
+      images
+      videoUrl
+      createdAt
+      visibility
+      isPinned
+      likesCount
+      user {
+        id
+        name
+        username
+        avatar
+      }
+      club {
+        id
+        name
+        logo
+      }
+    }
+  }
+`;
+
 export const GET_POST = gql`
   query GetPost($id: ID!) {
     post(id: $id) {

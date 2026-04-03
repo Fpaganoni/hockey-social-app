@@ -3,10 +3,15 @@ import { Loader } from "../ui/loader";
 import { Error } from "../ui/error";
 import { OpportunityListCard } from "./opportunity-list-card";
 import { useTranslations } from "next-intl";
+import { JobOpportunity } from "@/types/models/job-opportunity";
 
-export function JobOpportunities() {
+interface JobOpportunitiesProps {
+  initialData?: { jobOpportunities: JobOpportunity[] };
+}
+
+export function JobOpportunities({ initialData }: JobOpportunitiesProps) {
   const t = useTranslations("opportunities");
-  const { data, isLoading, error } = useJobOpportunities();
+  const { data, isLoading, error } = useJobOpportunities(undefined, initialData);
 
   if (isLoading) {
     return <Loader children={t("loading")} />;

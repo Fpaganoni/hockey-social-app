@@ -1,5 +1,8 @@
 "use client";
 
+import Image from "next/image";
+
+// Keep existing imports below...
 import { ArrowRight, MapPin, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
@@ -64,11 +67,15 @@ export function ProfileCard({
       <div className="flex items-start justify-between gap-4">
         {/* Profile Info */}
         <div className="flex items-start gap-3 flex-1 min-w-0">
-          <img
-            src={avatar || "/user.png"}
-            alt={name}
-            className="w-14 h-14 rounded-full object-cover cursor-pointer shrink-0"
-          />
+          <div className="relative w-14 h-14 shrink-0 rounded-full overflow-hidden">
+            <Image
+              src={avatar || "/user.png"}
+              alt={name}
+              fill
+              className="object-cover cursor-pointer"
+              sizes="56px"
+            />
+          </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <h3 className="font-medium text-foreground truncate">{name}</h3>

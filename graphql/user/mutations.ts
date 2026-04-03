@@ -30,25 +30,65 @@ export const REGISTER = gql`
 
 export const UPDATE_USER = gql`
   mutation UpdateUser(
+    $id: ID!
     $name: String
+    $username: String
     $bio: String
     $avatar: String
+    $coverImage: String
     $position: String
     $clubId: ID
+    $cvUrl: String
+    $multimedia: [String!]
+    $country: String
+    $city: String
+    $yearsOfExperience: Int
+    $statistics: StatisticsInput
+    $trajectories: [TrajectoryInput!]
   ) {
     updateUser(
+      id: $id
       name: $name
+      username: $username
       bio: $bio
       avatar: $avatar
+      coverImage: $coverImage
       position: $position
       clubId: $clubId
+      cvUrl: $cvUrl
+      multimedia: $multimedia
+      country: $country
+      city: $city
+      yearsOfExperience: $yearsOfExperience
+      statistics: $statistics
+      trajectories: $trajectories
     ) {
       id
       name
       bio
       avatar
+      coverImage
       position
       clubId
+      cvUrl
+      multimedia
+      country
+      city
+      yearsOfExperience
+      trajectories {
+        title
+        organization
+        period
+        description
+        startDate
+        endDate
+        isCurrent
+      }
+      statistics {
+        gamesPlayed
+        goals
+        assists
+      }
     }
   }
 `;
@@ -58,8 +98,18 @@ export const UPDATE_USER = gql`
 // ============================================
 
 export const FOLLOW_USER = gql`
-  mutation FollowUser($userId: ID!) {
-    followUser(userId: $userId) {
+  mutation Follow(
+    $followerType: String!
+    $followerId: String!
+    $followingType: String!
+    $followingId: String!
+  ) {
+    follow(
+      followerType: $followerType
+      followerId: $followerId
+      followingType: $followingType
+      followingId: $followingId
+    ) {
       id
       followerId
       followingId
@@ -68,10 +118,18 @@ export const FOLLOW_USER = gql`
 `;
 
 export const UNFOLLOW_USER = gql`
-  mutation UnfollowUser($userId: ID!) {
-    unfollowUser(userId: $userId) {
-      id
-    }
+  mutation Unfollow(
+    $followerType: String!
+    $followerId: String!
+    $followingType: String!
+    $followingId: String!
+  ) {
+    unfollow(
+      followerType: $followerType
+      followerId: $followerId
+      followingType: $followingType
+      followingId: $followingId
+    )
   }
 `;
 
