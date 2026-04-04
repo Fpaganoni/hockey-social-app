@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    name: Lint · Type-check · Build · Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # ── Static analysis ─────────────────────────────────────────────────────
+      - name: Type-check
+        run: pnpm exec tsc --noEmit
+
+      - name: Lint
+        run: pnpm lint
+
+      # ── Build (.next cache persisted for subsequent runs) ───────────────────
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: nextjs-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('**/*.ts', '**/*.tsx') }}
+          restore-keys: nextjs-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
+
+      - name: Build
+        run: pnpm build
+
+      # ── Unit / Integration tests ─────────────────────────────────────────────
+      - name: Unit tests (Vitest)
+        run: pnpm test:unit --reporter=verbose
+
+      # ── E2E tests (only on push to main/develop, not every PR) ──────────────
+      - name: Install Playwright browsers
+        if: github.event_name == 'push'
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Validate E2E secrets
+        if: github.event_name == 'push'
+        run: |
+          if [ -z "$GRAPHQL_URL_TEST" ]; then
+            echo "::error::Secret GRAPHQL_URL_TEST is not set. Add it in Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+        env:
+          GRAPHQL_URL_TEST: ${{ secrets.GRAPHQL_URL_TEST }}
+
+      - name: E2E tests (Playwright)
+        if: github.event_name == 'push'
+        run: pnpm test:e2e
+        env:
+          NEXT_PUBLIC_GRAPHQL_URL: ${{ secrets.GRAPHQL_URL_TEST }}
+
+      - name: Upload Playwright report
+        if: failure() && github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

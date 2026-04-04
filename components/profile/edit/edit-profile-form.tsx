@@ -174,10 +174,11 @@ export function EditProfileForm() {
         }
 
         return {
+          id: t.id,
           title: t.title,
           organization: t.organization,
           period: t.period,
-          description: t.description,
+          description: t.description || "",
           startDate: formattedStartDate,
           endDate: formattedEndDate,
           isCurrent: t.isCurrent,
