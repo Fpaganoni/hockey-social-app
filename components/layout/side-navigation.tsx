@@ -29,6 +29,11 @@ export function SideNavigation() {
   // Check if active, considering locale prefix
   const isActiveRoute = (href: string) => {
     const localizedHref = getLocalizedHref(href);
+    
+    if (href === "/feed" && (pathname === "/" || pathname === `/${locale}`)) {
+      return true;
+    }
+
     return pathname === localizedHref || pathname === href;
   };
 
