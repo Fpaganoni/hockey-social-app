@@ -386,6 +386,19 @@
     "comment": "Comentar",
     "share": "Compartir",
     "newPost": "Crear publicación",
-    "whatAreYouThinking": "¿Qué estás pensando?"
+    "whatAreYouThinking": "¿Qué estás pensando?",
+    "modal": {
+      "commentsTab": "Comentarios ({count})",
+      "likesTab": "Me gusta ({count})",
+      "noCommentsYet": "Aún no hay comentarios.",
+      "reply": "Responder",
+      "noLikesYet": "Nadie ha dado me gusta todavía.",
+      "follow": "Seguir",
+      "following": "Siguiendo",
+      "likesCount": "{count} Me gusta",
+      "addCommentPlaceholder": "Agrega un comentario...",
+      "publish": "Publicar",
+      "publishing": "Publicando..."
+    }
   }
 }

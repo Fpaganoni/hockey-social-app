@@ -386,6 +386,19 @@
     "comment": "Comment",
     "share": "Share",
     "newPost": "Create Post",
-    "whatAreYouThinking": "What's on your mind?"
+    "whatAreYouThinking": "What's on your mind?",
+    "modal": {
+      "commentsTab": "Comments ({count})",
+      "likesTab": "Likes ({count})",
+      "noCommentsYet": "No comments yet.",
+      "reply": "Reply",
+      "noLikesYet": "No likes yet.",
+      "follow": "Follow",
+      "following": "Following",
+      "likesCount": "{count} Likes",
+      "addCommentPlaceholder": "Add a comment...",
+      "publish": "Publish",
+      "publishing": "Publishing..."
+    }
   }
 }

@@ -4,6 +4,9 @@ import {
   CREATE_POST,
   UPDATE_POST,
   DELETE_POST,
+  LIKE_POST,
+  UNLIKE_POST,
+  CREATE_COMMENT,
 } from "@/graphql/post/mutations";
 import { Post } from "@/types/models/post";
 import { Role } from "@/types/enums";
@@ -13,6 +16,8 @@ import { useAuthStore } from "@/stores/useAuthStore";
 type CreatePostVariables = Pick<Post, "content" | "imageUrl">;
 type UpdatePostVariables = Pick<Post, "id" | "content" | "imageUrl">;
 type DeletePostVariables = Pick<Post, "id">;
+type LikePostVariables = Pick<Post, "id">;
+type CreateCommentVariables = { postId: string; content: string };
 
 type PostMutationContext = {
   previousPosts?: { posts: Post[] };
@@ -124,6 +129,51 @@ export function useDeletePost() {
       graphqlClient.request(DELETE_POST, variables),
     onSuccess: () => {
       // Invalidate posts list
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+  });
+}
+
+/**
+ * Hook to like a post
+ */
+export function useLikePost() {
+  const queryClient = useQueryClient();
+
+  return useMutation<{ likePost: any }, Error, { postId: string }>({
+    mutationFn: async (variables) => graphqlClient.request(LIKE_POST, variables),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["post", variables.postId] });
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+  });
+}
+
+/**
+ * Hook to unlike a post
+ */
+export function useUnlikePost() {
+  const queryClient = useQueryClient();
+
+  return useMutation<{ unlikePost: any }, Error, { postId: string }>({
+    mutationFn: async (variables) => graphqlClient.request(UNLIKE_POST, variables),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["post", variables.postId] });
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+  });
+}
+
+/**
+ * Hook to comment on a post
+ */
+export function useCreateComment() {
+  const queryClient = useQueryClient();
+
+  return useMutation<{ createComment: any }, Error, CreateCommentVariables>({
+    mutationFn: async (variables) => graphqlClient.request(CREATE_COMMENT, variables),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["post", variables.postId] });
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });

@@ -80,7 +80,6 @@ export const GET_POST = gql`
       }
       likes {
         id
-        userId
         user {
           id
           name
