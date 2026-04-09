@@ -7,6 +7,7 @@ import { formatRelativeTime } from "@/lib/date-utils";
 import { Post } from "@/types/models/post";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
+import { PostModal } from "./post-modal";
 
 type PostCardProps = {
   post: Pick<
@@ -28,9 +29,11 @@ export function PostCard({ post }: PostCardProps) {
   const { id, content, imageUrl, createdAt, user, comments, likes, updatedAt } =
     post;
   const [liked, setLiked] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <motion.div className="w-full bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg">
+    <>
+      <motion.div className="w-full bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg">
       {/* Header */}
       <div className="p-4 flex items-center justify-between border-b border-border">
         <div className="flex items-center gap-3">
@@ -56,7 +59,10 @@ export function PostCard({ post }: PostCardProps) {
       </div>
 
       {/* Content */}
-      <div className="px-4 py-3">
+      <div 
+        className="px-4 py-3 cursor-pointer"
+        onClick={() => setIsModalOpen(true)}
+      >
         <p className="text-foreground leading-relaxed text-sm">{content}</p>
       </div>
 
@@ -68,6 +74,7 @@ export function PostCard({ post }: PostCardProps) {
           height={300}
           alt={t("postContent")}
           className="w-full h-[600px] object-cover cursor-pointer"
+          onClick={() => setIsModalOpen(true)}
         />
       )}
 
@@ -84,7 +91,10 @@ export function PostCard({ post }: PostCardProps) {
           <Heart size={18} fill={liked ? "currentColor" : "none"} />
           <span className="text-sm font-medium">{likes?.length}</span>
         </button>
-        <button className="flex items-center gap-2 px-4 py-2 hover:bg-foreground-muted/30 rounded-lg transition-colors duration-300 cursor-pointer">
+        <button 
+          onClick={() => setIsModalOpen(true)}
+          className="flex items-center gap-2 px-4 py-2 hover:bg-foreground-muted/30 rounded-lg transition-colors duration-300 cursor-pointer"
+        >
           <MessageCircle size={18} />
           <span className="text-sm font-medium">{comments?.length}</span>
         </button>
@@ -93,5 +103,12 @@ export function PostCard({ post }: PostCardProps) {
         </button>
       </div>
     </motion.div>
+
+    <PostModal 
+      postId={id} 
+      isOpen={isModalOpen} 
+      onClose={() => setIsModalOpen(false)} 
+    />
+    </>
   );
 }

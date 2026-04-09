@@ -84,6 +84,7 @@ export const GET_POST = gql`
         user {
           id
           name
+          avatar
         }
       }
       comments {
