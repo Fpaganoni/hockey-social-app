@@ -44,12 +44,17 @@ export const DELETE_POST = gql`
 // LIKE MUTATIONS
 // ============================================
 
+// Backend requires userId as a mandatory argument.
+// Like type only exposes: id, user { id name avatar }
 export const LIKE_POST = gql`
-  mutation LikePost($postId: ID!) {
-    likePost(postId: $postId) {
+  mutation LikePost($postId: ID!, $userId: ID!) {
+    likePost(postId: $postId, userId: $userId) {
       id
-      userId
-      postId
+      user {
+        id
+        name
+        avatar
+      }
     }
   }
 `;
@@ -66,14 +71,14 @@ export const UNLIKE_POST = gql`
 // COMMENT MUTATIONS
 // ============================================
 
+// Backend requires userId as a mandatory argument.
+// Return only safe fields: id, content, createdAt, user object
 export const CREATE_COMMENT = gql`
-  mutation CreateComment($postId: ID!, $content: String!) {
-    createComment(postId: $postId, content: $content) {
+  mutation CreateComment($postId: ID!, $userId: ID!, $content: String!) {
+    createComment(postId: $postId, userId: $userId, content: $content) {
       id
       content
       createdAt
-      userId
-      postId
       user {
         id
         name
