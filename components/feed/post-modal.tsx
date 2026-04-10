@@ -1,18 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { formatRelativeTime } from "@/lib/date-utils";
-import { Heart, MessageCircle, Share2, Loader2, X } from "lucide-react";
+import {
+  Heart,
+  MessageCircle,
+  Share2,
+  Loader2,
+  X,
+  MoreHorizontal,
+  ChevronLeft,
+} from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { usePost } from "@/hooks/usePosts";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { useFollowMutation, useUnfollowMutation, useFollowingUser } from "@/hooks/useUsers";
-import { useLikePost, useUnlikePost, useCreateComment } from "@/hooks/usePostMutations";
+import {
+  useFollowMutation,
+  useUnfollowMutation,
+  useFollowingUser,
+} from "@/hooks/useUsers";
+import {
+  useLikePost,
+  useUnlikePost,
+  useCreateComment,
+} from "@/hooks/usePostMutations";
 
 interface PostModalProps {
   postId: string | null;
@@ -20,14 +40,22 @@ interface PostModalProps {
   onClose: () => void;
 }
 
+// Breakpoint at which we switch to side-by-side layout (px)
+const SIDE_BY_SIDE_BREAKPOINT = 900;
+
 export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
   const { data, isLoading } = usePost(isOpen ? postId : null);
   const locale = useLocale() as "en" | "es" | "fr";
   const t = useTranslations("posts.modal");
-  
+
   const { user: currentUser } = useAuthStore();
-  const { data: followingData } = useFollowingUser("User", currentUser?.id || "");
-  const followingIds = new Set(followingData?.following.map((f) => f.followingId) || []);
+  const { data: followingData } = useFollowingUser(
+    "USER",
+    currentUser?.id || "",
+  );
+  const followingIds = new Set(
+    followingData?.following.map((f) => f.followingId) || [],
+  );
 
   const followMutation = useFollowMutation();
   const unfollowMutation = useUnfollowMutation();
@@ -35,12 +63,30 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
   const unlikeMutation = useUnlikePost();
   const commentMutation = useCreateComment();
 
-  const [activeTab, setActiveTab] = useState<"comments" | "likes">("comments");
   const [commentText, setCommentText] = useState("");
+  const [showLikes, setShowLikes] = useState(false);
+  const [isWide, setIsWide] = useState(false);
+
+  // Track actual window width to determine layout, bypassing Tailwind's
+  // breakpoint system which can be unreliable inside portal-mounted dialogs.
+  useEffect(() => {
+    const update = () =>
+      setIsWide(window.innerWidth >= SIDE_BY_SIDE_BREAKPOINT);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const handleClose = () => {
+    setShowLikes(false);
+    onClose();
+  };
 
   if (!isOpen) return null;
 
-  const isLikedByMe = data?.post?.likes?.some((l) => l.user?.id === currentUser?.id);
+  const isLikedByMe = data?.post?.likes?.some(
+    (l) => l.user?.id === currentUser?.id,
+  );
 
   const handleLikeToggle = () => {
     if (!postId) return;
@@ -55,237 +101,349 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
     if (!postId || !commentText.trim() || commentMutation.isPending) return;
     commentMutation.mutate(
       { postId, content: commentText },
-      { onSuccess: () => setCommentText("") }
+      { onSuccess: () => setCommentText("") },
     );
   };
 
   const handleFollowToggle = (targetUserId: string) => {
     if (!currentUser?.id) return;
     const isFollowing = followingIds.has(targetUserId);
-
     if (isFollowing) {
       unfollowMutation.mutate({
-        followerType: "User",
+        followerType: "USER",
         followerId: currentUser.id,
-        followingType: "User",
+        followingType: "USER",
         followingId: targetUserId,
       });
     } else {
       followMutation.mutate({
-        followerType: "User",
+        followerType: "USER",
         followerId: currentUser.id,
-        followingType: "User",
+        followingType: "USER",
         followingId: targetUserId,
       });
     }
   };
 
+  // Sidebar width in the side-by-side layout
+  const SIDEBAR_W = 380;
+
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent 
-        className="max-w-7xl w-full p-0 overflow-hidden h-[90vh] flex flex-col md:flex-row gap-0 rounded-2xl bg-black"
-        showCloseButton={false} 
+    <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
+      <DialogContent
+        // Use inline style for the layout — this is reliable inside a portal
+        className="p-0 overflow-hidden rounded-lg bg-surface border border-border"
+        style={{
+          width: "95vw",
+          maxWidth: 1400,
+          height: "92vh",
+          maxHeight: "92vh",
+          display: "flex",
+          flexDirection: isWide ? "row" : "column",
+        }}
+        showCloseButton={false}
       >
         <div className="sr-only">
           <DialogTitle>Post visualization</DialogTitle>
-          <DialogDescription>Details for the selected post, including comments and likes.</DialogDescription>
+          <DialogDescription>
+            Details for the selected post, including comments and likes.
+          </DialogDescription>
         </div>
 
-        <button
-          onClick={onClose}
-          className="absolute right-4 top-4 z-50 p-2 bg-black/40 hover:bg-black/60 rounded-full text-white transition-colors"
-          aria-label="Close modal"
-        >
-          <X className="w-5 h-5" />
-        </button>
+        {/* Close button — visible on narrow screens */}
+        {!isWide && (
+          <button
+            onClick={handleClose}
+            className="absolute right-3 top-3 z-50 p-2 bg-background/70 backdrop-blur-sm hover:bg-background/90 rounded-full text-foreground transition-colors"
+            aria-label="Close modal"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
 
         {isLoading || !data?.post ? (
-          <div className="w-full h-full flex items-center justify-center bg-background rounded-l-2xl">
+          <div className="w-full h-full flex items-center justify-center bg-background">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </div>
         ) : (
           <>
-            {/* Left Side - Image/Content */}
-            <div className="flex-1 relative w-full h-[50vh] md:h-full flex items-center justify-center">
+            {/* ===== IMAGE PANEL ===== */}
+            <div
+              className="relative flex items-center justify-center bg-black/90 overflow-hidden"
+              style={
+                isWide
+                  ? { flex: 1, minWidth: 0, height: "100%" }
+                  : { width: "100%", height: "45%" }
+              }
+            >
               {data.post.imageUrl ? (
-                <div className="relative w-full h-full flex items-center justify-center p-4">
-                  <Image
-                    src={data.post.imageUrl}
-                    alt={data.post.content || "Post content"}
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 768px) 100vw, 70vw"
-                  />
-                </div>
+                <Image
+                  src={data.post.imageUrl}
+                  alt={data.post.content || "Post content"}
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 900px) 95vw, 70vw"
+                  priority
+                />
               ) : (
-                <div className="w-full h-full flex items-center justify-center p-8 overflow-auto text-xl text-center text-white bg-zinc-900">
+                <div className="w-full h-full flex items-center justify-center p-8 overflow-auto text-xl text-center text-foreground bg-surface-elevated">
                   <p>{data.post.content}</p>
                 </div>
               )}
             </div>
 
-            {/* Right Side - Details, Comments, Likes */}
-            <div className="w-full md:w-[400px] lg:w-[450px] shrink-0 flex flex-col bg-background h-[50vh] md:h-full border-l border-border relative">
-              {/* Header: User Info */}
-              <div className="p-4 flex items-center justify-between border-b border-border shadow-sm z-10 shrink-0">
-                <div className="flex items-center gap-3">
-                  <Avatar>
-                    <AvatarImage src={data.post.user?.avatar || "/default-avatar.png"} />
-                    <AvatarFallback>{data.post.user?.name?.[0]}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-semibold text-sm hover:underline cursor-pointer">{data.post.user?.name}</p>
+            {/* ===== SIDEBAR PANEL ===== */}
+            <div
+              className="flex flex-col bg-background border-border overflow-hidden"
+              style={
+                isWide
+                  ? {
+                      width: SIDEBAR_W,
+                      minWidth: SIDEBAR_W,
+                      maxWidth: SIDEBAR_W,
+                      height: "100%",
+                      borderLeft: "1px solid var(--border)",
+                    }
+                  : {
+                      width: "100%",
+                      flex: 1,
+                      minHeight: 0,
+                      borderTop: "1px solid var(--border)",
+                    }
+              }
+            >
+              {/* Header */}
+              <div className="px-4 py-3 flex items-center justify-between border-b border-border shrink-0">
+                {showLikes ? (
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => setShowLikes(false)}
+                      className="hover:opacity-70 transition-opacity text-foreground"
+                    >
+                      <ChevronLeft size={24} />
+                    </button>
+                    <span className="font-bold text-base text-foreground">
+                      {t("likesTab", { count: data.post.likes?.length || 0 })}
+                    </span>
                   </div>
-                </div>
+                ) : (
+                  <>
+                    <div className="flex items-center gap-3">
+                      <Avatar className="w-8 h-8">
+                        <AvatarImage
+                          src={data.post.user?.avatar || "/default-avatar.png"}
+                        />
+                        <AvatarFallback>
+                          {data.post.user?.name?.[0]}
+                        </AvatarFallback>
+                      </Avatar>
+                      <p className="font-semibold text-sm text-foreground hover:underline cursor-pointer">
+                        {data.post.user?.name}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={handleClose}
+                        className="text-foreground-muted hover:text-foreground transition-colors p-1"
+                      >
+                        <X size={20} />
+                      </button>
+                      <button className="text-foreground-muted hover:text-foreground transition-colors p-1">
+                        <MoreHorizontal size={20} />
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
 
-              {/* Tabs for comments & likes */}
-              <Tabs
-                defaultValue="comments"
-                value={activeTab}
-                onValueChange={(val) => setActiveTab(val as "comments" | "likes")}
-                className="flex-1 flex flex-col overflow-hidden min-h-0"
-              >
-                <div className="px-4 pt-2 border-b border-border/50 shrink-0">
-                  <TabsList className="w-full grid grid-cols-2">
-                    <TabsTrigger value="comments">{t("commentsTab", { count: data.post.comments?.length || 0 })}</TabsTrigger>
-                    <TabsTrigger value="likes">{t("likesTab", { count: data.post.likes?.length || 0 })}</TabsTrigger>
-                  </TabsList>
-                </div>
-
-                <div className="flex-1 overflow-hidden">
-                  <TabsContent value="comments" className="m-0 h-full">
-                    <ScrollArea className="h-full px-4 py-4">
-                      {/* Post caption as the first "comment" */}
-                      {data.post.content && (
-                        <div className="flex gap-3 mb-6">
-                           <Avatar className="w-8 h-8">
-                             <AvatarImage src={data.post.user?.avatar || "/default-avatar.png"} />
-                             <AvatarFallback>{data.post.user?.name?.[0]}</AvatarFallback>
-                           </Avatar>
-                           <div>
-                             <p className="text-sm">
-                               <span className="font-semibold mr-2">{data.post.user?.name}</span>
-                               {data.post.content}
-                             </p>
-                             <p className="text-xs text-muted-foreground mt-1">
-                               {formatRelativeTime(data.post.createdAt, locale)}
-                             </p>
-                           </div>
-                        </div>
-                      )}
-                      
-                      {/* Actual Comments */}
-                      {data.post.comments && data.post.comments.length > 0 ? (
-                        <div className="flex flex-col gap-4 pb-4">
-                          {data.post.comments.map((comment) => (
-                            <div key={comment.id} className="flex gap-3 group">
-                              <Avatar className="w-8 h-8 shrink-0">
-                                <AvatarImage src={comment.user?.avatar || "/default-avatar.png"} />
-                                <AvatarFallback>{comment.user?.name?.[0] || "?"}</AvatarFallback>
-                              </Avatar>
-                              <div>
-                                <p className="text-sm break-words">
-                                  <span className="font-semibold mr-2">{comment.user?.name}</span>
-                                  {comment.content}
-                                </p>
-                                <div className="flex items-center gap-3 mt-1">
-                                  <p className="text-xs text-muted-foreground shrink-0">
-                                    {formatRelativeTime(comment.createdAt, locale)}
-                                  </p>
-                                  <button className="text-xs text-muted-foreground font-medium hidden group-hover:block hover:text-foreground">
-                                    {t("reply")}
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="text-center text-muted-foreground text-sm py-10">
-                          {t("noCommentsYet")}
-                        </div>
-                      )}
-                    </ScrollArea>
-                  </TabsContent>
-
-                  <TabsContent value="likes" className="m-0 h-full">
-                    <ScrollArea className="h-full px-4 py-4">
-                      {data.post.likes && data.post.likes.length > 0 ? (
-                        <div className="flex flex-col gap-4">
+              {/* Scrollable content */}
+              <div className="flex-1 overflow-hidden min-h-0">
+                <ScrollArea className="h-full">
+                  <div className="px-4 py-4">
+                    {showLikes ? (
+                      /* LIKES */
+                      data.post.likes && data.post.likes.length > 0 ? (
+                        <div className="flex flex-col gap-3">
                           {data.post.likes.map((like) => {
                             if (!like.user) return null;
                             const isMe = like.user.id === currentUser?.id;
                             const isFollowing = followingIds.has(like.user.id);
-                            
                             return (
-                              <div key={like.id} className="flex items-center justify-between cursor-pointer hover:bg-muted/50 p-2 rounded-lg transition-colors">
-                                <div className="flex items-center gap-3">
-                                  <Avatar className="w-8 h-8 shrink-0">
-                                    <AvatarImage src={like.user.avatar || '/default-avatar.png'} /> 
-                                    <AvatarFallback>{like.user.name?.[0]}</AvatarFallback>
+                              <div
+                                key={like.id}
+                                className="flex items-center justify-between py-1"
+                              >
+                                <div className="flex items-center gap-3 cursor-pointer">
+                                  <Avatar className="w-10 h-10">
+                                    <AvatarImage
+                                      src={
+                                        like.user.avatar ||
+                                        "/default-avatar.png"
+                                      }
+                                    />
+                                    <AvatarFallback>
+                                      {like.user.name?.[0]}
+                                    </AvatarFallback>
                                   </Avatar>
-                                  <span className="text-sm font-semibold truncate hover:underline">{like.user.name}</span>
+                                  <div className="flex flex-col">
+                                    <span className="text-sm font-semibold text-foreground truncate hover:underline">
+                                      {like.user.name}
+                                    </span>
+                                    <span className="text-xs text-foreground-muted">
+                                      {like.user.username || like.user.name}
+                                    </span>
+                                  </div>
                                 </div>
                                 {!isMe && (
-                                  <button 
-                                    onClick={() => handleFollowToggle(like.user!.id)}
-                                    disabled={followMutation.isPending || unfollowMutation.isPending}
-                                    className={`text-xs px-3 py-1.5 rounded-md font-semibold transition-colors disabled:opacity-70 ${
-                                      isFollowing 
-                                        ? "bg-secondary text-secondary-foreground hover:bg-secondary/80" 
-                                        : "bg-primary text-primary-foreground hover:bg-primary/90"
+                                  <button
+                                    onClick={() =>
+                                      handleFollowToggle(like.user!.id)
+                                    }
+                                    disabled={
+                                      followMutation.isPending ||
+                                      unfollowMutation.isPending
+                                    }
+                                    className={`text-xs px-4 py-1.5 rounded-md font-semibold transition-colors disabled:opacity-70 ${
+                                      isFollowing
+                                        ? "bg-surface-elevated text-foreground hover:bg-surface-elevated/80"
+                                        : "bg-primary text-white-black hover:bg-primary-hover"
                                     }`}
                                   >
                                     {isFollowing ? t("following") : t("follow")}
                                   </button>
                                 )}
                               </div>
-                            )
+                            );
                           })}
                         </div>
                       ) : (
-                        <div className="text-center text-muted-foreground text-sm py-10">
+                        <div className="text-center text-foreground-muted text-sm py-10">
                           {t("noLikesYet")}
                         </div>
-                      )}
-                    </ScrollArea>
-                  </TabsContent>
-                </div>
-              </Tabs>
+                      )
+                    ) : (
+                      /* COMMENTS */
+                      <div className="flex flex-col gap-5">
+                        {data.post.content && (
+                          <div className="flex gap-3">
+                            <Avatar className="w-8 h-8 shrink-0">
+                              <AvatarImage
+                                src={
+                                  data.post.user?.avatar ||
+                                  "/default-avatar.png"
+                                }
+                              />
+                              <AvatarFallback>
+                                {data.post.user?.name?.[0]}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1">
+                              <p className="text-sm wrap-break-word leading-relaxed text-foreground">
+                                <span className="font-semibold mr-2">
+                                  {data.post.user?.name}
+                                </span>
+                                {data.post.content}
+                              </p>
+                              <p className="text-xs text-foreground-muted mt-2">
+                                {formatRelativeTime(
+                                  data.post.createdAt,
+                                  locale,
+                                )}
+                              </p>
+                            </div>
+                          </div>
+                        )}
 
-              {/* Actions Footer */}
-              <div className="p-4 border-t border-border bg-background z-10 shrink-0">
-                <div className="flex items-center gap-4 mb-3">
-                  <button onClick={handleLikeToggle} className="transition-colors hover:scale-110 active:scale-95">
-                    <Heart size={26} fill={isLikedByMe ? "currentColor" : "none"} className={isLikedByMe ? "text-error" : "text-foreground"} />
+                        {data.post.comments?.map((comment) => (
+                          <div key={comment.id} className="flex gap-3 group">
+                            <Avatar className="w-8 h-8 shrink-0">
+                              <AvatarImage
+                                src={
+                                  comment.user?.avatar || "/default-avatar.png"
+                                }
+                              />
+                              <AvatarFallback>
+                                {comment.user?.name?.[0] || "?"}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1">
+                              <p className="text-sm wrap-break-word leading-relaxed text-foreground">
+                                <span className="font-semibold mr-2">
+                                  {comment.user?.name}
+                                </span>
+                                {comment.content}
+                              </p>
+                              <div className="flex items-center gap-4 mt-2">
+                                <p className="text-xs text-foreground-muted">
+                                  {formatRelativeTime(
+                                    comment.createdAt,
+                                    locale,
+                                  )}
+                                </p>
+                                <button className="text-xs text-foreground-muted font-bold hidden group-hover:block hover:text-foreground">
+                                  {t("reply")}
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </ScrollArea>
+              </div>
+
+              {/* Footer */}
+              <div className="px-4 py-3 border-t border-border bg-background shrink-0">
+                <div className="flex items-center gap-4 mb-2">
+                  <button
+                    onClick={handleLikeToggle}
+                    className="transition-transform hover:scale-110 active:scale-95"
+                  >
+                    <Heart
+                      size={24}
+                      fill={isLikedByMe ? "currentColor" : "none"}
+                      className={isLikedByMe ? "text-error" : "text-foreground"}
+                    />
                   </button>
-                  <button onClick={() => setActiveTab("comments")} className="hover:scale-110 active:scale-95 transition-transform text-foreground">
-                    <MessageCircle size={26} />
+                  <button
+                    onClick={() => setShowLikes(false)}
+                    className="hover:scale-110 active:scale-95 transition-transform text-foreground"
+                  >
+                    <MessageCircle size={24} />
                   </button>
                   <button className="hover:scale-110 active:scale-95 transition-transform text-foreground">
-                    <Share2 size={26} />
+                    <Share2 size={22} />
                   </button>
                 </div>
-                <p className="font-semibold text-sm mb-1">{t("likesCount", { count: data.post.likes?.length || 0 })}</p>
-                <p className="text-[11px] text-muted-foreground uppercase tracking-wider">{formatRelativeTime(data.post.createdAt, locale)}</p>
-                
-                {/* Input for comments */}
-                <div className="mt-4 pt-3 border-t border-border flex items-center">
-                  <input 
-                    type="text" 
+
+                <p
+                  className="font-bold text-sm mb-0.5 cursor-pointer hover:underline text-foreground w-fit"
+                  onClick={() => setShowLikes(true)}
+                >
+                  {t("likesCount", { count: data.post.likes?.length || 0 })}
+                </p>
+                <p className="text-[11px] text-foreground-muted uppercase tracking-wider">
+                  {formatRelativeTime(data.post.createdAt, locale)}
+                </p>
+
+                <div className="mt-3 pt-3 border-t border-border flex items-center">
+                  <input
+                    type="text"
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
-                    onKeyDown={(e) => { if (e.key === 'Enter') handlePostComment(); }}
-                    placeholder={t("addCommentPlaceholder")} 
-                    className="flex-1 bg-transparent border-none outline-none text-sm focus:ring-0 text-foreground"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") handlePostComment();
+                    }}
+                    placeholder={t("addCommentPlaceholder")}
+                    className="flex-1 bg-transparent border-none outline-none text-sm focus:ring-0 text-foreground placeholder:text-foreground-muted"
                   />
-                  <button 
+                  <button
                     onClick={handlePostComment}
                     disabled={!commentText.trim() || commentMutation.isPending}
-                    className="text-primary font-semibold text-sm ml-2 disabled:opacity-50 transition-opacity"
+                    className="text-primary font-semibold text-sm ml-2 disabled:opacity-40 transition-opacity hover:text-primary-hover"
                   >
-                    {commentMutation.isPending ? t("publishing") : t("publish")}
+                    {t("publish")}
                   </button>
                 </div>
               </div>
