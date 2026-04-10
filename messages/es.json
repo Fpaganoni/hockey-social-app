@@ -398,7 +398,10 @@
       "likesCount": "{count} Me gusta",
       "addCommentPlaceholder": "Agrega un comentario...",
       "publish": "Publicar",
-      "publishing": "Publicando..."
+      "publishing": "Publicando...",
+      "share": "Compartir",
+      "linkCopied": "¡Enlace copiado!",
+      "shareFailed": "No se pudo copiar el enlace"
     }
   }
 }

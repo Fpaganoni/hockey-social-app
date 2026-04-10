@@ -8,7 +8,7 @@ import {
   UNLIKE_POST,
   CREATE_COMMENT,
 } from "@/graphql/post/mutations";
-import { Post } from "@/types/models/post";
+import { Post, Like, Comment } from "@/types/models/post";
 import { Role } from "@/types/enums";
 import { useAuthStore } from "@/stores/useAuthStore";
 
@@ -16,7 +16,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 type CreatePostVariables = Pick<Post, "content" | "imageUrl">;
 type UpdatePostVariables = Pick<Post, "id" | "content" | "imageUrl">;
 type DeletePostVariables = Pick<Post, "id">;
-type LikePostVariables = Pick<Post, "id">;
+type LikePostVariables = { postId: string };
 type CreateCommentVariables = { postId: string; content: string };
 
 type PostMutationContext = {
@@ -135,45 +135,163 @@ export function useDeletePost() {
 }
 
 /**
- * Hook to like a post
+ * Hook to like a post with optimistic update
  */
 export function useLikePost() {
   const queryClient = useQueryClient();
+  const { user } = useAuthStore();
 
   return useMutation<{ likePost: any }, Error, { postId: string }>({
-    mutationFn: async (variables) => graphqlClient.request(LIKE_POST, variables),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["post", variables.postId] });
+    // Backend requires userId — injected from auth store, not from caller
+    mutationFn: async ({ postId }) =>
+      graphqlClient.request(LIKE_POST, { postId, userId: user?.id }),
+
+    onMutate: async ({ postId }) => {
+      await queryClient.cancelQueries({ queryKey: ["post", postId] });
+      const previousPost = queryClient.getQueryData<{ post: Post }>(["post", postId]);
+
+      queryClient.setQueryData<{ post: Post }>([ "post", postId], (old) => {
+        if (!old?.post || !user) return old;
+        // Like type has no userId field — identify via user.id
+        const alreadyLiked = old.post.likes?.some((l) => l.user?.id === user.id);
+        if (alreadyLiked) return old;
+        return {
+          post: {
+            ...old.post,
+            likes: [
+              ...old.post.likes,
+              {
+                id: `temp-${Date.now()}`,
+                postId,
+                userId: user.id,
+                createdAt: new Date().toISOString(),
+                user: {
+                  id: user.id,
+                  name: user.name,
+                  avatar: user.avatar ?? null,
+                  email: user.email,
+                  username: user.username ?? "",
+                  role: user.role,
+                  isEmailVerified: user.isEmailVerified ?? false,
+                },
+              } as Like,
+            ],
+          },
+        };
+      });
+
+      return { previousPost };
+    },
+
+    onError: (_err, { postId }, context: any) => {
+      if (context?.previousPost) {
+        queryClient.setQueryData(["post", postId], context.previousPost);
+      }
+    },
+
+    onSuccess: (_, { postId }) => {
+      queryClient.invalidateQueries({ queryKey: ["post", postId] });
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
 }
 
 /**
- * Hook to unlike a post
+ * Hook to unlike a post with optimistic update
  */
 export function useUnlikePost() {
   const queryClient = useQueryClient();
+  const { user } = useAuthStore();
 
   return useMutation<{ unlikePost: any }, Error, { postId: string }>({
-    mutationFn: async (variables) => graphqlClient.request(UNLIKE_POST, variables),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["post", variables.postId] });
+    mutationFn: async ({ postId }) =>
+      graphqlClient.request(UNLIKE_POST, { postId }),
+
+    onMutate: async ({ postId }) => {
+      await queryClient.cancelQueries({ queryKey: ["post", postId] });
+      const previousPost = queryClient.getQueryData<{ post: Post }>(["post", postId]);
+
+      queryClient.setQueryData<{ post: Post }>([ "post", postId], (old) => {
+        if (!old?.post || !user) return old;
+        return {
+          post: {
+            ...old.post,
+            // Like type uses user.id — filter by that
+            likes: old.post.likes.filter((l) => l.user?.id !== user.id),
+          },
+        };
+      });
+
+      return { previousPost };
+    },
+
+    onError: (_err, { postId }, context: any) => {
+      if (context?.previousPost) {
+        queryClient.setQueryData(["post", postId], context.previousPost);
+      }
+    },
+
+    onSuccess: (_, { postId }) => {
+      queryClient.invalidateQueries({ queryKey: ["post", postId] });
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
 }
 
 /**
- * Hook to comment on a post
+ * Hook to comment on a post with optimistic update
  */
 export function useCreateComment() {
   const queryClient = useQueryClient();
+  const { user } = useAuthStore();
 
   return useMutation<{ createComment: any }, Error, CreateCommentVariables>({
-    mutationFn: async (variables) => graphqlClient.request(CREATE_COMMENT, variables),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["post", variables.postId] });
+    // Backend requires userId — injected from auth store, not from caller
+    mutationFn: async ({ postId, content }) =>
+      graphqlClient.request(CREATE_COMMENT, { postId, userId: user?.id, content }),
+
+    onMutate: async ({ postId, content }) => {
+      await queryClient.cancelQueries({ queryKey: ["post", postId] });
+      const previousPost = queryClient.getQueryData<{ post: Post }>(["post", postId]);
+
+      queryClient.setQueryData<{ post: Post }>(["post", postId], (old) => {
+        if (!old?.post || !user) return old;
+        const optimisticComment = {
+          id: `temp-${Date.now()}`,
+          content,
+          postId,
+          userId: user.id,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          user: {
+            id: user.id,
+            name: user.name,
+            avatar: user.avatar ?? null,
+            email: user.email,
+            username: user.username ?? "",
+            role: user.role,
+            isEmailVerified: user.isEmailVerified ?? false,
+          },
+        } as Comment;
+        return {
+          post: {
+            ...old.post,
+            comments: [...old.post.comments, optimisticComment],
+          },
+        };
+      });
+
+      return { previousPost };
+    },
+
+    onError: (_err, { postId }, context: any) => {
+      if (context?.previousPost) {
+        queryClient.setQueryData(["post", postId], context.previousPost);
+      }
+    },
+
+    onSuccess: (_, { postId }) => {
+      queryClient.invalidateQueries({ queryKey: ["post", postId] });
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });

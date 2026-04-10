@@ -18,6 +18,9 @@ import {
   X,
   MoreHorizontal,
   ChevronLeft,
+  Send,
+  Check,
+  Link2,
 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -33,6 +36,7 @@ import {
   useUnlikePost,
   useCreateComment,
 } from "@/hooks/usePostMutations";
+import { useToast } from "@/hooks/ui/use-toast";
 
 interface PostModalProps {
   postId: string | null;
@@ -66,6 +70,9 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
   const [commentText, setCommentText] = useState("");
   const [showLikes, setShowLikes] = useState(false);
   const [isWide, setIsWide] = useState(false);
+  const [sharecopied, setShareCopied] = useState(false);
+  const commentsEndRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
 
   // Track actual window width to determine layout, bypassing Tailwind's
   // breakpoint system which can be unreliable inside portal-mounted dialogs.
@@ -84,8 +91,12 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
 
   if (!isOpen) return null;
 
+  // Scroll to bottom of comments when a new one is added
+  // We do this after render via a layout effect in the scroll area
+
+  // isLikedByMe checks both user.id and userId for optimistic update compatibility
   const isLikedByMe = data?.post?.likes?.some(
-    (l) => l.user?.id === currentUser?.id,
+    (l) => l.user?.id === currentUser?.id || l.userId === currentUser?.id,
   );
 
   const handleLikeToggle = () => {
@@ -101,7 +112,15 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
     if (!postId || !commentText.trim() || commentMutation.isPending) return;
     commentMutation.mutate(
       { postId, content: commentText },
-      { onSuccess: () => setCommentText("") },
+      {
+        onSuccess: () => {
+          setCommentText("");
+          // Scroll to bottom after the DOM updates
+          setTimeout(() => {
+            commentsEndRef.current?.scrollIntoView({ behavior: "smooth" });
+          }, 100);
+        },
+      },
     );
   };
 
@@ -125,6 +144,47 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
     }
   };
 
+  const handleShare = async () => {
+    const postUrl = `${window.location.origin}/post/${postId}`;
+    const shareData = {
+      title: data?.post?.user?.name
+        ? `${data.post.user.name}'s post`
+        : "Hockey post",
+      text:
+        data?.post?.content?.slice(0, 100) ||
+        "Check out this post on Hockey Connect",
+      url: postUrl,
+    };
+
+    // Use native share sheet if available (mobile)
+    if (typeof navigator.share === "function") {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch {
+        // User dismissed native share — fall through to clipboard
+      }
+    }
+
+    // Fallback: copy link to clipboard
+    try {
+      await navigator.clipboard.writeText(postUrl);
+      setShareCopied(true);
+      toast({
+        title: t("linkCopied"),
+        description: postUrl,
+        duration: 3000,
+      });
+      setTimeout(() => setShareCopied(false), 2000);
+    } catch {
+      toast({
+        title: t("shareFailed"),
+        variant: "destructive",
+        duration: 3000,
+      });
+    }
+  };
+
   // Sidebar width in the side-by-side layout
   const SIDEBAR_W = 380;
 
@@ -140,6 +200,7 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
           maxHeight: "92vh",
           display: "flex",
           flexDirection: isWide ? "row" : "column",
+          gap: 0,
         }}
         showCloseButton={false}
       >
@@ -387,6 +448,8 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
                             </div>
                           </div>
                         ))}
+                        {/* Sentinel for scroll-to-bottom */}
+                        <div ref={commentsEndRef} />
                       </div>
                     )}
                   </div>
@@ -412,8 +475,16 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
                   >
                     <MessageCircle size={24} />
                   </button>
-                  <button className="hover:scale-110 active:scale-95 transition-transform text-foreground">
-                    <Share2 size={22} />
+                  <button
+                    onClick={handleShare}
+                    className="hover:scale-110 active:scale-95 transition-all text-foreground"
+                    title={t("share")}
+                  >
+                    {sharecopied ? (
+                      <Check size={22} className="text-accent" />
+                    ) : (
+                      <Share2 size={22} />
+                    )}
                   </button>
                 </div>
 
@@ -427,7 +498,7 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
                   {formatRelativeTime(data.post.createdAt, locale)}
                 </p>
 
-                <div className="mt-3 pt-3 border-t border-border flex items-center">
+                <div className="mt-3 pt-3 border-t border-border flex items-center gap-2">
                   <input
                     type="text"
                     value={commentText}
@@ -437,13 +508,19 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
                     }}
                     placeholder={t("addCommentPlaceholder")}
                     className="flex-1 bg-transparent border-none outline-none text-sm focus:ring-0 text-foreground placeholder:text-foreground-muted"
+                    disabled={commentMutation.isPending}
                   />
                   <button
                     onClick={handlePostComment}
                     disabled={!commentText.trim() || commentMutation.isPending}
-                    className="text-primary font-semibold text-sm ml-2 disabled:opacity-40 transition-opacity hover:text-primary-hover"
+                    className="flex items-center gap-1 text-primary font-semibold text-sm disabled:opacity-40 transition-all hover:text-primary-hover shrink-0"
                   >
-                    {t("publish")}
+                    {commentMutation.isPending ? (
+                      <Loader2 size={16} className="animate-spin" />
+                    ) : (
+                      <Send size={16} />
+                    )}
+                    <span>{t("publish")}</span>
                   </button>
                 </div>
               </div>
