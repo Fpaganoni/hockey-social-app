@@ -45,25 +45,18 @@ export const DELETE_POST = gql`
 // ============================================
 
 // Backend requires userId as a mandatory argument.
-// Like type only exposes: id, user { id name avatar }
+// Returns Like object with id
 export const LIKE_POST = gql`
   mutation LikePost($postId: ID!, $userId: ID!) {
     likePost(postId: $postId, userId: $userId) {
       id
-      user {
-        id
-        name
-        avatar
-      }
     }
   }
 `;
 
 export const UNLIKE_POST = gql`
-  mutation UnlikePost($postId: ID!) {
-    unlikePost(postId: $postId) {
-      id
-    }
+  mutation UnlikePost($postId: ID!, $userId: ID!) {
+    unlikePost(postId: $postId, userId: $userId)
   }
 `;
 

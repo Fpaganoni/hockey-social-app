@@ -34,6 +34,7 @@ export function PostCard({ post }: PostCardProps) {
   const { id, content, imageUrl, createdAt, user, comments, likes, updatedAt } =
     post;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLikedOptimistic, setIsLikedOptimistic] = useState<boolean | null>(null);
 
   // Real-time data from React Query cache (updated by like/unlike mutations)
   const { data: postData } = usePost(id);
@@ -46,14 +47,33 @@ export function PostCard({ post }: PostCardProps) {
   const likePost = useLikePost();
   const unlikePost = useUnlikePost();
 
-  // Derive liked state from live data
-  const isLiked = liveLikes?.some((l) => l.user?.id === currentUser?.id) ?? false;
+  // Derive liked state: prefer optimistic state, fallback to server state
+  const likeFromServer = liveLikes?.some((l) => l.user?.id === currentUser?.id) ?? false;
+  const isLiked = isLikedOptimistic !== null ? isLikedOptimistic : likeFromServer;
+
+  // Calculate optimistic like count
+  const likeCountServer = liveLikes?.length ?? 0;
+  const likeCountOptimistic = isLikedOptimistic !== null
+    ? isLikedOptimistic
+      ? likeCountServer + (likeFromServer ? 0 : 1) // Add 1 if wasn't liked before
+      : likeCountServer - (likeFromServer ? 1 : 0) // Subtract 1 if was liked before
+    : likeCountServer;
 
   const handleLike = () => {
+    // Optimistic update: immediate visual feedback
+    const newLikedState = !isLiked;
+    setIsLikedOptimistic(newLikedState);
+
     if (isLiked) {
-      unlikePost.mutate({ postId: id });
+      unlikePost.mutate({ postId: id }, {
+        onSuccess: () => setIsLikedOptimistic(null), // Reset to server state
+        onError: () => setIsLikedOptimistic(null), // Reset on error
+      });
     } else {
-      likePost.mutate({ postId: id });
+      likePost.mutate({ postId: id }, {
+        onSuccess: () => setIsLikedOptimistic(null), // Reset to server state
+        onError: () => setIsLikedOptimistic(null), // Reset on error
+      });
     }
   };
 
@@ -151,7 +171,7 @@ export function PostCard({ post }: PostCardProps) {
           } disabled:opacity-50 disabled:cursor-not-allowed`}
         >
           <Heart size={18} fill={isLiked ? "currentColor" : "none"} />
-          <span className="text-sm font-medium">{liveLikes?.length}</span>
+          <span className="text-sm font-medium">{likeCountOptimistic}</span>
         </button>
         <button
           onClick={() => setIsModalOpen(true)}
