@@ -204,8 +204,9 @@ export function useUnlikePost() {
   const { user } = useAuthStore();
 
   return useMutation<{ unlikePost: any }, Error, { postId: string }>({
+    // Backend requires userId — injected from auth store, not from caller
     mutationFn: async ({ postId }) =>
-      graphqlClient.request(UNLIKE_POST, { postId }),
+      graphqlClient.request(UNLIKE_POST, { postId, userId: user?.id }),
 
     onMutate: async ({ postId }) => {
       await queryClient.cancelQueries({ queryKey: ["post", postId] });
