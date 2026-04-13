@@ -17,15 +17,16 @@ interface JobOpportunitiesProps {
 
 export function JobOpportunities({ initialData }: JobOpportunitiesProps) {
   const t = useTranslations("opportunities");
-  const { data, isLoading, error } = useJobOpportunities(undefined, initialData);
+  const { data, isLoading, error } = useJobOpportunities(
+    undefined,
+    initialData,
+  );
   const { searchQuery, filters } = useOpportunitiesStore();
 
   // Extract unique countries for filter dropdown
   const availableCountries = useMemo(() => {
     if (!data?.jobOpportunities) return [];
-    const countries = new Set(
-      data.jobOpportunities.map((opp) => opp.country)
-    );
+    const countries = new Set(data.jobOpportunities.map((opp) => opp.country));
     return Array.from(countries).sort();
   }, [data?.jobOpportunities]);
 
@@ -87,10 +88,7 @@ export function JobOpportunities({ initialData }: JobOpportunitiesProps) {
       <div className="px-4 py-6 space-y-6">
         {filteredOpportunities.length > 0 ? (
           filteredOpportunities.map((jobOpportunity) => (
-            <OpportunityListCard
-              key={jobOpportunity.id}
-              {...jobOpportunity}
-            />
+            <OpportunityListCard key={jobOpportunity.id} {...jobOpportunity} />
           ))
         ) : (
           <p className="text-center text-foreground py-8">

@@ -55,10 +55,10 @@ export function OpportunityDetailModal() {
     | "filled";
 
   // Ensure benefits is always an array
-  const benefitsArray = Array.isArray(opportunity.benefits)
+  const benefitsArray: string[] = Array.isArray(opportunity.benefits)
     ? opportunity.benefits
     : typeof opportunity.benefits === "string"
-      ? opportunity.benefits.split(",").map((b) => b.trim())
+      ? (opportunity.benefits as string).split(",").map((b: string) => b.trim())
       : [];
 
   return (
@@ -180,7 +180,7 @@ export function OpportunityDetailModal() {
                 {t("benefits")}
               </h3>
               <div className="grid grid-cols-2 gap-2">
-                {benefitsArray.map((benefit, index) => (
+                {benefitsArray.map((benefit: string, index: number) => (
                   <div key={index} className="flex items-start gap-2">
                     <CheckCircle size={16} className="text-success mt-0.5" />
                     <p className="text-sm text-foreground">{benefit}</p>
