@@ -374,12 +374,21 @@
     "loading": "Loading opportunities...",
     "noData": "No data found",
     "noOpportunities": "No job opportunities found",
+    "noResultsFound": "No opportunities match your search filters",
     "open": "Open",
     "filled": "Filled",
     "closed": "Closed",
     "published": "Published",
     "applicationSent": "Application Sent",
-    "applyWithProfile": "Apply with Profile"
+    "applyWithProfile": "Apply with Profile",
+    "searchPlaceholder": "Search by title, city, club...",
+    "verified": "Verified Club",
+    "country": "Country",
+    "positionType": "Position Type",
+    "description": "Description",
+    "benefits": "Benefits",
+    "close": "Close",
+    "reset": "Reset Filters"
   },
   "posts": {
     "like": "Like",

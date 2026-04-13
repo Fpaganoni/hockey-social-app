@@ -5,41 +5,35 @@ import { Badge } from "../ui/badge";
 import { JobOpportunity } from "@/types/models/job-opportunity";
 import { formatRelativeTime } from "@/lib/date-utils";
 import { useTranslations, useLocale } from "next-intl";
+import { useOpportunitiesStore } from "@/stores/useOpportunitiesStore";
 
-type OpportunityListCardProps = Pick<
-  JobOpportunity,
-  | "id"
-  | "title"
-  | "description"
-  | "positionType"
-  | "club"
-  | "country"
-  | "city"
-  | "salary"
-  | "currency"
-  | "benefits"
-  | "createdAt"
-  | "level"
-  | "status"
->;
+type OpportunityListCardProps = JobOpportunity;
 
-export function OpportunityListCard({
-  id,
-  title,
-  description,
-  positionType,
-  club,
-  country,
-  city,
-  status,
-  salary,
-  currency,
-  benefits,
-  createdAt,
-  level,
-}: OpportunityListCardProps) {
+export function OpportunityListCard(opportunity: OpportunityListCardProps) {
   const t = useTranslations("opportunities");
   const locale = useLocale() as "en" | "es" | "fr";
+  const { setSelectedOpportunity, setIsModalOpen } = useOpportunitiesStore();
+
+  const {
+    id,
+    title,
+    description,
+    positionType,
+    club,
+    country,
+    city,
+    status,
+    salary,
+    currency,
+    benefits,
+    createdAt,
+    level,
+  } = opportunity;
+
+  const handleOpenModal = () => {
+    setSelectedOpportunity(opportunity);
+    setIsModalOpen(true);
+  };
 
   // Normalize status to lowercase for comparison
   const normalizedStatus = status.toLowerCase() as "open" | "closed" | "filled";
@@ -56,7 +50,10 @@ export function OpportunityListCard({
   };
 
   return (
-    <div className="bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg group border-l-4 border-l-accent">
+    <div
+      className="bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg group border-l-4 border-l-accent cursor-pointer transition-all duration-200 hover:border-l-accent-bright hover:translate-x-1"
+      onClick={handleOpenModal}
+    >
       <div className="p-4">
         <div className="mb-4">
           <div className="flex items-start justify-between gap-4 mb-3">

@@ -374,12 +374,21 @@
     "loading": "Cargando oportunidades...",
     "noData": "No se encontraron datos",
     "noOpportunities": "No se encontraron oportunidades laborales",
+    "noResultsFound": "No hay oportunidades que coincidan con tus filtros de búsqueda",
     "open": "Abierto",
     "filled": "Cubierta",
     "closed": "Cerrado",
     "published": "Publicado",
     "applicationSent": "Solicitud Enviada",
-    "applyWithProfile": "Aplicar con Perfil"
+    "applyWithProfile": "Aplicar con Perfil",
+    "searchPlaceholder": "Busca por título, ciudad, club...",
+    "verified": "Club Verificado",
+    "country": "País",
+    "positionType": "Tipo de Posición",
+    "description": "Descripción",
+    "benefits": "Beneficios",
+    "close": "Cerrar",
+    "reset": "Reiniciar Filtros"
   },
   "posts": {
     "like": "Me gusta",
