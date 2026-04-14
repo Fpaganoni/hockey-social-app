@@ -385,7 +385,12 @@
     "description": "Description",
     "benefits": "Avantages",
     "close": "Fermer",
-    "reset": "Réinitialiser les Filtres"
+    "reset": "Réinitialiser les Filtres",
+    "applicationSubmitted": "Demande Soumise",
+    "applicationSubmittedDescription": "Votre demande a été soumise avec succès",
+    "alreadyApplied": "Vous avez déjà postulé pour cette opportunité",
+    "opportunityNotFound": "Cette opportunité n'est plus disponible",
+    "applicationFailed": "Erreur lors de l'envoi de la demande"
   },
   "posts": {
     "like": "J'aime",

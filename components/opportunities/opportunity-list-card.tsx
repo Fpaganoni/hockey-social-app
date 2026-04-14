@@ -1,11 +1,12 @@
 "use client";
 
-import { CheckCircle, MapPin, Calendar, Award } from "lucide-react";
+import { MapPin, Calendar, Award } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { JobOpportunity } from "@/types/models/job-opportunity";
 import { formatRelativeTime } from "@/lib/date-utils";
 import { useTranslations, useLocale } from "next-intl";
 import { useOpportunitiesStore } from "@/stores/useOpportunitiesStore";
+import { useUserApplications } from "@/hooks/useJobApplications";
 
 type OpportunityListCardProps = JobOpportunity;
 
@@ -13,6 +14,7 @@ export function OpportunityListCard(opportunity: OpportunityListCardProps) {
   const t = useTranslations("opportunities");
   const locale = useLocale() as "en" | "es" | "fr";
   const { setSelectedOpportunity, setIsModalOpen } = useOpportunitiesStore();
+  const { hasAppliedTo } = useUserApplications();
 
   const {
     id,
@@ -37,6 +39,7 @@ export function OpportunityListCard(opportunity: OpportunityListCardProps) {
 
   // Normalize status to lowercase for comparison
   const normalizedStatus = status.toLowerCase() as "open" | "closed" | "filled";
+  const userAlreadyApplied = hasAppliedTo(id);
 
   const tagColorMap: Record<string, string> = {
     Professional: "bg-info/30 text-foreground border-info/40",
@@ -70,12 +73,18 @@ export function OpportunityListCard(opportunity: OpportunityListCardProps) {
                     <Badge
                       key={status}
                       className={
-                        normalizedStatus === "open"
-                          ? "bg-success/30 text-foreground border-success/40"
-                          : "bg-error/30 text-foreground border-error/40"
+                        userAlreadyApplied
+                          ? "bg-error/30 text-foreground border-error/40"
+                          : normalizedStatus === "open"
+                            ? "bg-success/30 text-foreground border-success/40"
+                            : "bg-error/30 text-foreground border-error/40"
                       }
                     >
-                      {normalizedStatus === "open" ? t("open") : t("filled")}
+                      {userAlreadyApplied
+                        ? t("filled")
+                        : normalizedStatus === "open"
+                          ? t("open")
+                          : t("filled")}
                     </Badge>
                     <Badge
                       key={country}
@@ -95,12 +104,18 @@ export function OpportunityListCard(opportunity: OpportunityListCardProps) {
                     <Badge
                       key={status}
                       className={
-                        normalizedStatus === "open"
-                          ? "bg-success/30 text-foreground border-success/40"
-                          : "bg-danger/30 text-foreground border-danger/40"
+                        userAlreadyApplied
+                          ? "bg-error/30 text-foreground border-error/40"
+                          : normalizedStatus === "open"
+                            ? "bg-success/30 text-foreground border-success/40"
+                            : "bg-error/30 text-foreground border-error/40"
                       }
                     >
-                      {normalizedStatus === "open" ? t("open") : t("filled")}
+                      {userAlreadyApplied
+                        ? t("filled")
+                        : normalizedStatus === "open"
+                          ? t("open")
+                          : t("filled")}
                     </Badge>
                     <Badge
                       key={country}
@@ -144,20 +159,6 @@ export function OpportunityListCard(opportunity: OpportunityListCardProps) {
             </span>
           </div>
         </div>
-
-        {normalizedStatus === "filled" ? (
-          <button
-            disabled
-            className="w-full py-2 rounded-lg border-2 border-success bg-success/20 font-semibold text-foreground flex items-center justify-center gap-2 transition-colors duration-300 cursor-default"
-          >
-            <CheckCircle size={18} />
-            {t("applicationSent")}
-          </button>
-        ) : (
-          <button className="w-full py-2 rounded-lg bg-success/20 border border-border hover:bg-success text-foreground hover:text-background font-semibold transition-colors duration-300 cursor-pointer hover:shadow-lg">
-            {t("applyWithProfile")}
-          </button>
-        )}
       </div>
     </div>
   );

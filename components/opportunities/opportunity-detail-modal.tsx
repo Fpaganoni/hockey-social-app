@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { JobOpportunity } from "@/types/models/job-opportunity";
 import { useOpportunitiesStore } from "@/stores/useOpportunitiesStore";
 import { useTranslations, useLocale } from "next-intl";
+import { useAuthStore } from "@/stores/useAuthStore";
+import { useApplyForJob, useUserApplications } from "@/hooks/useJobApplications";
 import {
   Dialog,
   DialogContent,
@@ -16,7 +19,7 @@ import {
   Briefcase,
   Globe,
   CheckCircle,
-  X,
+  Loader,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { formatRelativeTime } from "@/lib/date-utils";
@@ -43,6 +46,11 @@ export function OpportunityDetailModal() {
   const locale = useLocale() as "en" | "es" | "fr";
   const { selectedOpportunity, isModalOpen, closeModal } =
     useOpportunitiesStore();
+  const { user } = useAuthStore();
+  const { mutate: applyForJob, isPending } = useApplyForJob();
+  const { hasAppliedTo, isLoading: isLoadingApplications } =
+    useUserApplications();
+  const [hasAppliedLocalState, setHasAppliedLocalState] = useState(false);
 
   if (!selectedOpportunity) {
     return null;
@@ -60,6 +68,30 @@ export function OpportunityDetailModal() {
     : typeof opportunity.benefits === "string"
       ? (opportunity.benefits as string).split(",").map((b: string) => b.trim())
       : [];
+
+  const handleApply = () => {
+    if (!user?.id) {
+      console.error("User not authenticated");
+      return;
+    }
+
+    applyForJob(
+      {
+        jobOpportunityId: opportunity.id,
+        coverLetter: undefined,
+        resumeUrl: user.cvUrl || undefined,
+      },
+      {
+        onSuccess: () => {
+          setHasAppliedLocalState(true);
+        },
+      }
+    );
+  };
+
+  // Check if user already applied - either from previous query or local state
+  const userAlreadyApplied =
+    hasAppliedLocalState || hasAppliedTo(opportunity.id);
 
   return (
     <Dialog open={isModalOpen} onOpenChange={(open) => !open && closeModal()}>
@@ -192,7 +224,7 @@ export function OpportunityDetailModal() {
 
           {/* Action Buttons */}
           <div className="flex gap-3 pt-4 border-t border-border">
-            {normalizedStatus === "filled" ? (
+            {normalizedStatus === "filled" || userAlreadyApplied ? (
               <button
                 disabled
                 className="flex-1 py-2 rounded-lg border-2 border-success bg-success/20 font-semibold text-foreground flex items-center justify-center gap-2 transition-colors duration-300 cursor-default"
@@ -201,8 +233,19 @@ export function OpportunityDetailModal() {
                 {t("applicationSent")}
               </button>
             ) : (
-              <button className="flex-1 py-2 rounded-lg bg-success/20 border border-border hover:bg-success text-foreground hover:text-background font-semibold transition-colors duration-300 cursor-pointer hover:shadow-lg">
-                {t("applyWithProfile")}
+              <button
+                onClick={handleApply}
+                disabled={isPending || !user || isLoadingApplications}
+                className="flex-1 py-2 rounded-lg bg-success/20 border border-border hover:bg-success disabled:opacity-50 disabled:cursor-not-allowed text-foreground hover:text-background font-semibold transition-colors duration-300 cursor-pointer hover:shadow-lg flex items-center justify-center gap-2"
+              >
+                {isPending || isLoadingApplications ? (
+                  <>
+                    <Loader size={18} className="animate-spin" />
+                    {t("loading")}
+                  </>
+                ) : (
+                  t("applyWithProfile")
+                )}
               </button>
             )}
             <button

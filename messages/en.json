@@ -388,7 +388,12 @@
     "description": "Description",
     "benefits": "Benefits",
     "close": "Close",
-    "reset": "Reset Filters"
+    "reset": "Reset Filters",
+    "applicationSubmitted": "Application Submitted",
+    "applicationSubmittedDescription": "Your application has been sent successfully",
+    "alreadyApplied": "You have already applied to this opportunity",
+    "opportunityNotFound": "This opportunity is no longer available",
+    "applicationFailed": "Failed to submit application"
   },
   "posts": {
     "like": "Like",

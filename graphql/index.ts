@@ -30,7 +30,9 @@ export {
 export { GET_CLUBS, GET_CLUB } from "./club/queries";
 
 // OPPORTUNITY
-export { GET_JOB_OPPORTUNITIES } from "./opportunity/queries";
+export { GET_JOB_OPPORTUNITIES, GET_USER_APPLICATIONS } from "./opportunity/queries";
+
+export { APPLY_FOR_JOB } from "./opportunity/mutations";
 
 // STORY
 export { GET_ACTIVE_STORIES } from "./story/queries";

@@ -13,13 +13,8 @@ export function OpportunityFilters({
   availableCountries,
 }: OpportunityFiltersProps) {
   const t = useTranslations("opportunities");
-  const {
-    searchQuery,
-    filters,
-    setSearchQuery,
-    setFilters,
-    resetFilters,
-  } = useOpportunitiesStore();
+  const { searchQuery, filters, setSearchQuery, setFilters, resetFilters } =
+    useOpportunitiesStore();
 
   const [localSearch, setLocalSearch] = useState(searchQuery);
 
@@ -33,10 +28,7 @@ export function OpportunityFilters({
   }, [localSearch, setSearchQuery]);
 
   const hasActiveFilters =
-    searchQuery ||
-    filters.level ||
-    filters.status ||
-    filters.country;
+    searchQuery || filters.level || filters.status || filters.country;
 
   return (
     <div className="px-4 py-6 bg-background border-b border-border space-y-4">
@@ -60,41 +52,58 @@ export function OpportunityFilters({
         {/* Level Filter */}
         <select
           value={filters.level || ""}
-          onChange={(e) =>
-            setFilters({ level: e.target.value || null })
-          }
+          onChange={(e) => setFilters({ level: e.target.value || null })}
           className="px-3 py-2 rounded-lg bg-foreground/5 border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all duration-200"
         >
-          <option value="">{t("filters.experience")}</option>
-          <option value="professional">Professional</option>
-          <option value="amateur">Amateur</option>
+          <option className="text-foreground bg-background/90" value="">
+            {t("filters.experience")}
+          </option>
+          <option
+            className="text-foreground bg-background/90"
+            value="professional"
+          >
+            Professional
+          </option>
+          <option className="text-foreground bg-background/90" value="amateur">
+            Amateur
+          </option>
         </select>
 
         {/* Status Filter */}
         <select
           value={filters.status || ""}
-          onChange={(e) =>
-            setFilters({ status: e.target.value || null })
-          }
+          onChange={(e) => setFilters({ status: e.target.value || null })}
           className="px-3 py-2 rounded-lg bg-foreground/5 border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all duration-200"
         >
-          <option value="">{t("open")}/{t("filled")}</option>
-          <option value="open">{t("open")}</option>
-          <option value="filled">{t("filled")}</option>
-          <option value="closed">{t("closed")}</option>
+          <option className="text-foreground bg-background/90" value="">
+            {t("open")}/{t("filled")}
+          </option>
+          <option className="text-foreground bg-background/90" value="open">
+            {t("open")}
+          </option>
+          <option className="text-foreground bg-background/90" value="filled">
+            {t("filled")}
+          </option>
+          <option className="text-foreground bg-background/90" value="closed">
+            {t("closed")}
+          </option>
         </select>
 
         {/* Country Filter */}
         <select
           value={filters.country || ""}
-          onChange={(e) =>
-            setFilters({ country: e.target.value || null })
-          }
+          onChange={(e) => setFilters({ country: e.target.value || null })}
           className="px-3 py-2 rounded-lg bg-foreground/5 border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all duration-200"
         >
-          <option value="">{t("filters.location")}</option>
+          <option className="text-foreground bg-background/90" value="">
+            {t("filters.location")}
+          </option>
           {availableCountries.map((country) => (
-            <option key={country} value={country}>
+            <option
+              className="text-foreground bg-background/90"
+              key={country}
+              value={country}
+            >
               {country}
             </option>
           ))}

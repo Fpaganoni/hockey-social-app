@@ -28,3 +28,14 @@ export const GET_JOB_OPPORTUNITIES = gql`
     }
   }
 `;
+
+export const GET_USER_APPLICATIONS = gql`
+  query GetUserApplications($userId: String!) {
+    userApplications(userId: $userId) {
+      id
+      jobOpportunityId
+      status
+      appliedAt
+    }
+  }
+`;
