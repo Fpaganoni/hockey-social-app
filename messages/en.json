@@ -355,6 +355,29 @@
       "invalidType": "Only PDF files accepted"
     }
   },
+  "clubProfile": {
+    "editProfile": "Edit Profile",
+    "noBio": "No description available.",
+    "tabs": {
+      "posts": "Posts",
+      "squad": "Squad",
+      "opportunities": "Opportunities",
+      "about": "About"
+    },
+    "squad": {
+      "title": "Squad",
+      "noMembers": "No members yet. Squad will appear here."
+    },
+    "opportunities": {
+      "title": "Open Positions",
+      "noOpportunities": "No open positions at the moment."
+    },
+    "about": {
+      "title": "About",
+      "location": "Location",
+      "noLocation": "Location not set."
+    }
+  },
   "messages": {
     "searchConversations": "Search conversations...",
     "noConversationsFound": "No conversations found",
