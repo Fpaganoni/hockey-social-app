@@ -67,71 +67,34 @@ export function OpportunityListCard(opportunity: OpportunityListCardProps) {
               </p>
             </div>
             {level && (
-              <>
-                {level === "professional" ? (
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <Badge
-                      key={status}
-                      className={
-                        userAlreadyApplied
-                          ? "bg-error/30 text-foreground border-error/40"
-                          : normalizedStatus === "open"
-                            ? "bg-success/30 text-foreground border-success/40"
-                            : "bg-error/30 text-foreground border-error/40"
-                      }
-                    >
-                      {userAlreadyApplied
-                        ? t("filled")
-                        : normalizedStatus === "open"
-                          ? t("open")
-                          : t("filled")}
-                    </Badge>
-                    <Badge
-                      key={country}
-                      className="bg-foreground/20 text-foreground border-foreground/30"
-                    >
-                      {country.slice(0, 4)}
-                    </Badge>
-                    <Badge
-                      key={level}
-                      className="bg-info/30 text-foreground border-info/40"
-                    >
-                      {level}
-                    </Badge>
-                  </div>
-                ) : (
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <Badge
-                      key={status}
-                      className={
-                        userAlreadyApplied
-                          ? "bg-error/30 text-foreground border-error/40"
-                          : normalizedStatus === "open"
-                            ? "bg-success/30 text-foreground border-success/40"
-                            : "bg-error/30 text-foreground border-error/40"
-                      }
-                    >
-                      {userAlreadyApplied
-                        ? t("filled")
-                        : normalizedStatus === "open"
-                          ? t("open")
-                          : t("filled")}
-                    </Badge>
-                    <Badge
-                      key={country}
-                      className="bg-foreground/20 text-foreground border-foreground/30"
-                    >
-                      {country.slice(0, 4)}
-                    </Badge>
-                    <Badge
-                      key={level}
-                      className="bg-warning/30 text-foreground border-warning/40"
-                    >
-                      {level}
-                    </Badge>
-                  </div>
+              <div className="flex flex-wrap gap-2 mb-4">
+                <Badge
+                  className={
+                    normalizedStatus === "open"
+                      ? "bg-success/30 text-foreground border-success/40"
+                      : "bg-error/30 text-foreground border-error/40"
+                  }
+                >
+                  {normalizedStatus === "open" ? t("open") : t("filled")}
+                </Badge>
+                {userAlreadyApplied && (
+                  <Badge className="bg-accent/30 text-foreground border-accent/40">
+                    {t("alreadyApplied")}
+                  </Badge>
                 )}
-              </>
+                <Badge className="bg-foreground/20 text-foreground border-foreground/30">
+                  {country.slice(0, 4)}
+                </Badge>
+                <Badge
+                  className={
+                    level === "professional"
+                      ? "bg-info/30 text-foreground border-info/40"
+                      : "bg-warning/30 text-foreground border-warning/40"
+                  }
+                >
+                  {level}
+                </Badge>
+              </div>
             )}
           </div>
 

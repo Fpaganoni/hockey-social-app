@@ -128,6 +128,11 @@ export function OpportunityDetailModal() {
               >
                 {normalizedStatus === "open" ? t("open") : t("filled")}
               </Badge>
+              {userAlreadyApplied && (
+                <Badge className="bg-accent/30 text-foreground border-accent/40">
+                  {t("alreadyApplied")}
+                </Badge>
+              )}
               <Badge className="bg-info/30 text-foreground border-info/40">
                 {opportunity.level}
               </Badge>
