@@ -14,6 +14,7 @@
     "explore": "Explorer",
     "messages": "Messages",
     "opportunities": "Opportunités",
+    "clubs": "Clubs",
     "profile": "Profil",
     "settings": "Paramètres",
     "logout": "Se déconnecter"
@@ -437,5 +438,13 @@
       "linkCopied": "Lien copié !",
       "shareFailed": "Impossible de copier le lien"
     }
+  },
+  "clubs": {
+    "title": "Clubs",
+    "searchPlaceholder": "Rechercher des clubs...",
+    "noClubs": "Aucun club trouvé",
+    "members": "Membres",
+    "viewProfile": "Voir le profil",
+    "loading": "Chargement des clubs..."
   }
 }

@@ -108,6 +108,7 @@ export function HeroSection() {
                 height={500}
                 className="rounded-2xl"
                 priority
+                unoptimized
               />
             </figure>
           </div>

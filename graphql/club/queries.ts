@@ -18,8 +18,8 @@ export const GET_CLUBS = gql`
 `;
 
 export const GET_CLUB = gql`
-  query GetClub($id: ID!) {
-    club(id: $id) {
+  query GetClubs {
+    clubs {
       id
       name
       logo
