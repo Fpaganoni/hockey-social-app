@@ -448,6 +448,22 @@
     "noClubs": "No clubs found",
     "members": "Members",
     "viewProfile": "View Profile",
-    "loading": "Loading clubs..."
+    "loading": "Loading clubs...",
+    "detail": {
+      "contactAndSocial": "Contact & Social",
+      "contactInfo": "Contact Information",
+      "followUs": "Follow Us",
+      "squad": "Squad",
+      "joinedSince": "Joined since"
+    },
+    "roles": {
+      "coach": "Coach",
+      "manager": "Manager",
+      "player": "Player"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    }
   }
 }

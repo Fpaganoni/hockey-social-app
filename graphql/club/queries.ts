@@ -18,19 +18,35 @@ export const GET_CLUBS = gql`
 `;
 
 export const GET_CLUB = gql`
-  query GetClubs {
-    clubs {
+  query GetClub($id: ID!) {
+    club(id: $id) {
       id
       name
       logo
       description
       city
       country
+      isVerified
+      website
+      email
+      phone
+      instagram
+      twitter
+      facebook
+      tiktok
       members {
         id
-        name
-        avatar
-        position
+        role
+        status
+        joinedAt
+        user {
+          id
+          username
+          name
+          avatar
+          position
+          role
+        }
       }
     }
   }

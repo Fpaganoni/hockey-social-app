@@ -4,9 +4,10 @@ import { useTranslations } from "next-intl";
 import { useClub } from "@/hooks/useClubs";
 import { Loader } from "@/components/ui/loader";
 import { Error } from "@/components/ui/error";
-import { Avatar } from "@/components/ui/avatar";
+import { ClubContactSection } from "@/components/clubs/club-contact-section";
+import { ClubMembersSection } from "@/components/clubs/club-members-section";
 import Image from "next/image";
-import { MapPin } from "lucide-react";
+import { MapPin, CheckCircle } from "lucide-react";
 
 interface ClubDetailPageProps {
   clubId: string;
@@ -32,83 +33,63 @@ export function ClubDetailPage({ clubId }: ClubDetailPageProps) {
     );
   }
 
-  const club = data?.club;
-
-  if (!club) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Error>Club not found</Error>
-      </div>
-    );
-  }
+  const club = data.club;
 
   return (
-    <main className="bg-overlay max-w-4xl mx-auto pb-24">
-      {/* Cover area */}
-      {club.logo && (
-        <div className="relative h-64 bg-gradient-to-b from-primary/20 to-background overflow-hidden">
-          <Image
-            src={club.logo}
-            alt={club.name}
-            fill
-            className="w-full h-full object-cover"
-          />
-        </div>
-      )}
+    <main className="bg-overlay max-w-5xl mx-auto pb-24">
+      {/* Header con banner y logo */}
+      <div className="relative">
+        {club.logo && (
+          <div className="relative h-72 bg-gradient-to-b from-primary/20 to-background overflow-hidden">
+            <Image
+              src={club.logo}
+              alt={club.name}
+              fill
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+          </div>
+        )}
+      </div>
 
       {/* Club info */}
-      <div className="px-6 py-8">
-        <h1 className="text-4xl font-bold text-foreground mb-4">
-          {club.name}
-        </h1>
+      <div className="px-6 py-10 sm:px-8">
+        {/* Title con badge de verificación */}
+        <div className="flex items-start gap-4 mb-6">
+          <div className="flex-1">
+            <div className="flex items-center gap-3 mb-2">
+              <h1 className="text-4xl sm:text-5xl font-bold text-foreground">
+                {club.name}
+              </h1>
+              {club.isVerified && (
+                <CheckCircle className="w-8 h-8 text-primary flex-shrink-0" />
+              )}
+            </div>
+          </div>
+        </div>
 
+        {/* Ubicación */}
         {(club.city || club.country) && (
-          <div className="flex items-center gap-2 text-foreground/70 mb-6">
-            <MapPin size={20} />
+          <div className="flex items-center gap-2 text-foreground/70 mb-8 text-lg">
+            <MapPin className="w-5 h-5 flex-shrink-0" />
             <span>
               {[club.city, club.country].filter(Boolean).join(", ")}
             </span>
           </div>
         )}
 
+        {/* Descripción */}
         {club.description && (
-          <p className="text-foreground/80 text-lg mb-8 leading-relaxed">
+          <p className="text-foreground/80 text-lg mb-12 leading-relaxed max-w-3xl">
             {club.description}
           </p>
         )}
 
-        {/* Members section */}
-        {club.members && club.members.length > 0 && (
-          <div className="mt-12">
-            <h2 className="text-2xl font-bold text-foreground mb-6">
-              {t("members")}
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {club.members.map((member) => (
-                <div
-                  key={member.id}
-                  className="bg-background border border-border rounded-lg p-4 flex items-center gap-4"
-                >
-                  <Avatar
-                    src={member.avatar}
-                    alt={member.name}
-                    className="w-12 h-12"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-foreground truncate">
-                      {member.name}
-                    </h3>
-                    {member.position && (
-                      <p className="text-sm text-foreground/70 truncate">
-                        {member.position}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* Contacto y Redes */}
+        <ClubContactSection club={club} />
+
+        {/* Miembros */}
+        <ClubMembersSection club={club} />
       </div>
     </main>
   );

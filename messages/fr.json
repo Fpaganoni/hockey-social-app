@@ -445,6 +445,22 @@
     "noClubs": "Aucun club trouvé",
     "members": "Membres",
     "viewProfile": "Voir le profil",
-    "loading": "Chargement des clubs..."
+    "loading": "Chargement des clubs...",
+    "detail": {
+      "contactAndSocial": "Contact et Réseaux",
+      "contactInfo": "Informations de Contact",
+      "followUs": "Suivez-nous",
+      "squad": "Équipe",
+      "joinedSince": "Rejoint depuis"
+    },
+    "roles": {
+      "coach": "Entraîneur",
+      "manager": "Directeur",
+      "player": "Joueur"
+    },
+    "status": {
+      "active": "Actif",
+      "inactive": "Inactif"
+    }
   }
 }

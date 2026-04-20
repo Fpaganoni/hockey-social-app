@@ -23,7 +23,7 @@ export function ClubListCard(club: Club) {
         <div className="mb-4">
           <div className="flex justify-between items-start gap-3">
             {club.logo && (
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <Image
                   src={club.logo}
                   alt={club.name}

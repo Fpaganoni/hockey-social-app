@@ -448,6 +448,22 @@
     "noClubs": "No se encontraron clubes",
     "members": "Miembros",
     "viewProfile": "Ver perfil",
-    "loading": "Cargando clubes..."
+    "loading": "Cargando clubes...",
+    "detail": {
+      "contactAndSocial": "Contacto y Redes",
+      "contactInfo": "Información de Contacto",
+      "followUs": "Síguenos",
+      "squad": "Plantel",
+      "joinedSince": "Unido desde"
+    },
+    "roles": {
+      "coach": "Entrenador",
+      "manager": "Gerente",
+      "player": "Jugador"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    }
   }
 }
