@@ -461,6 +461,33 @@
     "status": {
       "active": "Actif",
       "inactive": "Inactif"
+    },
+    "verification": {
+      "verifyClub": "Vérifier le Club",
+      "unverifiedTitle": "Club Non Vérifié",
+      "unverifiedDescription": "Votre club n'est pas vérifié. Vérifiez votre compte pour accéder aux fonctionnalités avancées et gagner la confiance des joueurs.",
+      "pendingTitle": "Vérification en Attente",
+      "pendingDescription": "Votre demande de vérification est examinée par notre équipe.",
+      "verifyButton": "Vérifier le Club",
+      "description": "Nous avons besoin d'un document officiel pour vérifier votre club. Veuillez télécharger un document légal (certificat de constitution, lettre officielle, etc.).",
+      "uploadDocument": "Télécharger le Document",
+      "dragOrClick": "Déposez votre document ici ou cliquez pour parcourir",
+      "supportedFormats": "Formats acceptés: PDF, DOC, DOCX (Max 10MB)",
+      "fileTooLarge": "Le fichier est trop volumineux. Taille maximale: 10MB",
+      "invalidFileType": "Type de fichier invalide. Veuillez télécharger des fichiers PDF, DOC ou DOCX.",
+      "uploadFailed": "Erreur lors du téléchargement. Veuillez réessayer.",
+      "uploading": "Téléchargement...",
+      "submit": "Envoyer la Demande",
+      "submitting": "Envoi en cours...",
+      "cancel": "Annuler",
+      "success": "Succès",
+      "verificationRequested": "Demande de vérification envoyée avec succès. Notre équipe l'examinera bientôt.",
+      "error": "Erreur",
+      "fileRequired": "Veuillez télécharger un document avant d'envoyer.",
+      "genericError": "Une erreur s'est produite lors de l'envoi de votre demande.",
+      "alreadyVerified": "Ce club est déjà vérifié.",
+      "alreadyPending": "Une demande de vérification est déjà en attente. Veuillez attendre que notre équipe l'examine.",
+      "clubNotFound": "Erreur interne: Club non trouvé."
     }
   }
 }

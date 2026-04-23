@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Club, ClubMember } from "@/types/models/club";
-import { Avatar } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 
 interface ClubMembersSectionProps {
@@ -49,11 +49,10 @@ export function ClubMembersSection({ club }: ClubMembersSectionProps) {
               {/* Avatar */}
               <div className="flex justify-center">
                 <div className="relative">
-                  <Avatar
-                    src={member.user.avatar}
-                    alt={member.user.name}
-                    className="w-20 h-20 border-2 border-primary/20 group-hover:border-primary/50 transition-colors"
-                  />
+                  <Avatar className="w-20 h-20 border-2 border-primary/20 group-hover:border-primary/50 transition-colors">
+                    <AvatarImage src={member.user.avatar} alt={member.user.name} />
+                    <AvatarFallback>{member.user.name?.charAt(0)?.toUpperCase() || '?'}</AvatarFallback>
+                  </Avatar>
                   {member.status && (
                     <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 border-background bg-green-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                   )}

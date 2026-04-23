@@ -21,6 +21,8 @@ export interface Club {
   city?: string;
   country?: string;
   isVerified?: boolean;
+  verificationStatus?: "UNVERIFIED" | "PENDING" | "VERIFIED" | "REJECTED";
+  verificationDoc?: string;
   website?: string;
   email?: string;
   phone?: string;

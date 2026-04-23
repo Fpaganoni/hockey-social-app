@@ -27,6 +27,8 @@ export const GET_CLUB = gql`
       city
       country
       isVerified
+      verificationStatus
+      verificationDoc
       website
       email
       phone
