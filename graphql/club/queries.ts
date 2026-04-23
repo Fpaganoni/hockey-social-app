@@ -23,6 +23,7 @@ export const GET_CLUB = gql`
       id
       name
       logo
+      coverImage
       description
       city
       country

@@ -49,23 +49,51 @@ export function ClubDetailPage({ clubId }: ClubDetailPageProps) {
   return (
     <>
       <main className="bg-overlay max-w-5xl mx-auto pb-24">
-        {/* Header con banner y logo */}
-        <div className="relative">
-          {club.logo && (
-            <div className="relative h-72 bg-gradient-to-b from-primary/20 to-background overflow-hidden">
-              <Image
-                src={club.logo}
-                alt={club.name}
-                fill
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-            </div>
+        {/* Cover image */}
+        <div className="relative h-80 bg-gradient-to-b from-primary/10 to-background overflow-hidden">
+          {club.coverImage ? (
+            <Image
+              src={club.coverImage}
+              alt={club.name}
+              fill
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5" />
           )}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
         </div>
 
         {/* Club info */}
-        <div className="px-6 py-10 sm:px-8">
+        <div className="px-6 sm:px-8">
+          {/* Logo + Title section */}
+          <div className="flex items-end gap-4 -mt-16 mb-8 relative z-10">
+            {/* Logo */}
+            {club.logo && (
+              <div className="flex-shrink-0">
+                <Image
+                  src={club.logo}
+                  alt={club.name}
+                  width={120}
+                  height={120}
+                  className="w-32 h-32 rounded-lg object-cover border-4 border-background shadow-lg"
+                />
+              </div>
+            )}
+
+            {/* Title con badge */}
+            <div className="flex-1 pb-2">
+              <div className="flex items-center gap-3 mb-2">
+                <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
+                  {club.name}
+                </h1>
+                {club.isVerified && (
+                  <CheckCircle className="w-7 h-7 text-primary flex-shrink-0" />
+                )}
+              </div>
+            </div>
+          </div>
+
           {/* Verification banner - only show to admin */}
           {isClubAdmin && (
             <VerificationBanner
@@ -74,23 +102,9 @@ export function ClubDetailPage({ clubId }: ClubDetailPageProps) {
             />
           )}
 
-          {/* Title con badge de verificación */}
-          <div className="flex items-start gap-4 mb-6">
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-4xl sm:text-5xl font-bold text-foreground">
-                  {club.name}
-                </h1>
-                {club.isVerified && (
-                  <CheckCircle className="w-8 h-8 text-primary flex-shrink-0" />
-                )}
-              </div>
-            </div>
-          </div>
-
           {/* Ubicación */}
           {(club.city || club.country) && (
-            <div className="flex items-center gap-2 text-foreground/70 mb-8 text-lg">
+            <div className="flex items-center gap-2 text-foreground/70 mb-6 text-base">
               <MapPin className="w-5 h-5 flex-shrink-0" />
               <span>
                 {[club.city, club.country].filter(Boolean).join(", ")}
@@ -100,7 +114,7 @@ export function ClubDetailPage({ clubId }: ClubDetailPageProps) {
 
           {/* Descripción */}
           {club.description && (
-            <p className="text-foreground/80 text-lg mb-12 leading-relaxed max-w-3xl">
+            <p className="text-foreground/80 text-base mb-12 leading-relaxed max-w-3xl">
               {club.description}
             </p>
           )}

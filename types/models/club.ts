@@ -17,6 +17,7 @@ export interface Club {
   id: string;
   name: string;
   logo?: string;
+  coverImage?: string;
   description?: string;
   city?: string;
   country?: string;

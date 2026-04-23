@@ -43,15 +43,20 @@ export function ClubMembersSection({ club }: ClubMembersSectionProps) {
             className="group relative bg-background border border-border rounded-lg p-6 hover:border-primary/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden"
           >
             {/* Gradient overlay on hover */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/0 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-linear-to-br from-primary/0 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
 
             <div className="relative z-10 space-y-4">
               {/* Avatar */}
               <div className="flex justify-center">
                 <div className="relative">
                   <Avatar className="w-20 h-20 border-2 border-primary/20 group-hover:border-primary/50 transition-colors">
-                    <AvatarImage src={member.user.avatar} alt={member.user.name} />
-                    <AvatarFallback>{member.user.name?.charAt(0)?.toUpperCase() || '?'}</AvatarFallback>
+                    <AvatarImage
+                      src={member.user.avatar}
+                      alt={member.user.name}
+                    />
+                    <AvatarFallback>
+                      {member.user.name?.charAt(0)?.toUpperCase() || "?"}
+                    </AvatarFallback>
                   </Avatar>
                   {member.status && (
                     <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 border-background bg-green-500 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -94,7 +99,8 @@ export function ClubMembersSection({ club }: ClubMembersSectionProps) {
               {member.joinedAt && (
                 <div className="text-center pt-2 border-t border-border/50">
                   <p className="text-xs text-foreground/50">
-                    {t("joinedSince")} {new Date(member.joinedAt).toLocaleDateString()}
+                    {t("joinedSince")}{" "}
+                    {new Date(member.joinedAt).toLocaleDateString()}
                   </p>
                 </div>
               )}
