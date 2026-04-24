@@ -14,6 +14,7 @@
     "explore": "Explore",
     "messages": "Messages",
     "opportunities": "Opportunities",
+    "clubs": "Clubs",
     "profile": "Profile",
     "settings": "Settings",
     "logout": "Logout"
@@ -355,6 +356,29 @@
       "invalidType": "Only PDF files accepted"
     }
   },
+  "clubProfile": {
+    "editProfile": "Edit Profile",
+    "noBio": "No description available.",
+    "tabs": {
+      "posts": "Posts",
+      "squad": "Squad",
+      "opportunities": "Opportunities",
+      "about": "About"
+    },
+    "squad": {
+      "title": "Squad",
+      "noMembers": "No members yet. Squad will appear here."
+    },
+    "opportunities": {
+      "title": "Open Positions",
+      "noOpportunities": "No open positions at the moment."
+    },
+    "about": {
+      "title": "About",
+      "location": "Location",
+      "noLocation": "Location not set."
+    }
+  },
   "messages": {
     "searchConversations": "Search conversations...",
     "noConversationsFound": "No conversations found",
@@ -416,6 +440,57 @@
       "share": "Share",
       "linkCopied": "Link copied!",
       "shareFailed": "Could not copy link"
+    }
+  },
+  "clubs": {
+    "title": "Clubs",
+    "searchPlaceholder": "Search clubs...",
+    "noClubs": "No clubs found",
+    "members": "Members",
+    "viewProfile": "View Profile",
+    "loading": "Loading clubs...",
+    "detail": {
+      "contactAndSocial": "Contact & Social",
+      "contactInfo": "Contact Information",
+      "followUs": "Follow Us",
+      "squad": "Squad",
+      "joinedSince": "Joined since"
+    },
+    "roles": {
+      "coach": "Coach",
+      "manager": "Manager",
+      "player": "Player"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "verification": {
+      "verifyClub": "Verify Club",
+      "unverifiedTitle": "Club Not Verified",
+      "unverifiedDescription": "Your club is not verified. Verify your account to access advanced features and build player trust.",
+      "pendingTitle": "Verification Pending",
+      "pendingDescription": "Your verification request is being reviewed by our team.",
+      "verifyButton": "Verify Club",
+      "description": "We need an official document to verify your club. Please upload a legal document (legal incorporation certificate, official letterhead letter, etc.).",
+      "uploadDocument": "Upload Document",
+      "dragOrClick": "Drag and drop your document here or click to browse",
+      "supportedFormats": "Supported formats: PDF, DOC, DOCX (Max 10MB)",
+      "fileTooLarge": "File is too large. Maximum size: 10MB",
+      "invalidFileType": "Invalid file type. Please upload PDF, DOC, or DOCX files.",
+      "uploadFailed": "Failed to upload file. Please try again.",
+      "uploading": "Uploading...",
+      "submit": "Submit Request",
+      "submitting": "Submitting...",
+      "cancel": "Cancel",
+      "success": "Success",
+      "verificationRequested": "Verification request submitted successfully. Our team will review it shortly.",
+      "error": "Error",
+      "fileRequired": "Please upload a document before submitting.",
+      "genericError": "An error occurred while submitting your request.",
+      "alreadyVerified": "This club is already verified.",
+      "alreadyPending": "A verification request is already pending. Please wait for our team to review it.",
+      "clubNotFound": "Internal error: Club not found."
     }
   }
 }

@@ -14,6 +14,7 @@
     "explore": "Explorar",
     "messages": "Mensajes",
     "opportunities": "Oportunidades",
+    "clubs": "Clubes",
     "profile": "Perfil",
     "settings": "Configuración",
     "logout": "Cerrar sesión"
@@ -355,6 +356,29 @@
       "invalidType": "Solo se aceptan PDF"
     }
   },
+  "clubProfile": {
+    "editProfile": "Editar Perfil",
+    "noBio": "Sin descripción disponible.",
+    "tabs": {
+      "posts": "Publicaciones",
+      "squad": "Equipo",
+      "opportunities": "Oportunidades",
+      "about": "Acerca de"
+    },
+    "squad": {
+      "title": "Equipo",
+      "noMembers": "Sin miembros aún. El equipo aparecerá aquí."
+    },
+    "opportunities": {
+      "title": "Posiciones Abiertas",
+      "noOpportunities": "Sin posiciones abiertas en este momento."
+    },
+    "about": {
+      "title": "Acerca de",
+      "location": "Ubicación",
+      "noLocation": "Ubicación no establecida."
+    }
+  },
   "messages": {
     "searchConversations": "Buscar conversaciones...",
     "noConversationsFound": "No se encontraron conversaciones",
@@ -416,6 +440,57 @@
       "share": "Compartir",
       "linkCopied": "¡Enlace copiado!",
       "shareFailed": "No se pudo copiar el enlace"
+    }
+  },
+  "clubs": {
+    "title": "Clubes",
+    "searchPlaceholder": "Buscar clubes...",
+    "noClubs": "No se encontraron clubes",
+    "members": "Miembros",
+    "viewProfile": "Ver perfil",
+    "loading": "Cargando clubes...",
+    "detail": {
+      "contactAndSocial": "Contacto y Redes",
+      "contactInfo": "Información de Contacto",
+      "followUs": "Síguenos",
+      "squad": "Plantel",
+      "joinedSince": "Unido desde"
+    },
+    "roles": {
+      "coach": "Entrenador",
+      "manager": "Gerente",
+      "player": "Jugador"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    },
+    "verification": {
+      "verifyClub": "Verificar Club",
+      "unverifiedTitle": "Club No Verificado",
+      "unverifiedDescription": "Tu club no está verificado. Verifica tu cuenta para acceder a funciones avanzadas y generar confianza en los jugadores.",
+      "pendingTitle": "Verificación Pendiente",
+      "pendingDescription": "Tu solicitud de verificación está siendo revisada por nuestro equipo.",
+      "verifyButton": "Verificar Club",
+      "description": "Necesitamos un documento oficial para verificar tu club. Por favor, sube un documento legal (certificado de constitución legal, carta con membrete oficial, etc.).",
+      "uploadDocument": "Subir Documento",
+      "dragOrClick": "Arrastra y suelta tu documento aquí o haz clic para examinar",
+      "supportedFormats": "Formatos soportados: PDF, DOC, DOCX (Máx 10MB)",
+      "fileTooLarge": "El archivo es demasiado grande. Tamaño máximo: 10MB",
+      "invalidFileType": "Tipo de archivo inválido. Por favor, sube archivos PDF, DOC o DOCX.",
+      "uploadFailed": "Error al subir el archivo. Por favor, intenta de nuevo.",
+      "uploading": "Subiendo...",
+      "submit": "Enviar Solicitud",
+      "submitting": "Enviando...",
+      "cancel": "Cancelar",
+      "success": "Éxito",
+      "verificationRequested": "Solicitud de verificación enviada correctamente. Nuestro equipo la revisará pronto.",
+      "error": "Error",
+      "fileRequired": "Por favor, sube un documento antes de enviar.",
+      "genericError": "Ocurrió un error al enviar tu solicitud.",
+      "alreadyVerified": "Este club ya está verificado.",
+      "alreadyPending": "Ya existe una solicitud de verificación pendiente. Por favor, espera a que nuestro equipo la revise.",
+      "clubNotFound": "Error interno: Club no encontrado."
     }
   }
 }

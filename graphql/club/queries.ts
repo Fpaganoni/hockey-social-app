@@ -23,14 +23,33 @@ export const GET_CLUB = gql`
       id
       name
       logo
+      coverImage
       description
       city
       country
+      isVerified
+      verificationStatus
+      verificationDoc
+      website
+      email
+      phone
+      instagram
+      twitter
+      facebook
+      tiktok
       members {
         id
-        name
-        avatar
-        position
+        role
+        status
+        joinedAt
+        user {
+          id
+          username
+          name
+          avatar
+          position
+          role
+        }
       }
     }
   }

@@ -23,6 +23,6 @@ export const config = {
   // IMPORTANT: We do NOT exclude paths that merely contain a dot
   // (e.g. usernames like "franco.paganoni"). Only real file extensions are excluded.
   matcher: [
-    "/((?!api|_next|_vercel)(?!.*\\.(?:ico|png|jpg|jpeg|gif|webp|svg|css|js|ts|json|txt|xml|woff2?|ttf|eot|map)(?:\\?.*)?$).*)",
+    "/((?!api|_next|_vercel)(?!.*\\.(?:ico|png|jpg|jpeg|gif|webp|avif|svg|css|js|ts|json|txt|xml|woff2?|ttf|eot|map)(?:\\?.*)?$).*)",
   ],
 };
