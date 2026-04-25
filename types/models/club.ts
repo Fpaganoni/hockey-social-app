@@ -21,6 +21,7 @@ export interface Club {
   description?: string;
   city?: string;
   country?: string;
+  league?: string;
   isVerified?: boolean;
   verificationStatus?: "UNVERIFIED" | "PENDING" | "VERIFIED" | "REJECTED";
   verificationDoc?: string;
@@ -32,6 +33,9 @@ export interface Club {
   facebook?: string;
   tiktok?: string;
   members?: ClubMember[];
+  admin?: {
+    avatar?: string;
+  };
 }
 
 export type ClubBasic = Pick<Club, "id" | "name" | "logo">;

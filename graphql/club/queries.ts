@@ -10,9 +10,15 @@ export const GET_CLUBS = gql`
       id
       name
       logo
+      coverImage
       description
       city
       country
+      league
+      isVerified
+      admin {
+        avatar
+      }
     }
   }
 `;
