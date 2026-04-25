@@ -331,7 +331,8 @@
       "posts": "Publications",
       "trajectory": "Trajectoire",
       "multimedia": "Multimédia",
-      "statistics": "Statistiques"
+      "statistics": "Statistiques",
+      "applications": "Mes Candidatures"
     },
     "noPosts": "Pas encore de publications",
     "stats": {
@@ -351,6 +352,12 @@
       "removeSuccess": "CV supprimé",
       "fileTooLarge": "Fichier dépasse 5 Mo",
       "invalidType": "Seuls les PDF sont acceptés"
+    },
+    "applications": {
+      "noApplications": "Aucune candidature pour le moment. Commencez à postuler aux opportunités d'emploi !",
+      "location": "Localisation",
+      "salary": "Salaire",
+      "appliedAt": "Postuler"
     }
   },
   "clubProfile": {

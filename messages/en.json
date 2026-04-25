@@ -334,7 +334,8 @@
       "posts": "Posts",
       "trajectory": "Trajectory",
       "multimedia": "Multimedia",
-      "statistics": "Statistics"
+      "statistics": "Statistics",
+      "applications": "My Applications"
     },
     "noPosts": "No posts yet",
     "stats": {
@@ -354,6 +355,12 @@
       "removeSuccess": "CV removed",
       "fileTooLarge": "File exceeds 5 MB",
       "invalidType": "Only PDF files accepted"
+    },
+    "applications": {
+      "noApplications": "No applications yet. Start applying to job opportunities!",
+      "location": "Location",
+      "salary": "Salary",
+      "appliedAt": "Applied"
     }
   },
   "clubProfile": {
