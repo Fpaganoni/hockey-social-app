@@ -60,6 +60,8 @@ export function PostCard({ post }: PostCardProps) {
     : likeCountServer;
 
   const handleLike = () => {
+    if (!currentUser?.id) return;
+
     // Optimistic update: immediate visual feedback
     const newLikedState = !isLiked;
     setIsLikedOptimistic(newLikedState);
@@ -163,7 +165,7 @@ export function PostCard({ post }: PostCardProps) {
       <div className="px-4 py-3 flex items-center justify-around border-t border-border">
         <button
           onClick={handleLike}
-          disabled={likePost.isPending || unlikePost.isPending}
+          disabled={!currentUser?.id || likePost.isPending || unlikePost.isPending}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-300 cursor-pointer ${
             isLiked
               ? "text-error hover:bg-error/30"

@@ -77,6 +77,16 @@ export function useApplyForJob() {
       if (!user?.id) {
         throw new Error("User must be authenticated to apply");
       }
+      if (!jobOpportunityId) {
+        throw new Error("Job Opportunity ID is required");
+      }
+
+      console.log("Executing applyForJob mutation with args:", {
+        jobOpportunityId,
+        userId: user.id,
+        coverLetter,
+        resumeUrl,
+      });
 
       return graphqlClient.request(APPLY_FOR_JOB, {
         jobOpportunityId,

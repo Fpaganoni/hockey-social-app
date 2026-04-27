@@ -422,7 +422,7 @@
     "reset": "Reiniciar Filtros",
     "applicationSubmitted": "Solicitud Enviada",
     "applicationSubmittedDescription": "Tu solicitud ha sido enviada exitosamente",
-    "alreadyApplied": "Ya has aplicado a esta oportunidad",
+    "alreadyApplied": "Ya aplicaste",
     "opportunityNotFound": "Esta oportunidad ya no está disponible",
     "applicationFailed": "Error al enviar la solicitud"
   },

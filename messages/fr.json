@@ -419,7 +419,7 @@
     "reset": "Réinitialiser les Filtres",
     "applicationSubmitted": "Demande Soumise",
     "applicationSubmittedDescription": "Votre demande a été soumise avec succès",
-    "alreadyApplied": "Vous avez déjà postulé pour cette opportunité",
+    "alreadyApplied": "Vous avez déjà postulé",
     "opportunityNotFound": "Cette opportunité n'est plus disponible",
     "applicationFailed": "Erreur lors de l'envoi de la demande"
   },

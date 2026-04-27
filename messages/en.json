@@ -422,7 +422,7 @@
     "reset": "Reset Filters",
     "applicationSubmitted": "Application Submitted",
     "applicationSubmittedDescription": "Your application has been sent successfully",
-    "alreadyApplied": "You have already applied to this opportunity",
+    "alreadyApplied": "You already applied",
     "opportunityNotFound": "This opportunity is no longer available",
     "applicationFailed": "Failed to submit application"
   },
