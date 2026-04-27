@@ -48,8 +48,11 @@ export function JobOpportunities({ initialData }: JobOpportunitiesProps) {
       }
 
       // Level filter
-      if (filters.level && opportunity.level !== filters.level) {
-        return false;
+      if (filters.level) {
+        const normalizedLevel = opportunity.level.toLowerCase();
+        if (normalizedLevel !== filters.level.toLowerCase()) {
+          return false;
+        }
       }
 
       // Status filter

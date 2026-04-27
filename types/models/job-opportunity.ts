@@ -5,7 +5,7 @@ export interface JobOpportunity {
   title: string;
   description: string;
   positionType: string;
-  level: "professional" | "amateur";
+  level: "PROFESSIONAL" | "AMATEUR" | "professional" | "amateur";
   country: string;
   city: string;
   salary: number;

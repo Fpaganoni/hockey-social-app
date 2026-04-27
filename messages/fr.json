@@ -331,7 +331,8 @@
       "posts": "Publications",
       "trajectory": "Trajectoire",
       "multimedia": "Multimédia",
-      "statistics": "Statistiques"
+      "statistics": "Statistiques",
+      "applications": "Mes Candidatures"
     },
     "noPosts": "Pas encore de publications",
     "stats": {
@@ -351,6 +352,12 @@
       "removeSuccess": "CV supprimé",
       "fileTooLarge": "Fichier dépasse 5 Mo",
       "invalidType": "Seuls les PDF sont acceptés"
+    },
+    "applications": {
+      "noApplications": "Aucune candidature pour le moment. Commencez à postuler aux opportunités d'emploi !",
+      "location": "Localisation",
+      "salary": "Salaire",
+      "appliedAt": "Postuler"
     }
   },
   "clubProfile": {
@@ -412,7 +419,7 @@
     "reset": "Réinitialiser les Filtres",
     "applicationSubmitted": "Demande Soumise",
     "applicationSubmittedDescription": "Votre demande a été soumise avec succès",
-    "alreadyApplied": "Vous avez déjà postulé pour cette opportunité",
+    "alreadyApplied": "Vous avez déjà postulé",
     "opportunityNotFound": "Cette opportunité n'est plus disponible",
     "applicationFailed": "Erreur lors de l'envoi de la demande"
   },

@@ -100,7 +100,7 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
   );
 
   const handleLikeToggle = () => {
-    if (!postId) return;
+    if (!postId || !currentUser?.id) return;
     if (isLikedByMe) {
       unlikeMutation.mutate({ postId });
     } else {
@@ -109,7 +109,7 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
   };
 
   const handlePostComment = () => {
-    if (!postId || !commentText.trim() || commentMutation.isPending) return;
+    if (!postId || !currentUser?.id || !commentText.trim() || commentMutation.isPending) return;
     commentMutation.mutate(
       { postId, content: commentText },
       {
@@ -461,7 +461,8 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
                 <div className="flex items-center gap-4 mb-2">
                   <button
                     onClick={handleLikeToggle}
-                    className="transition-transform hover:scale-110 active:scale-95"
+                    disabled={!currentUser?.id}
+                    className="transition-transform hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Heart
                       size={24}
@@ -507,12 +508,12 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
                       if (e.key === "Enter") handlePostComment();
                     }}
                     placeholder={t("addCommentPlaceholder")}
-                    className="flex-1 bg-transparent border-none outline-none text-sm focus:ring-0 text-foreground placeholder:text-foreground-muted"
-                    disabled={commentMutation.isPending}
+                    className="flex-1 bg-transparent border-none outline-none text-sm focus:ring-0 text-foreground placeholder:text-foreground-muted disabled:opacity-50"
+                    disabled={!currentUser?.id || commentMutation.isPending}
                   />
                   <button
                     onClick={handlePostComment}
-                    disabled={!commentText.trim() || commentMutation.isPending}
+                    disabled={!currentUser?.id || !commentText.trim() || commentMutation.isPending}
                     className="flex items-center gap-1 text-primary font-semibold text-sm disabled:opacity-40 transition-all hover:text-primary-hover shrink-0"
                   >
                     {commentMutation.isPending ? (

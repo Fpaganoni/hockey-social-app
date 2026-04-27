@@ -12,3 +12,6 @@ tsconfig.tsbuildinfo
 .env.production
 .env.development
 .env.example
+.claude
+RoadMap.md
+PRE-LAUNCH.md

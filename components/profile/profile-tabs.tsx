@@ -11,6 +11,7 @@ import { YoutubeWidget } from "@/components/ui/youtube-widget";
 import { PostCard } from "@/components/feed/post-card";
 import { FileText, Loader2, Heart, MessageCircle, Copy } from "lucide-react";
 import { usePostsByUser } from "@/hooks/usePosts";
+import { UserApplications } from "./user-applications";
 
 interface UserData {
   id: string;
@@ -37,6 +38,7 @@ export function ProfileTabs({
     { id: "trajectory", label: t("tabs.trajectory") },
     { id: "multimedia", label: t("tabs.multimedia") },
     { id: "statistics", label: t("tabs.statistics") },
+    { id: "applications", label: t("tabs.applications") },
   ];
 
   const { data: postsData, isLoading: isLoadingPosts } = usePostsByUser(
@@ -201,6 +203,8 @@ export function ProfileTabs({
             </motion.div>
           </div>
         )}
+
+        {activeTab === "applications" && <UserApplications />}
       </div>
     </>
   );

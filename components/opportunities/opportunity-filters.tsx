@@ -60,11 +60,11 @@ export function OpportunityFilters({
           </option>
           <option
             className="text-foreground bg-background/90"
-            value="professional"
+            value="PROFESSIONAL"
           >
             Professional
           </option>
-          <option className="text-foreground bg-background/90" value="amateur">
+          <option className="text-foreground bg-background/90" value="AMATEUR">
             Amateur
           </option>
         </select>
@@ -136,7 +136,8 @@ export function OpportunityFilters({
           )}
           {filters.level && (
             <div className="px-3 py-1 rounded-full bg-info/20 text-info text-xs font-medium flex items-center gap-2">
-              {filters.level}
+              {filters.level.charAt(0).toUpperCase() +
+                filters.level.slice(1).toLowerCase()}
               <X
                 size={14}
                 className="cursor-pointer hover:opacity-70"
@@ -146,7 +147,8 @@ export function OpportunityFilters({
           )}
           {filters.status && (
             <div className="px-3 py-1 rounded-full bg-success/20 text-success text-xs font-medium flex items-center gap-2">
-              {filters.status}
+              {filters.status.charAt(0).toUpperCase() +
+                filters.status.slice(1).toLowerCase()}
               <X
                 size={14}
                 className="cursor-pointer hover:opacity-70"

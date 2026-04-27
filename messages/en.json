@@ -334,7 +334,8 @@
       "posts": "Posts",
       "trajectory": "Trajectory",
       "multimedia": "Multimedia",
-      "statistics": "Statistics"
+      "statistics": "Statistics",
+      "applications": "My Applications"
     },
     "noPosts": "No posts yet",
     "stats": {
@@ -354,6 +355,12 @@
       "removeSuccess": "CV removed",
       "fileTooLarge": "File exceeds 5 MB",
       "invalidType": "Only PDF files accepted"
+    },
+    "applications": {
+      "noApplications": "No applications yet. Start applying to job opportunities!",
+      "location": "Location",
+      "salary": "Salary",
+      "appliedAt": "Applied"
     }
   },
   "clubProfile": {
@@ -415,7 +422,7 @@
     "reset": "Reset Filters",
     "applicationSubmitted": "Application Submitted",
     "applicationSubmittedDescription": "Your application has been sent successfully",
-    "alreadyApplied": "You have already applied to this opportunity",
+    "alreadyApplied": "You already applied",
     "opportunityNotFound": "This opportunity is no longer available",
     "applicationFailed": "Failed to submit application"
   },

@@ -143,8 +143,14 @@ export function useLikePost() {
 
   return useMutation<{ likePost: any }, Error, { postId: string }>({
     // Backend requires userId — injected from auth store, not from caller
-    mutationFn: async ({ postId }) =>
-      graphqlClient.request(LIKE_POST, { postId, userId: user?.id }),
+    mutationFn: async ({ postId }) => {
+      if (!user?.id) throw new Error("User must be authenticated to like a post");
+      if (!postId) throw new Error("Post ID is required");
+      
+      console.log("Executing likePost mutation with args:", { postId, userId: user.id });
+      
+      return graphqlClient.request(LIKE_POST, { postId, userId: user.id });
+    },
 
     onMutate: async ({ postId }) => {
       await queryClient.cancelQueries({ queryKey: ["post", postId] });
@@ -205,8 +211,14 @@ export function useUnlikePost() {
 
   return useMutation<{ unlikePost: any }, Error, { postId: string }>({
     // Backend requires userId — injected from auth store, not from caller
-    mutationFn: async ({ postId }) =>
-      graphqlClient.request(UNLIKE_POST, { postId, userId: user?.id }),
+    mutationFn: async ({ postId }) => {
+      if (!user?.id) throw new Error("User must be authenticated to unlike a post");
+      if (!postId) throw new Error("Post ID is required");
+      
+      console.log("Executing unlikePost mutation with args:", { postId, userId: user.id });
+      
+      return graphqlClient.request(UNLIKE_POST, { postId, userId: user.id });
+    },
 
     onMutate: async ({ postId }) => {
       await queryClient.cancelQueries({ queryKey: ["post", postId] });
@@ -248,8 +260,14 @@ export function useCreateComment() {
 
   return useMutation<{ createComment: any }, Error, CreateCommentVariables>({
     // Backend requires userId — injected from auth store, not from caller
-    mutationFn: async ({ postId, content }) =>
-      graphqlClient.request(CREATE_COMMENT, { postId, userId: user?.id, content }),
+    mutationFn: async ({ postId, content }) => {
+      if (!user?.id) throw new Error("User must be authenticated to comment");
+      if (!postId) throw new Error("Post ID is required");
+      
+      console.log("Executing createComment mutation with args:", { postId, userId: user.id, content });
+      
+      return graphqlClient.request(CREATE_COMMENT, { postId, userId: user.id, content });
+    },
 
     onMutate: async ({ postId, content }) => {
       await queryClient.cancelQueries({ queryKey: ["post", postId] });
