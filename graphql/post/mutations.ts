@@ -5,8 +5,8 @@ import { gql } from "graphql-request";
 // ============================================
 
 export const CREATE_POST = gql`
-  mutation CreatePost($content: String!, $imageUrl: String) {
-    createPost(content: $content, imageUrl: $imageUrl) {
+  mutation CreatePost($userId: ID!, $content: String!, $imageUrl: String) {
+    createPost(userId: $userId, content: $content, imageUrl: $imageUrl) {
       id
       content
       imageUrl

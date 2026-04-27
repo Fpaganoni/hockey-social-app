@@ -216,7 +216,45 @@
     "scrollLeft": "Scroll left",
     "scrollRight": "Scroll right",
     "story": "story",
-    "stories": "stories"
+    "stories": "stories",
+    "createContent": {
+      "title": "Create",
+      "description": "Share a post or story with your community",
+      "createPost": "Create Post",
+      "postDescription": "Share text and images with your followers",
+      "createStory": "Create Story",
+      "storyDescription": "Share temporary content that expires after 24 hours"
+    },
+    "createPost": {
+      "contentPlaceholder": "What's on your mind?",
+      "addImageOptional": "Click to add image (optional)",
+      "uploading": "Uploading...",
+      "fileTooLarge": "File is too large. Maximum size: 50MB",
+      "invalidFileType": "Invalid file type. Please upload an image (JPG, PNG, GIF, WebP)",
+      "uploadFailed": "Failed to upload image. Please try again.",
+      "contentRequired": "Content is required to create a post",
+      "createPost": "Post",
+      "creating": "Creating...",
+      "postCreated": "Post created successfully!",
+      "postCreationFailed": "Failed to create post",
+      "cancel": "Cancel"
+    },
+    "createStory": {
+      "dragOrClick": "Drag and drop image or video here, or click to browse",
+      "supportedFormats": "Supported formats: JPG, PNG, GIF, MP4, WebM (Max 50MB)",
+      "addTextPlaceholder": "Add text to your story (optional)",
+      "fileTooLarge": "File is too large. Maximum size: 50MB",
+      "invalidFileType": "Invalid file type. Please upload an image or video",
+      "uploadFailed": "Failed to upload file. Please try again.",
+      "requiresFileOrText": "Story must have at least an image, video, or text",
+      "requiresFile": "Please upload an image or video",
+      "uploading": "Uploading...",
+      "createStory": "Create Story",
+      "creating": "Creating...",
+      "storyCreated": "Story created successfully!",
+      "storyCreationFailed": "Failed to create story",
+      "cancel": "Cancel"
+    }
   },
   "explore": {
     "searchPlaceholder": "Search by name, club, city...",
