@@ -2,45 +2,72 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+
+    const type = request.headers.get("x-content-type") || "post";
+    const preset =
+      type === "story"
+        ? process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_STORY
+        : process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_POST;
+
+    if (!cloudName || !preset) {
+      console.error("Missing Cloudinary env vars:", {
+        cloudName: !!cloudName,
+        uploadPreset: !!preset,
+      });
+      return NextResponse.json(
+        { error: "Server misconfigured: Missing Cloudinary credentials" },
+        { status: 500 },
+      );
+    }
+
     const formData = await request.formData();
     const file = formData.get("file") as File;
 
     if (!file) {
-      return NextResponse.json(
-        { error: "No file provided" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
     const uploadFormData = new FormData();
     uploadFormData.append("file", file);
-    uploadFormData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_PRESET || "");
+    uploadFormData.append("upload_preset", preset);
 
-    const response = await fetch(
-      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/auto/upload`,
-      {
-        method: "POST",
-        body: uploadFormData,
-      }
-    );
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`;
+    console.log("Uploading to Cloudinary:", {
+      url,
+      cloudName,
+      fileName: file.name,
+    });
+
+    const response = await fetch(url, {
+      method: "POST",
+      body: uploadFormData,
+    });
+
+    const responseData = await response.json();
 
     if (!response.ok) {
+      console.error("Cloudinary error:", {
+        status: response.status,
+        error: responseData,
+      });
       return NextResponse.json(
-        { error: "Upload failed" },
-        { status: response.status }
+        { error: responseData.error?.message || "Upload failed" },
+        { status: response.status },
       );
     }
 
-    const data = await response.json();
-
+    console.log("Upload success:", { url: responseData.secure_url });
     return NextResponse.json({
-      url: data.secure_url,
+      url: responseData.secure_url,
     });
   } catch (error) {
     console.error("Upload error:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
+      {
+        error: error instanceof Error ? error.message : "Internal server error",
+      },
+      { status: 500 },
     );
   }
 }

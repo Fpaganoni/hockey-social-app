@@ -41,7 +41,7 @@ export function useCreatePost() {
     PostMutationContext
   >({
     mutationFn: async (variables) =>
-      graphqlClient.request(CREATE_POST, variables),
+      graphqlClient.request(CREATE_POST, { userId: user.id, ...variables }),
 
     // Optimistic update: immediately add the post to the UI
     onMutate: async (newPost) => {

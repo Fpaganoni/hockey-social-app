@@ -216,7 +216,45 @@
     "scrollLeft": "Desplazar a la izquierda",
     "scrollRight": "Desplazar a la derecha",
     "story": "historia",
-    "stories": "historias"
+    "stories": "historias",
+    "createContent": {
+      "title": "Crear",
+      "description": "Comparte una publicación o historia con tu comunidad",
+      "createPost": "Crear Publicación",
+      "postDescription": "Comparte texto e imágenes con tus seguidores",
+      "createStory": "Crear Historia",
+      "storyDescription": "Comparte contenido temporal que caduca después de 24 horas"
+    },
+    "createPost": {
+      "contentPlaceholder": "¿Qué estás pensando?",
+      "addImageOptional": "Haz clic para añadir imagen (opcional)",
+      "uploading": "Subiendo...",
+      "fileTooLarge": "El archivo es demasiado grande. Tamaño máximo: 50MB",
+      "invalidFileType": "Tipo de archivo inválido. Por favor, sube una imagen (JPG, PNG, GIF, WebP)",
+      "uploadFailed": "Error al subir la imagen. Por favor, intenta de nuevo.",
+      "contentRequired": "El contenido es requerido para crear una publicación",
+      "createPost": "Publicar",
+      "creating": "Creando...",
+      "postCreated": "¡Publicación creada exitosamente!",
+      "postCreationFailed": "Error al crear la publicación",
+      "cancel": "Cancelar"
+    },
+    "createStory": {
+      "dragOrClick": "Arrastra y suelta la imagen o video aquí, o haz clic para examinar",
+      "supportedFormats": "Formatos soportados: JPG, PNG, GIF, MP4, WebM (Máx 50MB)",
+      "addTextPlaceholder": "Añade texto a tu historia (opcional)",
+      "fileTooLarge": "El archivo es demasiado grande. Tamaño máximo: 50MB",
+      "invalidFileType": "Tipo de archivo inválido. Por favor, sube una imagen o video",
+      "uploadFailed": "Error al subir el archivo. Por favor, intenta de nuevo.",
+      "requiresFileOrText": "La historia debe tener al menos una imagen, video o texto",
+      "requiresFile": "Por favor, sube una imagen o video",
+      "uploading": "Subiendo...",
+      "createStory": "Crear Historia",
+      "creating": "Creando...",
+      "storyCreated": "¡Historia creada exitosamente!",
+      "storyCreationFailed": "Error al crear la historia",
+      "cancel": "Cancelar"
+    }
   },
   "explore": {
     "searchPlaceholder": "Buscar por nombre, club, ciudad...",

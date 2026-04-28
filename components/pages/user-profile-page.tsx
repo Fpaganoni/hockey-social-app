@@ -47,6 +47,7 @@ export function UserProfilePage({
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         userData={userData}
+        isOwnProfile={isOwnProfile}
       />
     </main>
   );
