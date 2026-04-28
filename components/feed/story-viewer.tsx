@@ -5,6 +5,8 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Story, GroupedStory } from "@/types/models/story";
 import { useStoryStore } from "@/stores/useStoryStore";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 
 interface StoryViewerProps {
   groups: GroupedStory[];
@@ -32,6 +34,14 @@ export function StoryViewer({
   const [groupIndex, setGroupIndex] = useState(initialGroupIndex);
   const [storyIndex, setStoryIndex] = useState(initialStoryIndex);
   const { markAsSeen } = useStoryStore();
+  const router = useRouter();
+  const locale = useLocale();
+
+  const handleGoToProfile = () => {
+    router.push(
+      `/${locale}/profile/${currentStory.user.username.replace(/\./g, "/")}`,
+    );
+  };
 
   const currentGroup = groups[groupIndex];
   const currentStory = currentGroup?.stories[storyIndex];
@@ -110,7 +120,10 @@ export function StoryViewer({
 
         {/* Header */}
         <div className="absolute top-4 left-0 right-0 z-10 px-4 pt-4 pb-2 flex items-center justify-between bg-linear-to-b from-black/60 to-transparent">
-          <div className="flex items-center gap-2">
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={handleGoToProfile}
+          >
             <Image
               src={currentStory.user.avatar || "/user.png"}
               alt={currentStory.user.name}
@@ -119,7 +132,7 @@ export function StoryViewer({
               className="rounded-full border-2 border-white"
             />
             <div>
-              <p className="text-white font-semibold text-sm">
+              <p className="text-white font-semibold text-sm hover:underline">
                 {currentStory.user.name}
               </p>
               <p className="text-white/80 text-xs">
@@ -168,7 +181,8 @@ export function StoryViewer({
             className="flex-1 group cursor-pointer"
             aria-label="Next story"
           >
-            {(groupIndex < groups.length - 1 || storyIndex < currentGroup.stories.length - 1) && (
+            {(groupIndex < groups.length - 1 ||
+              storyIndex < currentGroup.stories.length - 1) && (
               <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
                 <ChevronRight size={32} className="text-white drop-shadow-lg" />
               </div>

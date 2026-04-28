@@ -7,12 +7,14 @@ import { ArrowRight, MapPin, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { User } from "@/types/models/user";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
 
 type ProfileCardProps = Pick<
   User,
   | "id"
   | "name"
+  | "username"
   | "role"
   | "position"
   | "country"
@@ -25,6 +27,7 @@ type ProfileCardProps = Pick<
 export function ProfileCard({
   id,
   name,
+  username,
   role,
   avatar,
   position,
@@ -34,6 +37,11 @@ export function ProfileCard({
   bio,
 }: ProfileCardProps) {
   const t = useTranslations("explore");
+  const locale = useLocale();
+  const router = useRouter();
+
+  const handleViewProfile = () =>
+    router.push(`/${locale}/profile/${username.replace(/\./g, "/")}`);
 
   const roleColors: Record<
     string,
@@ -105,6 +113,7 @@ export function ProfileCard({
 
         <motion.button
           whileTap={{ scale: 0.95 }}
+          onClick={handleViewProfile}
           className="px-4 py-2 rounded-lg bg-background text-foreground font-medium cursor-pointer shrink-0 group-hover:shadow-lg flex items-center gap-2 min-w-fit"
         >
           {t("viewProfile")}

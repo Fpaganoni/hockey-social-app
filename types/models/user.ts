@@ -68,6 +68,7 @@ export type ExploreUser = Pick<
   User,
   | "id"
   | "name"
+  | "username"
   | "role"
   | "position"
   | "country"

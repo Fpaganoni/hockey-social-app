@@ -182,8 +182,8 @@ export function StoriesCarousel() {
               {/* Avatar with border (indicates unviewed stories) */}
               <div
                 className={`relative w-16 h-16 rounded-full overflow-hidden active:scale-95 transition-transform duration-300 hover:scale-110 shadow-md hover:shadow-lg ${
-                  allViewed 
-                    ? "border-2 border-muted ring-2 ring-transparent opacity-70 grayscale" 
+                  allViewed
+                    ? "border-2 border-muted ring-2 ring-transparent opacity-70 grayscale"
                     : group.hasMultiple
                       ? "border-3 border-primary ring-2 ring-primary/30"
                       : "border-3 border-primary"
