@@ -13,6 +13,7 @@ import { usePost } from "@/hooks/usePosts";
 import { useLikePost, useUnlikePost } from "@/hooks/usePostMutations";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useToast } from "@/hooks/ui/use-toast";
+import { AvatarWithStory } from "@/components/ui/avatar-with-story";
 
 type PostCardProps = {
   post: Pick<
@@ -138,13 +139,9 @@ export function PostCard({ post }: PostCardProps) {
         {/* Header */}
         <div className="p-4 flex items-center justify-between border-b border-border">
           <div className="flex items-center gap-3">
-            <motion.img
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              src={user.avatar}
-              alt={user.name}
-              onClick={handleGoToProfile}
-              className="w-10 h-10 rounded-full cursor-pointer"
+            <AvatarWithStory
+              user={user}
+              imgClassName="w-10 h-10 object-cover"
             />
             <div>
               <p

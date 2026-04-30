@@ -64,7 +64,7 @@ export function ProfileHeader({
   const { seenStories } = useStoryStore();
   const [isStoryOpen, setIsStoryOpen] = useState(false);
 
-  const { data: storiesData } = useActiveStories(currentUser?.id || "");
+  const { data: storiesData } = useActiveStories(id);
 
   const profileGroupedStory = useMemo<GroupedStory | null>(() => {
     if (!storiesData?.activeStories) return null;

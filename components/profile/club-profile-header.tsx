@@ -9,16 +9,21 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState, useMemo } from "react";
 import { Badge } from "../ui/badge";
 import { User } from "@/types/models/user";
+import { GroupedStory } from "@/types/models/story";
 import { useAuthStore } from "@/stores/useAuthStore";
+import { useStoryStore } from "@/stores/useStoryStore";
 import {
   useFollowUser,
   useFollowMutation,
   useUnfollowMutation,
 } from "@/hooks/useUsers";
+import { useActiveStories } from "@/hooks/useStories";
 import { mapRoleToEntityType } from "@/lib/utils/entity-type";
 import { ProfileStats } from "./profile-stats";
+import { StoryViewer } from "@/components/feed/story-viewer";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
