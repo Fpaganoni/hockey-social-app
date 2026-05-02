@@ -22,3 +22,22 @@ export const GET_ACTIVE_STORIES = gql`
     }
   }
 `;
+
+export const GET_USER_STORIES = gql`
+  query GetUserStories($userId: String!) {
+    userStories(userId: $userId) {
+      id
+      userId
+      imageUrl
+      text
+      createdAt
+      viewsCount
+      user {
+        id
+        name
+        username
+        avatar
+      }
+    }
+  }
+`;

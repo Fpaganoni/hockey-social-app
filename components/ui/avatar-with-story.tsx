@@ -5,8 +5,7 @@ import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { GroupedStory } from "@/types/models/story";
-import { useActiveStories } from "@/hooks/useStories";
-import { useAuthStore } from "@/stores/useAuthStore";
+import { useUserStories } from "@/hooks/useStories";
 import { useStoryStore } from "@/stores/useStoryStore";
 import { StoryViewer } from "@/components/feed/story-viewer";
 
@@ -14,7 +13,7 @@ interface AvatarUser {
   id: string;
   name: string;
   username: string;
-  avatar: string;
+  avatar?: string;
 }
 
 interface AvatarWithStoryProps {
@@ -26,17 +25,16 @@ export function AvatarWithStory({
   user,
   imgClassName = "w-10 h-10 object-cover",
 }: AvatarWithStoryProps) {
-  const { user: currentUser } = useAuthStore();
   const { seenStories } = useStoryStore();
   const [isStoryOpen, setIsStoryOpen] = useState(false);
   const locale = useLocale();
   const router = useRouter();
 
-  const { data: storiesData } = useActiveStories(currentUser?.id || "");
+  const { data: storiesData } = useUserStories(user.id);
 
   const groupedStory = useMemo<GroupedStory | null>(() => {
-    if (!storiesData?.activeStories) return null;
-    const userStories = storiesData.activeStories
+    if (!storiesData?.userStories) return null;
+    const userStories = storiesData.userStories
       .filter((s) => s.userId === user.id)
       .sort(
         (a, b) =>
@@ -49,7 +47,7 @@ export function AvatarWithStory({
       stories: userStories,
       hasMultiple: userStories.length > 1,
     };
-  }, [storiesData?.activeStories, user.id]);
+  }, [storiesData?.userStories, user.id]);
 
   const hasActiveStory = !!groupedStory;
   const allStoriesSeen =

@@ -20,7 +20,7 @@ import {
   useFollowMutation,
   useUnfollowMutation,
 } from "@/hooks/useUsers";
-import { useActiveStories } from "@/hooks/useStories";
+import { useActiveStories, useUserStories } from "@/hooks/useStories";
 import { mapRoleToEntityType } from "@/lib/utils/entity-type";
 import { ProfileStats } from "./profile-stats";
 import { CvSection } from "./cv-section";
@@ -64,11 +64,11 @@ export function ProfileHeader({
   const { seenStories } = useStoryStore();
   const [isStoryOpen, setIsStoryOpen] = useState(false);
 
-  const { data: storiesData } = useActiveStories(id);
+  const { data: storiesData } = useUserStories(id);
 
   const profileGroupedStory = useMemo<GroupedStory | null>(() => {
-    if (!storiesData?.activeStories) return null;
-    const userStories = storiesData.activeStories
+    if (!storiesData?.userStories) return null;
+    const userStories = storiesData.userStories
       .filter((s) => s.userId === id)
       .sort(
         (a, b) =>
@@ -81,7 +81,7 @@ export function ProfileHeader({
       stories: userStories,
       hasMultiple: userStories.length > 1,
     };
-  }, [storiesData?.activeStories, id]);
+  }, [storiesData?.userStories, id]);
 
   const hasActiveStory = !!profileGroupedStory;
   const allStoriesSeen =
@@ -158,7 +158,7 @@ export function ProfileHeader({
                 hasActiveStory
                   ? allStoriesSeen
                     ? "bg-muted cursor-pointer"
-                    : "bg-gradient-to-tr from-primary to-primary/50 cursor-pointer"
+                    : "bg-linear-to-tr from-primary to-primary/50 cursor-pointer"
                   : ""
               }`}
             >
