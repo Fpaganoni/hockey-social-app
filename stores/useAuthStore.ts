@@ -7,12 +7,13 @@ type UpdateUserInput = Partial<User>;
 interface AuthState {
   // STATES
   user: User | null;
+  token: string | null;
   isLoggedIn: boolean;
 
   // ACTIONS
-  login: (user: User) => void;
+  login: (user: User, token: string) => void;
   logout: () => void;
-  register: (user: User) => void;
+  register: (user: User, token: string) => void;
   updateUser: (data: UpdateUserInput) => void;
 }
 
@@ -21,20 +22,21 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       // INITIAL STATE
       user: null,
+      token: null,
       isLoggedIn: false,
 
       //ACTIONS
 
-      login: (user: User) => {
-        set({ user, isLoggedIn: true });
+      login: (user: User, token: string) => {
+        set({ user, token, isLoggedIn: true });
       },
 
       logout: () => {
-        set({ user: null, isLoggedIn: false });
+        set({ user: null, token: null, isLoggedIn: false });
       },
 
-      register: (user: User) => {
-        set({ user });
+      register: (user: User, token: string) => {
+        set({ user, token, isLoggedIn: true });
       },
 
       updateUser: (data: UpdateUserInput) => {

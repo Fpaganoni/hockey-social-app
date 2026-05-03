@@ -7,8 +7,8 @@ export async function POST(request: NextRequest) {
     const type = request.headers.get("x-content-type") || "post";
     const preset =
       type === "story"
-        ? process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_STORY
-        : process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_POST;
+        ? process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_STORIES
+        : process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_POSTS;
 
     if (!cloudName || !preset) {
       console.error("Missing Cloudinary env vars:", {

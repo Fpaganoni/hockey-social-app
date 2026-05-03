@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 
 // Keep existing imports below...
 import { motion } from "framer-motion";
@@ -9,6 +10,7 @@ import { Post } from "@/types/models/post";
 import { useTranslations } from "next-intl";
 import { YoutubeWidget } from "@/components/ui/youtube-widget";
 import { PostCard } from "@/components/feed/post-card";
+import { PostModal } from "@/components/feed/post-modal";
 import { FileText, Loader2, Heart, MessageCircle, Copy } from "lucide-react";
 import { usePostsByUser } from "@/hooks/usePosts";
 import { UserApplications } from "./user-applications";
@@ -34,6 +36,7 @@ export function ProfileTabs({
   isOwnProfile = false,
 }: ProfileTabsProps) {
   const t = useTranslations("profile");
+  const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
   const tabs = [
     { id: "posts", label: t("tabs.posts") },
@@ -100,6 +103,7 @@ export function ProfileTabs({
                   return (
                     <div
                       key={post.id}
+                      onClick={() => setSelectedPostId(post.id)}
                       className="relative aspect-square bg-foreground-muted/10 group overflow-hidden cursor-pointer"
                     >
                       {imageUrl ? (
@@ -230,6 +234,12 @@ export function ProfileTabs({
 
         {activeTab === "applications" && <UserApplications />}
       </div>
+
+      <PostModal
+        postId={selectedPostId ?? ""}
+        isOpen={!!selectedPostId}
+        onClose={() => setSelectedPostId(null)}
+      />
     </>
   );
 }

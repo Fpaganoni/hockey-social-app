@@ -1,20 +1,48 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
-import { GET_ACTIVE_STORIES } from "@/graphql/story/queries";
+import { GET_ACTIVE_STORIES, GET_USER_STORIES } from "@/graphql/story/queries";
+import { VIEW_STORY } from "@/graphql/story/mutations";
 import { Story } from "@/types/models/story";
 
 interface ActiveStoriesResponse {
   activeStories: Story[];
 }
 
+interface UserStoriesResponse {
+  userStories: Story[];
+}
+
 /**
- * Hook to fetch active stories for a specific user
+ * Hook to fetch active stories from users the given user follows (feed)
  */
 export function useActiveStories(userId: string) {
   return useQuery<ActiveStoriesResponse>({
     queryKey: ["activeStories", userId],
     queryFn: async () => graphqlClient.request(GET_ACTIVE_STORIES, { userId }),
-    enabled: !!userId, // Only run query if userId is provided
+    enabled: !!userId,
+  });
+}
+
+export function useViewStory() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ storyId, userId }: { storyId: string; userId: string }) =>
+      graphqlClient.request(VIEW_STORY, { storyId, userId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["activeStories"] });
+      queryClient.invalidateQueries({ queryKey: ["userStories"] });
+    },
+  });
+}
+
+/**
+ * Hook to fetch the active stories of a specific user (for profile/avatar display)
+ */
+export function useUserStories(userId: string) {
+  return useQuery<UserStoriesResponse>({
+    queryKey: ["userStories", userId],
+    queryFn: async () => graphqlClient.request(GET_USER_STORIES, { userId }),
+    enabled: !!userId,
   });
 }
 

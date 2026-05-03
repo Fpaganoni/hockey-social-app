@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useUserRegister } from "@/hooks/useUsers";
 import { jwtDecode } from "jwt-decode";
-import { graphqlClient } from "@/lib/graphql-client";
+import { graphqlClient, setAuthToken } from "@/lib/graphql-client";
 import { GET_USER_FOR_LOGIN } from "@/graphql/user/queries";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/useAuthStore";
@@ -101,7 +101,9 @@ export const RegisterPage = () => {
       { email, name, username, password, role },
       {
         onSuccess: async (responseData) => {
-          const decoded = jwtDecode(responseData.register);
+          const token = responseData.register;
+          setAuthToken(token);
+          const decoded = jwtDecode(token);
           const userId = decoded.sub;
 
           const response = await graphqlClient.request(GET_USER_FOR_LOGIN, {
@@ -109,7 +111,7 @@ export const RegisterPage = () => {
           });
 
           const fullUser = response.user;
-          login(fullUser);
+          login(fullUser, token);
           router.push("/feed");
         },
         onError: (error) => {

@@ -22,3 +22,37 @@ export const GET_ACTIVE_STORIES = gql`
     }
   }
 `;
+
+export const GET_STORY_VIEWERS = gql`
+  query GetStoryViewers($storyId: String!) {
+    storyViewers(storyId: $storyId) {
+      id
+      viewedAt
+      user {
+        id
+        name
+        username
+        avatar
+      }
+    }
+  }
+`;
+
+export const GET_USER_STORIES = gql`
+  query GetUserStories($userId: String!) {
+    userStories(userId: $userId) {
+      id
+      userId
+      imageUrl
+      text
+      createdAt
+      viewsCount
+      user {
+        id
+        name
+        username
+        avatar
+      }
+    }
+  }
+`;

@@ -9,16 +9,21 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState, useMemo } from "react";
 import { Badge } from "../ui/badge";
 import { User } from "@/types/models/user";
+import { GroupedStory } from "@/types/models/story";
 import { useAuthStore } from "@/stores/useAuthStore";
+import { useStoryStore } from "@/stores/useStoryStore";
 import {
   useFollowUser,
   useFollowMutation,
   useUnfollowMutation,
 } from "@/hooks/useUsers";
+import { useActiveStories, useUserStories } from "@/hooks/useStories";
 import { mapRoleToEntityType } from "@/lib/utils/entity-type";
 import { ProfileStats } from "./profile-stats";
+import { StoryViewer } from "@/components/feed/story-viewer";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
@@ -49,6 +54,32 @@ export function ClubProfileHeader({
   const t = useTranslations("clubProfile");
   const { user: currentUser } = useAuthStore();
   const router = useRouter();
+  const { seenStories } = useStoryStore();
+  const [isStoryOpen, setIsStoryOpen] = useState(false);
+
+  const { data: storiesData } = useUserStories(id);
+
+  const profileGroupedStory = useMemo<GroupedStory | null>(() => {
+    if (!storiesData?.userStories) return null;
+    const userStories = storiesData.userStories
+      .filter((s) => s.userId === id)
+      .sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      );
+    if (userStories.length === 0) return null;
+    return {
+      userId: id,
+      user: userStories[0].user,
+      stories: userStories,
+      hasMultiple: userStories.length > 1,
+    };
+  }, [storiesData?.userStories, id]);
+
+  const hasActiveStory = !!profileGroupedStory;
+  const allStoriesSeen =
+    hasActiveStory &&
+    profileGroupedStory!.stories.every((s) => seenStories.includes(s.id));
 
   const entityType = mapRoleToEntityType(role);
   const { data: followersData } = useFollowUser(entityType, id);
@@ -112,26 +143,35 @@ export function ClubProfileHeader({
         {/* Profile Picture and Info */}
         <div className="flex justify-between items-start mb-4">
           <div className="flex items-start gap-3 flex-1 -mt-24 relative z-10">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="w-32 h-32 rounded-full border-2 border-border shadow-lg cursor-pointer mx-2 relative overflow-hidden shrink-0 bg-muted"
+            <div
+              onClick={hasActiveStory ? () => setIsStoryOpen(true) : undefined}
+              className={`rounded-full shrink-0 mx-2 p-[3px] ${
+                hasActiveStory
+                  ? allStoriesSeen
+                    ? "bg-muted cursor-pointer"
+                    : "bg-linear-to-tr from-primary to-primary/50 cursor-pointer"
+                  : ""
+              }`}
             >
-              <Image
-                src={avatar || "/hockey-stadium.jpg"}
-                alt={name}
-                fill
-                priority
-                sizes="128px"
-                className="object-cover"
-              />
-            </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
+                className="w-32 h-32 rounded-full border-2 border-background shadow-lg relative overflow-hidden bg-muted"
+              >
+                <Image
+                  src={avatar || "/hockey-stadium.jpg"}
+                  alt={name}
+                  fill
+                  priority
+                  sizes="128px"
+                  className="object-cover"
+                />
+              </motion.div>
+            </div>
             <div className="pt-6">
               <div className="flex items-center gap-2 flex-wrap">
                 <h1 className="text-2xl font-bold text-foreground">{name}</h1>
-                {isVerified && (
-                  <CheckCircle className="w-6 h-6 text-success" />
-                )}
+                {isVerified && <CheckCircle className="w-6 h-6 text-success" />}
               </div>
               <div className="flex items-center gap-2 mt-1">
                 <Badge variant="club">{role}</Badge>
@@ -211,6 +251,14 @@ export function ClubProfileHeader({
           )}
         </div>
       </div>
+      {isStoryOpen && profileGroupedStory && (
+        <StoryViewer
+          groups={[profileGroupedStory]}
+          initialGroupIndex={0}
+          initialStoryIndex={0}
+          onClose={() => setIsStoryOpen(false)}
+        />
+      )}
     </div>
   );
 }

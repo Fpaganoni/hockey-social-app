@@ -35,4 +35,6 @@ export { GET_JOB_OPPORTUNITIES, GET_USER_APPLICATIONS } from "./opportunity/quer
 export { APPLY_FOR_JOB } from "./opportunity/mutations";
 
 // STORY
-export { GET_ACTIVE_STORIES } from "./story/queries";
+export { GET_ACTIVE_STORIES, GET_STORY_VIEWERS } from "./story/queries";
+
+export { CREATE_STORY, VIEW_STORY } from "./story/mutations";

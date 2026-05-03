@@ -176,6 +176,7 @@ export const EXPLORE_USERS_QUERY = gql`
     exploreUsers(role: $role, limit: $limit) {
       id
       name
+      username
       role
       position
       country
