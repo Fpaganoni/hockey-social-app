@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { jwtDecode } from "jwt-decode";
 import { useUserLogin } from "@/hooks/useUsers";
-import { graphqlClient } from "@/lib/graphql-client";
+import { graphqlClient, setAuthToken } from "@/lib/graphql-client";
 import { GET_USER_FOR_LOGIN } from "@/graphql/user/queries";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
@@ -54,14 +54,16 @@ export function LoginPage() {
       { email: data.email, password: data.password },
       {
         onSuccess: async (responseData) => {
-          const decoded = jwtDecode(responseData.login);
+          const token = responseData.login;
+          setAuthToken(token);
+          const decoded = jwtDecode(token);
           const userId = decoded.sub;
 
           const response = await graphqlClient.request(GET_USER_FOR_LOGIN, {
             id: userId,
           });
           const fullUser = response.user;
-          login(fullUser);
+          login(fullUser, token);
           router.push("/feed");
         },
         onError: (error) => {

@@ -1,6 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
 import { GET_ACTIVE_STORIES, GET_USER_STORIES } from "@/graphql/story/queries";
+import { VIEW_STORY } from "@/graphql/story/mutations";
 import { Story } from "@/types/models/story";
 
 interface ActiveStoriesResponse {
@@ -19,6 +20,18 @@ export function useActiveStories(userId: string) {
     queryKey: ["activeStories", userId],
     queryFn: async () => graphqlClient.request(GET_ACTIVE_STORIES, { userId }),
     enabled: !!userId,
+  });
+}
+
+export function useViewStory() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ storyId, userId }: { storyId: string; userId: string }) =>
+      graphqlClient.request(VIEW_STORY, { storyId, userId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["activeStories"] });
+      queryClient.invalidateQueries({ queryKey: ["userStories"] });
+    },
   });
 }
 

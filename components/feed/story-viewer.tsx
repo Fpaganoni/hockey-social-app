@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Story, GroupedStory } from "@/types/models/story";
 import { useStoryStore } from "@/stores/useStoryStore";
+import { useAuthStore } from "@/stores/useAuthStore";
+import { useViewStory } from "@/hooks/useStories";
+import { formatDistanceToNowLocalized } from "@/lib/date-utils";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
@@ -34,6 +37,8 @@ export function StoryViewer({
   const [groupIndex, setGroupIndex] = useState(initialGroupIndex);
   const [storyIndex, setStoryIndex] = useState(initialStoryIndex);
   const { markAsSeen } = useStoryStore();
+  const { mutate: viewStory } = useViewStory();
+  const userId = useAuthStore((state) => state.user?.id);
   const router = useRouter();
   const locale = useLocale();
 
@@ -49,8 +54,11 @@ export function StoryViewer({
   useEffect(() => {
     if (currentStory) {
       markAsSeen(currentStory.id);
+      if (userId) {
+        viewStory({ storyId: currentStory.id, userId });
+      }
     }
-  }, [currentStory, markAsSeen]);
+  }, [currentStory, markAsSeen, viewStory, userId]);
 
   // Navigate to next story
   const goToNext = () => {
@@ -135,8 +143,11 @@ export function StoryViewer({
               <p className="text-white font-semibold text-sm hover:underline">
                 {currentStory.user.name}
               </p>
-              <p className="text-white/80 text-xs">
+              <p className="text-white/70 text-xs">
                 @{currentStory.user.username}
+              </p>
+              <p className="text-white/60 text-xs">
+                {formatDistanceToNowLocalized(currentStory.createdAt, locale as "en" | "es" | "fr")}
               </p>
             </div>
           </div>
