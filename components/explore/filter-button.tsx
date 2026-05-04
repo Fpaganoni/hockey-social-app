@@ -69,7 +69,7 @@ export function FilterButton({
               }}
               className={`w-full h-10 text-left px-4 py-1.5 text-foreground rounded-md text-sm transition-colors cursor-pointer border border-border-strong ${
                 option.value === activeValue
-                  ? "bg-primary/10 font-semibold"
+                  ? "bg-primary font-semibold"
                   : "bg-background hover:bg-input"
               }`}
             >
