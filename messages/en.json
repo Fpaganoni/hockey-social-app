@@ -272,13 +272,11 @@
     "roles": {
       "player": "Player",
       "coach": "Coach",
-      "clubManager": "Club Manager"
+      "clubAdmin": "Club Admin"
     },
     "levels": {
-      "elite": "Elite",
       "professional": "Professional",
-      "amateur": "Amateur",
-      "youth": "Youth"
+      "amateur": "Amateur"
     },
     "positions": {
       "forward": "Forward",

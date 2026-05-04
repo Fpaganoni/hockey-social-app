@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { ProfileCard } from "@/components/explore/profile-card";
 import { FilterButton } from "@/components/explore/filter-button";
 import { Filter } from "@/components/ui/filter";
@@ -8,31 +8,38 @@ import { useTranslations } from "next-intl";
 import { useExploreUsers } from "@/hooks/useExplore";
 import { Loader } from "../ui/loader";
 import { Error } from "../ui/error";
-import { ExploreUser } from "@/types/models/user";
+
+// Debounce: only fire the query after the user stops typing for 400ms
+function useDebounce<T>(value: T, delay = 400): T {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() => {
+    const timer = setTimeout(() => setDebounced(value), delay);
+    return () => clearTimeout(timer);
+  }, [value, delay]);
+  return debounced;
+}
 
 export function ExplorePage() {
   const t = useTranslations("explore");
+
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedFilters, setSelectedFilters] = useState<Record<string, string>>({});
+  const [selectedFilters, setSelectedFilters] = useState<
+    Record<string, string>
+  >({});
 
-  const { data: players, isLoading: playersLoading, error: playersError } = useExploreUsers("PLAYER", 50);
-  const { data: coaches, isLoading: coachesLoading, error: coachesError } = useExploreUsers("COACH", 50);
+  const debouncedSearch = useDebounce(searchQuery, 400);
 
-  const allUsers: ExploreUser[] = useMemo(
-    () => [...(players?.exploreUsers ?? []), ...(coaches?.exploreUsers ?? [])],
-    [players, coaches],
-  );
+  const { data, isLoading, error } = useExploreUsers({
+    searchQuery: debouncedSearch || undefined,
+    role: selectedFilters.role || undefined,
+    position: selectedFilters.position || undefined,
+    level: selectedFilters.level || undefined,
+    country: selectedFilters.country || undefined,
+    limit: 50,
+    offset: 0,
+  });
 
-  const filteredUsers = useMemo(() => {
-    return allUsers.filter((user) => {
-      if (searchQuery && !user.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
-      if (selectedFilters.role && user.role?.toUpperCase() !== selectedFilters.role) return false;
-      if (selectedFilters.position && user.position?.toLowerCase() !== selectedFilters.position) return false;
-      if (selectedFilters.level && user.level?.toUpperCase() !== selectedFilters.level) return false;
-      if (selectedFilters.country && user.country?.toUpperCase() !== selectedFilters.country) return false;
-      return true;
-    });
-  }, [allUsers, searchQuery, selectedFilters]);
+  const users = useMemo(() => data?.exploreUsers ?? [], [data]);
 
   const setFilter = (key: string) => (value: string) =>
     setSelectedFilters((prev) => ({ ...prev, [key]: value }));
@@ -47,6 +54,7 @@ export function ExplorePage() {
   const roleOptions = [
     { value: "PLAYER", label: t("roles.player") },
     { value: "COACH", label: t("roles.coach") },
+    { value: "CLUB_ADMIN", label: t("roles.clubAdmin") },
   ];
 
   const positionOptions = [
@@ -80,9 +88,6 @@ export function ExplorePage() {
     { value: "GB", label: "🇬🇧 UK" },
     { value: "US", label: "🇺🇸 USA" },
   ];
-
-  if (playersLoading && coachesLoading) return <Loader children="Loading" />;
-  if (playersError || coachesError) return <Error children="Error loading users" />;
 
   return (
     <main className="max-w-2xl mx-auto pb-4">
@@ -127,8 +132,12 @@ export function ExplorePage() {
       </div>
 
       <div className="px-4 mt-8 mb-28">
-        {filteredUsers.length > 0 ? (
-          filteredUsers.map((profile) => <ProfileCard key={profile.id} {...profile} />)
+        {isLoading ? (
+          <Loader>Loading</Loader>
+        ) : error ? (
+          <Error>Error loading users</Error>
+        ) : users.length > 0 ? (
+          users.map((profile) => <ProfileCard key={profile.id} {...profile} />)
         ) : (
           <p className="text-center text-foreground py-8">
             {t("noResults")}{" "}
