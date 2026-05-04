@@ -1,7 +1,12 @@
 export enum Role {
-  PLAYER = "player",
-  COACH = "coach",
-  CLUB = "club",
+  PLAYER = "PLAYER",
+  COACH = "COACH",
+  CLUB_ADMIN = "CLUB_ADMIN",
+}
+
+export enum Level {
+  PROFESSIONAL = "PROFESSIONAL",
+  AMATEUR = "AMATEUR",
 }
 
 export enum Position {

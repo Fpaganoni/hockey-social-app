@@ -17,8 +17,8 @@ export function CvSection({
 }: CvSectionProps) {
   const t = useTranslations("profile.cv");
 
-  const normalizedRole = (role as string).toLowerCase();
-  if (normalizedRole !== Role.PLAYER && normalizedRole !== Role.COACH)
+  const upperRole = (role as string).toUpperCase();
+  if (upperRole !== Role.PLAYER && upperRole !== Role.COACH)
     return null;
   
   if (!cvUrl) return null;

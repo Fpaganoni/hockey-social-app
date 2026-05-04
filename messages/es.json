@@ -272,13 +272,11 @@
     "roles": {
       "player": "Jugador",
       "coach": "Entrenador",
-      "clubManager": "Director de Club"
+      "clubAdmin": "Admin de Club"
     },
     "levels": {
-      "elite": "Elite",
       "professional": "Profesional",
-      "amateur": "Amateur",
-      "youth": "Juvenil"
+      "amateur": "Amateur"
     },
     "positions": {
       "forward": "Delantero",

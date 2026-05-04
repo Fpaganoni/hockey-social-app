@@ -1,4 +1,4 @@
-import { Role, Position } from "../enums";
+import { Role, Position, Level } from "../enums";
 import { Club } from "./club";
 import { Post } from "./post";
 
@@ -37,7 +37,7 @@ export interface User {
   position?: Position;
   country?: string;
   city?: string;
-  level?: string;
+  level?: Level;
   yearsOfExperience?: number;
   cvUrl?: string;
   multimedia?: string[];
@@ -63,7 +63,6 @@ export type UserCard = Pick<
 >;
 export type UserProfile = Omit<User, "email" | "isEmailVerified">;
 
-// Para explore/discovery
 export type ExploreUser = Pick<
   User,
   | "id"
@@ -77,7 +76,8 @@ export type ExploreUser = Pick<
   | "bio"
   | "level"
 > & {
-  isVerified?: boolean; // Este campo no está en User principal, lo agregamos aquí
+  isVerified?: boolean;
+  club?: { id: string; name: string; logo?: string };
 };
 
 // Para crear/actualizar

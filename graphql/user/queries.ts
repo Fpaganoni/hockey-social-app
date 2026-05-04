@@ -172,20 +172,41 @@ export const GET_USER_BY_USERNAME = gql`
 `;
 
 export const EXPLORE_USERS_QUERY = gql`
-  query ExploreUsers($role: String!, $limit: Int!) {
-    exploreUsers(role: $role, limit: $limit) {
+  query ExploreUsers(
+    $searchQuery: String
+    $role: String
+    $position: String
+    $level: String
+    $country: String
+    $limit: Int
+    $offset: Int
+  ) {
+    exploreUsers(
+      searchQuery: $searchQuery
+      role: $role
+      position: $position
+      level: $level
+      country: $country
+      limit: $limit
+      offset: $offset
+    ) {
       id
       name
       username
+      avatar
       role
       position
+      level
       country
       city
-      avatar
-      isVerified
       bio
-      level
+      isVerified
       cvUrl
+      club {
+        id
+        name
+        logo
+      }
     }
   }
 `;
