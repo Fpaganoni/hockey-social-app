@@ -72,6 +72,7 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
   const [isWide, setIsWide] = useState(false);
   const [sharecopied, setShareCopied] = useState(false);
   const commentsEndRef = useRef<HTMLDivElement>(null);
+  const commentInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
   // Track actual window width to determine layout, bypassing Tailwind's
@@ -471,7 +472,10 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
                     />
                   </button>
                   <button
-                    onClick={() => setShowLikes(false)}
+                    onClick={() => {
+                      setShowLikes(false);
+                      setTimeout(() => commentInputRef.current?.focus(), 0);
+                    }}
                     className="hover:scale-110 active:scale-95 transition-transform text-foreground"
                   >
                     <MessageCircle size={24} />
@@ -501,6 +505,7 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
 
                 <div className="mt-3 pt-3 border-t border-border flex items-center gap-2">
                   <input
+                    ref={commentInputRef}
                     type="text"
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
