@@ -397,7 +397,13 @@
       "location": "Location",
       "salary": "Salary",
       "appliedAt": "Applied"
-    }
+    },
+    "repositionCover": "Reposition Cover",
+    "dragToReposition": "Drag to reposition",
+    "coverPositionSaved": "Cover position saved",
+    "coverPositionError": "Failed to save position",
+    "cancel": "Cancel",
+    "save": "Save"
   },
   "clubProfile": {
     "editProfile": "Edit Profile",

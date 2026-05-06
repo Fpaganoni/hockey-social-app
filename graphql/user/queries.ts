@@ -28,6 +28,7 @@ export const GET_USER_FOR_LOGIN = gql`
       username
       avatar
       coverImage
+      coverImagePosition
       bio
       position
       role
@@ -70,6 +71,7 @@ export const GET_USER = gql`
       name
       avatar
       coverImage
+      coverImagePosition
       bio
       position
       clubId
@@ -142,6 +144,7 @@ export const GET_USER_BY_USERNAME = gql`
       username
       avatar
       coverImage
+      coverImagePosition
       bio
       position
       role

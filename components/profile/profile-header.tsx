@@ -7,9 +7,12 @@ import {
   MessageCircle,
   Download,
   Loader2,
+  Move,
+  Check,
+  X,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import { Badge } from "../ui/badge";
 import { User } from "@/types/models/user";
 import { GroupedStory } from "@/types/models/story";
@@ -19,6 +22,7 @@ import {
   useFollowUser,
   useFollowMutation,
   useUnfollowMutation,
+  useUpdateUser,
 } from "@/hooks/useUsers";
 import { useActiveStories, useUserStories } from "@/hooks/useStories";
 import { mapRoleToEntityType } from "@/lib/utils/entity-type";
@@ -38,6 +42,7 @@ type ProfileHeaderProps = Pick<
   | "role"
   | "avatar"
   | "coverImage"
+  | "coverImagePosition"
   | "position"
   | "country"
   | "bio"
@@ -55,6 +60,7 @@ export function ProfileHeader({
   bio,
   avatar,
   coverImage,
+  coverImagePosition,
   cvUrl,
   isOwnProfile = false,
 }: ProfileHeaderProps) {
@@ -63,6 +69,71 @@ export function ProfileHeader({
   const router = useRouter();
   const { seenStories } = useStoryStore();
   const [isStoryOpen, setIsStoryOpen] = useState(false);
+
+  const [isHoveringCover, setIsHoveringCover] = useState(false);
+  const [isRepositioning, setIsRepositioning] = useState(false);
+  const [coverPos, setCoverPos] = useState<number>(
+    coverImagePosition ? parseFloat(coverImagePosition) : 50,
+  );
+  const [savedPos, setSavedPos] = useState<number>(
+    coverImagePosition ? parseFloat(coverImagePosition) : 50,
+  );
+  const isDragging = useRef(false);
+  const coverContainerRef = useRef<HTMLDivElement>(null);
+  const updateUser = useUpdateUser();
+
+  useEffect(() => {
+    const pos = coverImagePosition ? parseFloat(coverImagePosition) : 50;
+    setCoverPos(pos);
+    setSavedPos(pos);
+  }, [coverImagePosition]);
+
+  const handleCoverMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      if (!isRepositioning) return;
+      isDragging.current = true;
+      e.preventDefault();
+    },
+    [isRepositioning],
+  );
+
+  const handleCoverMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!isDragging.current || !coverContainerRef.current) return;
+    const rect = coverContainerRef.current.getBoundingClientRect();
+    const pct = Math.min(
+      100,
+      Math.max(0, ((e.clientY - rect.top) / rect.height) * 100),
+    );
+    setCoverPos(pct);
+  }, []);
+
+  const handleCoverMouseUp = useCallback(() => {
+    isDragging.current = false;
+  }, []);
+
+  const handleSavePosition = () => {
+    updateUser.mutate(
+      { id, coverImagePosition: `${Math.round(coverPos)}%` },
+      {
+        onSuccess: () => {
+          setSavedPos(coverPos);
+          setIsRepositioning(false);
+          toast.success(
+            t("coverPositionSaved", { fallback: "Cover position saved" }),
+          );
+        },
+        onError: () =>
+          toast.error(
+            t("coverPositionError", { fallback: "Failed to save position" }),
+          ),
+      },
+    );
+  };
+
+  const handleCancelReposition = () => {
+    setCoverPos(savedPos);
+    setIsRepositioning(false);
+  };
 
   const { data: storiesData } = useUserStories(id);
 
@@ -135,7 +206,18 @@ export function ProfileHeader({
 
   return (
     <div className="bg-background">
-      <div className="h-86 relative overflow-hidden">
+      <div
+        ref={coverContainerRef}
+        className={`h-86 relative overflow-hidden ${isRepositioning ? "cursor-ns-resize" : ""}`}
+        onMouseEnter={() => setIsHoveringCover(true)}
+        onMouseLeave={() => {
+          setIsHoveringCover(false);
+          isDragging.current = false;
+        }}
+        onMouseDown={handleCoverMouseDown}
+        onMouseMove={handleCoverMouseMove}
+        onMouseUp={handleCoverMouseUp}
+      >
         <Image
           src={coverImage || "/hockey-stadium.jpg"}
           alt="Cover"
@@ -143,8 +225,59 @@ export function ProfileHeader({
           priority
           sizes="100vw"
           className="object-cover"
+          style={{ objectPosition: `center ${coverPos}%` }}
+          draggable={false}
         />
-        <div className="absolute inset-0 bg-linear-to-t from-background via-background/10 to-transparent z-10"></div>
+        <div className="absolute inset-0 bg-linear-to-t from-background via-background/10 to-transparent z-10 pointer-events-none" />
+
+        {isOwnProfile && !isRepositioning && isHoveringCover && (
+          <motion.button
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 4 }}
+            onClick={() => setIsRepositioning(true)}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-white backdrop-blur-md bg-black/40 hover:bg-black/60 transition-colors"
+          >
+            <Move size={14} />
+            {t("repositionCover", { fallback: "Reposition" })}
+          </motion.button>
+        )}
+
+        {isRepositioning && (
+          <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
+            <motion.button
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              onClick={handleCancelReposition}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-white backdrop-blur-md bg-black/40 hover:bg-black/60 transition-colors"
+            >
+              <X size={14} />
+              {t("cancel", { fallback: "Cancel" })}
+            </motion.button>
+            <motion.button
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              onClick={handleSavePosition}
+              disabled={updateUser.isPending}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-white backdrop-blur-md bg-primary/80 hover:bg-primary transition-colors disabled:opacity-50"
+            >
+              {updateUser.isPending ? (
+                <Loader2 size={14} className="animate-spin" />
+              ) : (
+                <Check size={14} />
+              )}
+              {t("save", { fallback: "Save" })}
+            </motion.button>
+          </div>
+        )}
+
+        {isRepositioning && (
+          <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+            <p className="text-white text-sm font-medium backdrop-blur-md bg-black/30 px-3 py-1.5 rounded-lg">
+              {t("dragToReposition", { fallback: "Drag to reposition" })}
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Profile Content */}

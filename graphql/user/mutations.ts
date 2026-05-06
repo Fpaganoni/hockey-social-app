@@ -36,6 +36,7 @@ export const UPDATE_USER = gql`
     $bio: String
     $avatar: String
     $coverImage: String
+    $coverImagePosition: String
     $position: String
     $clubId: ID
     $cvUrl: String
@@ -53,6 +54,7 @@ export const UPDATE_USER = gql`
       bio: $bio
       avatar: $avatar
       coverImage: $coverImage
+      coverImagePosition: $coverImagePosition
       position: $position
       clubId: $clubId
       cvUrl: $cvUrl
@@ -68,6 +70,7 @@ export const UPDATE_USER = gql`
       bio
       avatar
       coverImage
+      coverImagePosition
       position
       clubId
       cvUrl
