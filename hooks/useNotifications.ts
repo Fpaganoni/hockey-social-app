@@ -1,4 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+  InfiniteData,
+} from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql-client";
 import {
   GET_NOTIFICATIONS,
@@ -10,7 +16,7 @@ import {
 } from "@/graphql/notification/mutations";
 import {
   Notification,
-  NotificationsResponse,
+  NotificationsPage,
   UnreadCountResponse,
   MarkAsReadResponse,
   MarkAllAsReadResponse,
@@ -19,22 +25,32 @@ import {
 } from "@/types/models/notification";
 import { useAuthStore } from "@/stores/useAuthStore";
 
-type NotificationsMutationContext = {
-  previousNotifications?: NotificationsResponse;
-  previousCount?: UnreadCountResponse;
-};
+const PAGE_SIZE = 20;
 
-export function useNotifications(limit = 20, offset = 0) {
+export function notificationsQueryKey(userId?: string) {
+  return ["notifications", userId] as const;
+}
+
+export function notificationsCountQueryKey(userId?: string) {
+  return ["notifications-count", userId] as const;
+}
+
+export function useNotifications() {
   const { user } = useAuthStore();
 
-  return useQuery<NotificationsResponse>({
-    queryKey: ["notifications", user?.id, limit, offset],
-    queryFn: () =>
+  return useInfiniteQuery<NotificationsPage>({
+    queryKey: notificationsQueryKey(user?.id),
+    queryFn: ({ pageParam }) =>
       graphqlClient.request(GET_NOTIFICATIONS, {
         userId: user!.id,
-        limit,
-        offset,
+        limit: PAGE_SIZE,
+        offset: pageParam as number,
       }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.myNotifications.length < PAGE_SIZE) return undefined;
+      return allPages.length * PAGE_SIZE;
+    },
     enabled: !!user?.id,
     staleTime: 30_000,
   });
@@ -44,7 +60,7 @@ export function useUnreadNotificationsCount() {
   const { user } = useAuthStore();
 
   return useQuery<UnreadCountResponse>({
-    queryKey: ["notifications-count", user?.id],
+    queryKey: notificationsCountQueryKey(user?.id),
     queryFn: () =>
       graphqlClient.request(GET_UNREAD_NOTIFICATIONS_COUNT, {
         userId: user!.id,
@@ -59,72 +75,54 @@ export function useMarkNotificationAsRead() {
   const queryClient = useQueryClient();
   const { user } = useAuthStore();
 
-  return useMutation<
-    MarkAsReadResponse,
-    Error,
-    MarkAsReadVariables,
-    NotificationsMutationContext
-  >({
+  return useMutation<MarkAsReadResponse, Error, MarkAsReadVariables>({
     mutationFn: (variables) =>
       graphqlClient.request(MARK_NOTIFICATION_AS_READ, variables),
 
     onMutate: async ({ id }) => {
-      await queryClient.cancelQueries({ queryKey: ["notifications", user?.id] });
-      await queryClient.cancelQueries({ queryKey: ["notifications-count", user?.id] });
+      const listKey = notificationsQueryKey(user?.id);
+      const countKey = notificationsCountQueryKey(user?.id);
 
-      const previousNotifications = queryClient.getQueryData<NotificationsResponse>(
-        ["notifications", user?.id, 20, 0]
-      );
-      const previousCount = queryClient.getQueryData<UnreadCountResponse>(
-        ["notifications-count", user?.id]
-      );
+      await queryClient.cancelQueries({ queryKey: listKey });
+      await queryClient.cancelQueries({ queryKey: countKey });
 
-      queryClient.setQueryData<NotificationsResponse>(
-        ["notifications", user?.id, 20, 0],
-        (old) => {
-          if (!old) return old;
-          return {
-            notifications: old.notifications.map((n) =>
+      const previousList = queryClient.getQueryData<InfiniteData<NotificationsPage>>(listKey);
+      const previousCount = queryClient.getQueryData<UnreadCountResponse>(countKey);
+
+      queryClient.setQueryData<InfiniteData<NotificationsPage>>(listKey, (old) => {
+        if (!old) return old;
+        return {
+          ...old,
+          pages: old.pages.map((page) => ({
+            myNotifications: page.myNotifications.map((n) =>
               n.id === id ? { ...n, isRead: true } : n
             ),
-          };
-        }
-      );
+          })),
+        };
+      });
 
-      queryClient.setQueryData<UnreadCountResponse>(
-        ["notifications-count", user?.id],
-        (old) => {
-          if (!old) return old;
-          return {
-            unreadNotificationsCount: Math.max(
-              0,
-              old.unreadNotificationsCount - 1
-            ),
-          };
-        }
-      );
+      queryClient.setQueryData<UnreadCountResponse>(countKey, (old) => {
+        if (!old) return old;
+        return {
+          unreadNotificationsCount: Math.max(0, old.unreadNotificationsCount - 1),
+        };
+      });
 
-      return { previousNotifications, previousCount };
+      return { previousList, previousCount };
     },
 
-    onError: (_err, _vars, context) => {
-      if (context?.previousNotifications) {
-        queryClient.setQueryData(
-          ["notifications", user?.id, 20, 0],
-          context.previousNotifications
-        );
+    onError: (_err, _vars, context: any) => {
+      if (context?.previousList) {
+        queryClient.setQueryData(notificationsQueryKey(user?.id), context.previousList);
       }
       if (context?.previousCount) {
-        queryClient.setQueryData(
-          ["notifications-count", user?.id],
-          context.previousCount
-        );
+        queryClient.setQueryData(notificationsCountQueryKey(user?.id), context.previousCount);
       }
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notifications", user?.id] });
-      queryClient.invalidateQueries({ queryKey: ["notifications-count", user?.id] });
+      queryClient.invalidateQueries({ queryKey: notificationsQueryKey(user?.id) });
+      queryClient.invalidateQueries({ queryKey: notificationsCountQueryKey(user?.id) });
     },
   });
 }
@@ -133,62 +131,49 @@ export function useMarkAllNotificationsAsRead() {
   const queryClient = useQueryClient();
   const { user } = useAuthStore();
 
-  return useMutation<
-    MarkAllAsReadResponse,
-    Error,
-    MarkAllAsReadVariables,
-    NotificationsMutationContext
-  >({
+  return useMutation<MarkAllAsReadResponse, Error, MarkAllAsReadVariables>({
     mutationFn: (variables) =>
       graphqlClient.request(MARK_ALL_NOTIFICATIONS_AS_READ, variables),
 
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ["notifications", user?.id] });
-      await queryClient.cancelQueries({ queryKey: ["notifications-count", user?.id] });
+      const listKey = notificationsQueryKey(user?.id);
+      const countKey = notificationsCountQueryKey(user?.id);
 
-      const previousNotifications = queryClient.getQueryData<NotificationsResponse>(
-        ["notifications", user?.id, 20, 0]
-      );
-      const previousCount = queryClient.getQueryData<UnreadCountResponse>(
-        ["notifications-count", user?.id]
-      );
+      await queryClient.cancelQueries({ queryKey: listKey });
+      await queryClient.cancelQueries({ queryKey: countKey });
 
-      queryClient.setQueryData<NotificationsResponse>(
-        ["notifications", user?.id, 20, 0],
-        (old) => {
-          if (!old) return old;
-          return {
-            notifications: old.notifications.map((n) => ({ ...n, isRead: true })),
-          };
-        }
-      );
+      const previousList = queryClient.getQueryData<InfiniteData<NotificationsPage>>(listKey);
+      const previousCount = queryClient.getQueryData<UnreadCountResponse>(countKey);
 
-      queryClient.setQueryData<UnreadCountResponse>(
-        ["notifications-count", user?.id],
-        { unreadNotificationsCount: 0 }
-      );
+      queryClient.setQueryData<InfiniteData<NotificationsPage>>(listKey, (old) => {
+        if (!old) return old;
+        return {
+          ...old,
+          pages: old.pages.map((page) => ({
+            myNotifications: page.myNotifications.map((n) => ({ ...n, isRead: true })),
+          })),
+        };
+      });
 
-      return { previousNotifications, previousCount };
+      queryClient.setQueryData<UnreadCountResponse>(countKey, {
+        unreadNotificationsCount: 0,
+      });
+
+      return { previousList, previousCount };
     },
 
-    onError: (_err, _vars, context) => {
-      if (context?.previousNotifications) {
-        queryClient.setQueryData(
-          ["notifications", user?.id, 20, 0],
-          context.previousNotifications
-        );
+    onError: (_err, _vars, context: any) => {
+      if (context?.previousList) {
+        queryClient.setQueryData(notificationsQueryKey(user?.id), context.previousList);
       }
       if (context?.previousCount) {
-        queryClient.setQueryData(
-          ["notifications-count", user?.id],
-          context.previousCount
-        );
+        queryClient.setQueryData(notificationsCountQueryKey(user?.id), context.previousCount);
       }
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notifications", user?.id] });
-      queryClient.invalidateQueries({ queryKey: ["notifications-count", user?.id] });
+      queryClient.invalidateQueries({ queryKey: notificationsQueryKey(user?.id) });
+      queryClient.invalidateQueries({ queryKey: notificationsCountQueryKey(user?.id) });
     },
   });
 }

@@ -5,19 +5,20 @@ import { gql } from "graphql-request";
 // ============================================
 
 export const GET_NOTIFICATIONS = gql`
-  query GetNotifications($userId: ID!, $limit: Int, $offset: Int) {
-    notifications(userId: $userId, limit: $limit, offset: $offset) {
+  query MyNotifications($userId: ID!, $limit: Int, $offset: Int) {
+    myNotifications(userId: $userId, limit: $limit, offset: $offset) {
       id
       type
       isRead
       message
+      recipientId
       entityId
-      entityType
+      postId
       createdAt
-      userId
       actor {
         id
         name
+        username
         avatar
       }
     }
@@ -25,7 +26,7 @@ export const GET_NOTIFICATIONS = gql`
 `;
 
 export const GET_UNREAD_NOTIFICATIONS_COUNT = gql`
-  query GetUnreadNotificationsCount($userId: ID!) {
+  query UnreadNotificationsCount($userId: ID!) {
     unreadNotificationsCount(userId: $userId)
   }
 `;
