@@ -6,6 +6,9 @@ import { useTranslations } from "next-intl";
 import { LanguageSelector } from "../ui/language-selector";
 import { ThemeToggleControl } from "../ui/theme-provider";
 import { useAuthStore } from "@/stores/useAuthStore";
+import { useNotificationsStore } from "@/stores/useNotificationsStore";
+import { useUnreadNotificationsCount } from "@/hooks/useNotifications";
+import { NotificationDropdown } from "@/components/notifications/NotificationDropdown";
 
 interface HeaderProps {
   title?: string;
@@ -15,6 +18,10 @@ export function Header({ title = "Hockey Connect" }: HeaderProps) {
   const [showLogout, setShowLogout] = useState(false);
   const { logout } = useAuthStore();
   const t = useTranslations("navigation");
+  const { toggle } = useNotificationsStore();
+  const { data: countData } = useUnreadNotificationsCount();
+
+  const unreadCount = countData?.unreadNotificationsCount ?? 0;
 
   const handleLogout = () => {
     logout();
@@ -30,15 +37,24 @@ export function Header({ title = "Hockey Connect" }: HeaderProps) {
         <LanguageSelector />
         <ThemeToggleControl />
 
-        <button className="group p-2 hover:bg-primary/85 rounded-lg transition-colors cursor-pointer relative">
-          <Bell
-            size={24}
-            className="text-foreground group-hover:text-white-black transition-colors"
-          />
-          <span className="absolute flex items-center justify-center p-1.5 text-xs text-white font-bold top-1 right-1 w-3 h-3 bg-error rounded-full">
-            3
-          </span>
-        </button>
+        <div className="relative">
+          <button
+            onClick={toggle}
+            className="group p-2 hover:bg-primary/85 rounded-lg transition-colors cursor-pointer relative"
+            aria-label="Notifications"
+          >
+            <Bell
+              size={24}
+              className="text-foreground group-hover:text-white-black transition-colors"
+            />
+            {unreadCount > 0 && (
+              <span className="absolute flex items-center justify-center p-1.5 text-xs text-white font-bold top-1 right-1 min-w-[12px] h-3 bg-error rounded-full">
+                {unreadCount > 99 ? "99+" : unreadCount}
+              </span>
+            )}
+          </button>
+          <NotificationDropdown />
+        </div>
 
         <div className="relative">
           <button
