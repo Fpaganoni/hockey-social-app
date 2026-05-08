@@ -397,7 +397,13 @@
       "location": "Ubicación",
       "salary": "Salario",
       "appliedAt": "Solicitado"
-    }
+    },
+    "repositionCover": "Reposicionar portada",
+    "dragToReposition": "Arrastra para reposicionar",
+    "coverPositionSaved": "Posición de portada guardada",
+    "coverPositionError": "Error al guardar la posición",
+    "cancel": "Cancelar",
+    "save": "Guardar"
   },
   "clubProfile": {
     "editProfile": "Editar Perfil",

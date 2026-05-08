@@ -11,7 +11,9 @@ interface PublicUserProfilePageProps {
   username: string;
 }
 
-export function PublicUserProfilePage({ username }: PublicUserProfilePageProps) {
+export function PublicUserProfilePage({
+  username,
+}: PublicUserProfilePageProps) {
   const [activeTab, setActiveTab] = useState("posts");
   const { data, isLoading, error } = useUserByUsername(username);
 
@@ -43,6 +45,7 @@ export function PublicUserProfilePage({ username }: PublicUserProfilePageProps) 
     coverImage: user.coverImage || "",
     bio: user.bio,
     cvUrl: user.cvUrl,
+    coverImagePosition: user.coverImagePosition || "50%",
     stats: user.statistics || { gamesPlayed: 0, goals: 0, assists: 0 },
     trajectories:
       user.trajectories?.map((t) => ({
