@@ -17,6 +17,7 @@ function getToastIcon(type: Notification["type"]): string {
     FOLLOW_USER: "👤",
     CLUB_INVITE: "🏑",
     CLUB_ACCEPT: "✅",
+    JOB_APPLICATION_UPDATE: "💼",
   };
   return icons[type] ?? "🔔";
 }
