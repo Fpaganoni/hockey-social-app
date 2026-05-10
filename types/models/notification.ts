@@ -8,13 +8,13 @@ export enum NotificationType {
   FOLLOW_USER = "FOLLOW_USER",
   CLUB_INVITE = "CLUB_INVITE",
   CLUB_ACCEPT = "CLUB_ACCEPT",
+  JOB_APPLICATION_UPDATE = "JOB_APPLICATION_UPDATE",
 }
 
 export interface Notification {
   id: string;
   type: NotificationType;
   isRead: boolean;
-  message: string;
   recipientId: string;
   entityId?: string;
   postId?: string;

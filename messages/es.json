@@ -541,5 +541,19 @@
       "alreadyPending": "Ya existe una solicitud de verificación pendiente. Por favor, espera a que nuestro equipo la revise.",
       "clubNotFound": "Error interno: Club no encontrado."
     }
+  },
+  "Notifications": {
+    "LIKE_POST": "{actorName} le dio me gusta a tu publicaciÃ³n.",
+    "LIKE_COMMENT": "{actorName} le dio me gusta a tu comentario.",
+    "COMMENT_POST": "{actorName} ha comentado en tu publicaciÃ³n.",
+    "REPLY_COMMENT": "{actorName} ha respondido a tu comentario.",
+    "FOLLOW_USER": "{actorName} ha comenzado a seguirte.",
+    "CLUB_INVITE": "{actorName} te ha invitado a unirte a un club.",
+    "CLUB_ACCEPT": "{actorName} ha aceptado tu invitaciÃ³n al club.",
+    "JOB_APPLICATION_UPDATE": "{actorName} ha actualizado el estado de tu solicitud de empleo.",
+    "title": "Notificaciones",
+    "markAllRead": "Marcar todo como leÃ­do",
+    "loading": "Cargandoâ€¦",
+    "empty": "No tienes notificaciones aÃºn"
   }
 }

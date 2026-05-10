@@ -10,7 +10,6 @@ export const GET_NOTIFICATIONS = gql`
       id
       type
       isRead
-      message
       recipientId
       entityId
       postId

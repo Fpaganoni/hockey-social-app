@@ -13,7 +13,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import {
   useNotifications,
@@ -38,16 +38,29 @@ function formatRelativeTime(dateStr: string): string {
 const TYPE_ICON: Record<NotificationType, React.ReactNode> = {
   [NotificationType.LIKE_POST]: <Heart size={12} className="text-error" />,
   [NotificationType.LIKE_COMMENT]: <Heart size={12} className="text-error" />,
-  [NotificationType.COMMENT_POST]: <MessageCircle size={12} className="text-primary" />,
-  [NotificationType.REPLY_COMMENT]: <MessageCircle size={12} className="text-primary" />,
-  [NotificationType.FOLLOW_USER]: <UserPlus size={12} className="text-success" />,
-  [NotificationType.CLUB_INVITE]: <Briefcase size={12} className="text-warning" />,
-  [NotificationType.CLUB_ACCEPT]: <CheckCheck size={12} className="text-success" />,
+  [NotificationType.COMMENT_POST]: (
+    <MessageCircle size={12} className="text-primary" />
+  ),
+  [NotificationType.REPLY_COMMENT]: (
+    <MessageCircle size={12} className="text-primary" />
+  ),
+  [NotificationType.FOLLOW_USER]: (
+    <UserPlus size={12} className="text-success" />
+  ),
+  [NotificationType.CLUB_INVITE]: (
+    <Briefcase size={12} className="text-warning" />
+  ),
+  [NotificationType.CLUB_ACCEPT]: (
+    <CheckCheck size={12} className="text-success" />
+  ),
+  [NotificationType.JOB_APPLICATION_UPDATE]: (
+    <Briefcase size={12} className="text-primary" />
+  ),
 };
 
 function resolveNotificationHref(
   notification: Notification,
-  locale: string
+  locale: string,
 ): string | null {
   const { type, postId, actor } = notification;
 
@@ -80,6 +93,9 @@ function NotificationItem({ notification }: { notification: Notification }) {
   const markAsRead = useMarkNotificationAsRead();
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations("Notifications");
+
+  const actorName = notification.actor?.name?.trim() || "Someone";
 
   const handleClick = () => {
     if (!notification.isRead) {
@@ -97,7 +113,7 @@ function NotificationItem({ notification }: { notification: Notification }) {
       }`}
     >
       {/* Avatar + type icon badge */}
-      <div className="relative flex-shrink-0">
+      <div className="relative shrink-0">
         {notification.actor?.avatar ? (
           <Image
             src={notification.actor.avatar}
@@ -119,7 +135,7 @@ function NotificationItem({ notification }: { notification: Notification }) {
       {/* Message + time */}
       <div className="flex-1 min-w-0">
         <p className="text-sm text-foreground leading-snug line-clamp-2">
-          {notification.message}
+          {t(notification.type, { actorName })}
         </p>
         <p className="text-xs text-muted-foreground mt-0.5">
           {formatRelativeTime(notification.createdAt)}
@@ -128,7 +144,7 @@ function NotificationItem({ notification }: { notification: Notification }) {
 
       {/* Unread dot */}
       {!notification.isRead && (
-        <span className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2" />
+        <span className="shrink-0 w-2 h-2 rounded-full bg-primary mt-2" />
       )}
     </button>
   );
@@ -137,15 +153,11 @@ function NotificationItem({ notification }: { notification: Notification }) {
 export function NotificationDropdown() {
   const { isOpen, close } = useNotificationsStore();
   const { user } = useAuthStore();
-  const {
-    data,
-    isLoading,
-    isFetchingNextPage,
-    hasNextPage,
-    fetchNextPage,
-  } = useNotifications();
+  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
+    useNotifications();
   const markAllAsRead = useMarkAllNotificationsAsRead();
   const containerRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("Notifications");
 
   // Infinite scroll sentinel
   const { ref: sentinelRef, inView } = useInView({ threshold: 0.1 });
@@ -160,7 +172,10 @@ export function NotificationDropdown() {
   // Close on outside click
   useEffect(() => {
     function handleOutsideClick(e: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
         close();
       }
     }
@@ -179,7 +194,7 @@ export function NotificationDropdown() {
         markAllAsRead.mutate({ userId: user.id });
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -194,15 +209,19 @@ export function NotificationDropdown() {
     >
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-        <span className="font-semibold text-foreground text-sm">Notifications</span>
+        <span className="font-semibold text-foreground text-sm">
+          {t("title")}
+        </span>
         {hasUnread && (
           <button
-            onClick={() => user?.id && markAllAsRead.mutate({ userId: user.id })}
+            onClick={() =>
+              user?.id && markAllAsRead.mutate({ userId: user.id })
+            }
             disabled={markAllAsRead.isPending}
             className="text-xs text-primary hover:underline disabled:opacity-50 flex items-center gap-1"
           >
             <CheckCheck size={12} />
-            Mark all read
+            {t("markAllRead")}
           </button>
         )}
       </div>
@@ -212,14 +231,14 @@ export function NotificationDropdown() {
         {isLoading && (
           <div className="flex items-center justify-center py-10 gap-2 text-muted-foreground">
             <RefreshCw size={16} className="animate-spin" />
-            <span className="text-sm">Loading…</span>
+            <span className="text-sm">{t("loading")}</span>
           </div>
         )}
 
         {!isLoading && notifications.length === 0 && (
           <div className="flex flex-col items-center justify-center py-10 gap-2">
             <Bell size={28} className="text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">No notifications yet</span>
+            <span className="text-sm text-muted-foreground">{t("empty")}</span>
           </div>
         )}
 
@@ -231,7 +250,10 @@ export function NotificationDropdown() {
         <div ref={sentinelRef} className="py-1">
           {isFetchingNextPage && (
             <div className="flex justify-center py-2">
-              <RefreshCw size={14} className="animate-spin text-muted-foreground" />
+              <RefreshCw
+                size={14}
+                className="animate-spin text-muted-foreground"
+              />
             </div>
           )}
         </div>

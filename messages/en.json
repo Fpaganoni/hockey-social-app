@@ -541,5 +541,19 @@
       "alreadyPending": "A verification request is already pending. Please wait for our team to review it.",
       "clubNotFound": "Internal error: Club not found."
     }
+  },
+  "Notifications": {
+    "LIKE_POST": "{actorName} liked your post.",
+    "LIKE_COMMENT": "{actorName} liked your comment.",
+    "COMMENT_POST": "{actorName} commented on your post.",
+    "REPLY_COMMENT": "{actorName} replied to your comment.",
+    "FOLLOW_USER": "{actorName} started following you.",
+    "CLUB_INVITE": "{actorName} invited you to join a club.",
+    "CLUB_ACCEPT": "{actorName} accepted your club invitation.",
+    "JOB_APPLICATION_UPDATE": "{actorName} updated the status of your job application.",
+    "title": "Notifications",
+    "markAllRead": "Mark all as read",
+    "loading": "Loadingâ€¦",
+    "empty": "No notifications yet"
   }
 }
