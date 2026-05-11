@@ -11,6 +11,22 @@ const locales = {
 type SupportedLocale = keyof typeof locales;
 
 /**
+ * Parses any timestamp variant to a Date.
+ * - ISO string ("2024-05-11T...") → new Date(isoString)
+ * - Numeric string ("1715410000000") → new Date(parseInt(...))
+ * - number → new Date(number)
+ * - Date → passthrough
+ */
+function parseTimestamp(timestamp: string | number | Date): Date {
+  if (timestamp instanceof Date) return timestamp;
+  if (typeof timestamp === "number") return new Date(timestamp);
+  // String: numeric string = unix ms, otherwise treat as ISO
+  return isNaN(Number(timestamp))
+    ? new Date(timestamp)
+    : new Date(parseInt(timestamp, 10));
+}
+
+/**
  * Converts a timestamp to a relative time string (e.g., "2h ago", "hace 5min", "il y a 3d")
  * Returns complete phrase with locale-specific word order
  * @param timestamp - Unix timestamp in milliseconds or ISO string
@@ -22,8 +38,9 @@ export function formatRelativeTime(
   locale: SupportedLocale = "en",
 ): string {
   const now = Date.now();
-  const then =
-    typeof timestamp === "string" ? parseInt(timestamp, 10) : timestamp;
+  const date = parseTimestamp(timestamp);
+  const then = date.getTime();
+  if (isNaN(then)) return "";
   const diffInMs = now - then;
   const diffInSeconds = Math.floor(diffInMs / 1000);
   const diffInMinutes = Math.floor(diffInSeconds / 60);
@@ -95,9 +112,8 @@ export function formatDate(
   timestamp: string | number,
   locale: SupportedLocale = "en",
 ): string {
-  const date = new Date(
-    typeof timestamp === "string" ? parseInt(timestamp, 10) : timestamp,
-  );
+  const date = parseTimestamp(timestamp);
+  if (isNaN(date.getTime())) return "";
 
   const localeMap = {
     en: "en-US",
@@ -122,12 +138,8 @@ export function formatDistanceToNowLocalized(
   timestamp: string | number | Date,
   locale: SupportedLocale = "en",
 ): string {
-  const date =
-    timestamp instanceof Date
-      ? timestamp
-      : new Date(
-          typeof timestamp === "string" ? parseInt(timestamp, 10) : timestamp,
-        );
+  const date = parseTimestamp(timestamp);
+  if (isNaN(date.getTime())) return "";
 
   return formatDistanceToNow(date, {
     addSuffix: true,
