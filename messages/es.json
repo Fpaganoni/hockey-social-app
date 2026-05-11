@@ -554,6 +554,8 @@
     "JOB_APPLICATION_UPDATE": "{actorName} ha actualizado el estado de tu solicitud de empleo.",
     "title": "Notificaciones",
     "markAllRead": "Marcar todo como leÃ­do",
+    "remove": "Eliminar notificaciÃ³n",
+    "clearAll": "Limpiar todo",
     "loading": "Cargandoâ€¦",
     "empty": "No tienes notificaciones aÃºn"
   }

@@ -2,15 +2,17 @@
 
 import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Heart,
   MessageCircle,
   UserPlus,
   Bell,
-  AtSign,
   Briefcase,
   CheckCheck,
   RefreshCw,
+  X,
+  Trash2,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
@@ -19,6 +21,8 @@ import {
   useNotifications,
   useMarkNotificationAsRead,
   useMarkAllNotificationsAsRead,
+  useRemoveNotification,
+  useClearAllNotifications,
 } from "@/hooks/useNotifications";
 import { useNotificationsStore } from "@/stores/useNotificationsStore";
 import { useAuthStore } from "@/stores/useAuthStore";
@@ -81,6 +85,7 @@ function resolveNotificationHref(
 
 function NotificationItem({ notification }: { notification: Notification }) {
   const markAsRead = useMarkNotificationAsRead();
+  const removeNotification = useRemoveNotification();
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("Notifications");
@@ -96,10 +101,21 @@ function NotificationItem({ notification }: { notification: Notification }) {
     if (href) router.push(href);
   };
 
+  const handleRemove = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const userId = useAuthStore.getState().user?.id;
+    if (userId) {
+      removeNotification.mutate({ id: notification.id, userId });
+    }
+  };
+
   return (
-    <button
+    <div
+      role="button"
+      tabIndex={0}
       onClick={handleClick}
-      className={`w-full flex items-start gap-3 px-4 py-3 hover:bg-muted/50 transition-colors text-left ${
+      onKeyDown={(e) => e.key === "Enter" && handleClick()}
+      className={`relative w-full flex items-start gap-3 px-4 py-3 hover:bg-muted/50 transition-colors text-left cursor-pointer group ${
         !notification.isRead ? "bg-primary/5 border-l-2 border-l-primary" : ""
       }`}
     >
@@ -124,7 +140,7 @@ function NotificationItem({ notification }: { notification: Notification }) {
       </div>
 
       {/* Message + time */}
-      <div className="flex-1 min-w-0">
+      <div className="flex-1 min-w-0 pr-6">
         <p className="text-sm text-foreground leading-snug line-clamp-2">
           {t(notification.type, { actorName })}
         </p>
@@ -137,7 +153,17 @@ function NotificationItem({ notification }: { notification: Notification }) {
       {!notification.isRead && (
         <span className="shrink-0 w-2 h-2 rounded-full bg-primary mt-2" />
       )}
-    </button>
+
+      {/* Delete button — visible on hover */}
+      <button
+        onClick={handleRemove}
+        disabled={removeNotification.isPending}
+        aria-label={t("remove")}
+        className="absolute top-2 right-2 p-1 rounded-md opacity-0 group-hover:opacity-100 hover:bg-muted transition-all disabled:opacity-30 text-muted-foreground hover:text-foreground"
+      >
+        <X size={12} />
+      </button>
+    </div>
   );
 }
 
@@ -147,6 +173,7 @@ export function NotificationDropdown() {
   const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
     useNotifications();
   const markAllAsRead = useMarkAllNotificationsAsRead();
+  const clearAll = useClearAllNotifications();
   const containerRef = useRef<HTMLDivElement>(null);
   const t = useTranslations("Notifications");
 
@@ -203,18 +230,30 @@ export function NotificationDropdown() {
         <span className="font-semibold text-foreground text-sm">
           {t("title")}
         </span>
-        {hasUnread && (
-          <button
-            onClick={() =>
-              user?.id && markAllAsRead.mutate({ userId: user.id })
-            }
-            disabled={markAllAsRead.isPending}
-            className="text-xs text-primary hover:underline disabled:opacity-50 flex items-center gap-1"
-          >
-            <CheckCheck size={12} />
-            {t("markAllRead")}
-          </button>
-        )}
+        <div className="flex items-center gap-2">
+          {hasUnread && (
+            <button
+              onClick={() =>
+                user?.id && markAllAsRead.mutate({ userId: user.id })
+              }
+              disabled={markAllAsRead.isPending}
+              className="text-xs text-primary hover:underline disabled:opacity-50 flex items-center gap-1"
+            >
+              <CheckCheck size={12} />
+              {t("markAllRead")}
+            </button>
+          )}
+          {notifications.length > 0 && (
+            <button
+              onClick={() => user?.id && clearAll.mutate({ userId: user.id })}
+              disabled={clearAll.isPending}
+              className="text-xs text-muted-foreground hover:text-destructive hover:underline disabled:opacity-50 flex items-center gap-1 transition-colors"
+            >
+              <Trash2 size={12} />
+              {t("clearAll")}
+            </button>
+          )}
+        </div>
       </div>
 
       {/* List */}
@@ -233,9 +272,18 @@ export function NotificationDropdown() {
           </div>
         )}
 
-        {notifications.map((notification) => (
-          <NotificationItem key={notification.id} notification={notification} />
-        ))}
+        <AnimatePresence initial={false}>
+          {notifications.map((notification) => (
+            <motion.div
+              key={notification.id}
+              initial={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0, overflow: "hidden" }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              <NotificationItem notification={notification} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
 
         {/* Infinite scroll sentinel */}
         <div ref={sentinelRef} className="py-1">

@@ -40,3 +40,13 @@ export interface MarkAllAsReadResponse {
 
 export type MarkAsReadVariables = { id: string };
 export type MarkAllAsReadVariables = { userId: string };
+
+export interface RemoveNotificationResponse {
+  removeNotification: boolean;
+}
+export type RemoveNotificationVariables = { id: string; userId: string };
+
+export interface ClearAllNotificationsResponse {
+  clearAllNotifications: boolean;
+}
+export type ClearAllNotificationsVariables = { userId: string };

@@ -48,4 +48,6 @@ export {
 export {
   MARK_NOTIFICATION_AS_READ,
   MARK_ALL_NOTIFICATIONS_AS_READ,
+  REMOVE_NOTIFICATION,
+  CLEAR_ALL_NOTIFICATIONS,
 } from "./notification/mutations";

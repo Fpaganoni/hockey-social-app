@@ -551,6 +551,8 @@
     "JOB_APPLICATION_UPDATE": "{actorName} a mis Ã  jour le statut de votre candidature.",
     "title": "Notifications",
     "markAllRead": "Tout marquer comme lu",
+    "remove": "Supprimer la notification",
+    "clearAll": "Tout effacer",
     "loading": "Chargementâ€¦",
     "empty": "Pas encore de notifications"
   }
