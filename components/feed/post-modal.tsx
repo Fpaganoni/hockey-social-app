@@ -110,7 +110,13 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
   };
 
   const handlePostComment = () => {
-    if (!postId || !currentUser?.id || !commentText.trim() || commentMutation.isPending) return;
+    if (
+      !postId ||
+      !currentUser?.id ||
+      !commentText.trim() ||
+      commentMutation.isPending
+    )
+      return;
     commentMutation.mutate(
       { postId, content: commentText },
       {
@@ -518,7 +524,11 @@ export function PostModal({ postId, isOpen, onClose }: PostModalProps) {
                   />
                   <button
                     onClick={handlePostComment}
-                    disabled={!currentUser?.id || !commentText.trim() || commentMutation.isPending}
+                    disabled={
+                      !currentUser?.id ||
+                      !commentText.trim() ||
+                      commentMutation.isPending
+                    }
                     className="flex items-center gap-1 text-primary font-semibold text-sm disabled:opacity-40 transition-all hover:text-primary-hover shrink-0"
                   >
                     {commentMutation.isPending ? (
