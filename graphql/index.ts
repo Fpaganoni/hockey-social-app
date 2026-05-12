@@ -38,3 +38,16 @@ export { APPLY_FOR_JOB } from "./opportunity/mutations";
 export { GET_ACTIVE_STORIES, GET_STORY_VIEWERS } from "./story/queries";
 
 export { CREATE_STORY, VIEW_STORY } from "./story/mutations";
+
+// NOTIFICATION
+export {
+  GET_NOTIFICATIONS,
+  GET_UNREAD_NOTIFICATIONS_COUNT,
+} from "./notification/queries";
+
+export {
+  MARK_NOTIFICATION_AS_READ,
+  MARK_ALL_NOTIFICATIONS_AS_READ,
+  REMOVE_NOTIFICATION,
+  CLEAR_ALL_NOTIFICATIONS,
+} from "./notification/mutations";

@@ -27,9 +27,10 @@ type PostCardProps = {
     | "likes"
     | "updatedAt"
   >;
+  isDetailPage?: boolean;
 };
 
-export function PostCard({ post }: PostCardProps) {
+export function PostCard({ post, isDetailPage = false }: PostCardProps) {
   const t = useTranslations("feed");
   const tPosts = useTranslations("posts");
   const locale = useLocale() as "en" | "es" | "fr";
@@ -164,8 +165,8 @@ export function PostCard({ post }: PostCardProps) {
 
         {/* Content */}
         <div
-          className="px-4 py-3 cursor-pointer"
-          onClick={() => setIsModalOpen(true)}
+          className={`px-4 py-3 ${isDetailPage ? "" : "cursor-pointer"}`}
+          onClick={isDetailPage ? undefined : () => setIsModalOpen(true)}
         >
           <p className="text-foreground leading-relaxed text-sm">{content}</p>
         </div>
@@ -177,48 +178,52 @@ export function PostCard({ post }: PostCardProps) {
             width={600}
             height={300}
             alt={t("postContent")}
-            className="w-full h-[600px] object-cover cursor-pointer"
-            onClick={() => setIsModalOpen(true)}
+            className={`w-full h-[600px] object-cover ${isDetailPage ? "" : "cursor-pointer"}`}
+            onClick={isDetailPage ? undefined : () => setIsModalOpen(true)}
           />
         )}
 
-        {/* Actions */}
-        <div className="px-4 py-3 flex items-center justify-around border-t border-border">
-          <button
-            onClick={handleLike}
-            disabled={
-              !currentUser?.id || likePost.isPending || unlikePost.isPending
-            }
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-300 cursor-pointer ${
-              isLiked
-                ? "text-error hover:bg-error/30"
-                : "text-foreground  hover:bg-error/30"
-            } disabled:opacity-50 disabled:cursor-not-allowed`}
-          >
-            <Heart size={18} fill={isLiked ? "currentColor" : "none"} />
-            <span className="text-sm font-medium">{likeCountOptimistic}</span>
-          </button>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 hover:bg-foreground-muted/30 rounded-lg transition-colors duration-300 cursor-pointer"
-          >
-            <MessageCircle size={18} />
-            <span className="text-sm font-medium">{liveComments?.length}</span>
-          </button>
-          <button
-            onClick={handleShare}
-            className="flex items-center gap-2 px-4 py-2 hover:bg-foreground-muted/30 rounded-lg transition-colors duration-300 cursor-pointer"
-          >
-            <Share2 size={18} />
-          </button>
-        </div>
+        {/* Actions — hidden on detail page (handled by PostInteractionDetails) */}
+        {!isDetailPage && (
+          <div className="px-4 py-3 flex items-center justify-around border-t border-border">
+            <button
+              onClick={handleLike}
+              disabled={
+                !currentUser?.id || likePost.isPending || unlikePost.isPending
+              }
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-300 cursor-pointer ${
+                isLiked
+                  ? "text-error hover:bg-error/30"
+                  : "text-foreground  hover:bg-error/30"
+              } disabled:opacity-50 disabled:cursor-not-allowed`}
+            >
+              <Heart size={18} fill={isLiked ? "currentColor" : "none"} />
+              <span className="text-sm font-medium">{likeCountOptimistic}</span>
+            </button>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="flex items-center gap-2 px-4 py-2 hover:bg-foreground-muted/30 rounded-lg transition-colors duration-300 cursor-pointer"
+            >
+              <MessageCircle size={18} />
+              <span className="text-sm font-medium">{liveComments?.length}</span>
+            </button>
+            <button
+              onClick={handleShare}
+              className="flex items-center gap-2 px-4 py-2 hover:bg-foreground-muted/30 rounded-lg transition-colors duration-300 cursor-pointer"
+            >
+              <Share2 size={18} />
+            </button>
+          </div>
+        )}
       </motion.div>
 
-      <PostModal
-        postId={id}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      {!isDetailPage && (
+        <PostModal
+          postId={id}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </>
   );
 }

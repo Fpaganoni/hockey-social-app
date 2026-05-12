@@ -209,6 +209,7 @@
     "noStoriesAvailable": "Aucune story disponible",
     "scrollToLoadMore": "Faites défiler pour charger plus de publications",
     "noMorePosts": "Plus de publications à charger.",
+    "postNotFound": "Publication introuvable.",
     "postContent": "Contenu de la publication",
     "scrollLeft": "Faire défiler vers la gauche",
     "scrollRight": "Faire défiler vers la droite",
@@ -538,5 +539,21 @@
       "alreadyPending": "Une demande de vérification est déjà en attente. Veuillez attendre que notre équipe l'examine.",
       "clubNotFound": "Erreur interne: Club non trouvé."
     }
+  },
+  "Notifications": {
+    "LIKE_POST": "{actorName} a aimÃ© votre publication.",
+    "LIKE_COMMENT": "{actorName} a aimÃ© votre commentaire.",
+    "COMMENT_POST": "{actorName} a commentÃ© votre publication.",
+    "REPLY_COMMENT": "{actorName} a rÃ©pondu Ã  votre commentaire.",
+    "FOLLOW_USER": "{actorName} a commencÃ© Ã  vous suivre.",
+    "CLUB_INVITE": "{actorName} vous a invitÃ© Ã  rejoindre un club.",
+    "CLUB_ACCEPT": "{actorName} a acceptÃ© votre invitation au club.",
+    "JOB_APPLICATION_UPDATE": "{actorName} a mis Ã  jour le statut de votre candidature.",
+    "title": "Notifications",
+    "markAllRead": "Tout marquer comme lu",
+    "remove": "Supprimer la notification",
+    "clearAll": "Tout effacer",
+    "loading": "Chargementâ€¦",
+    "empty": "Pas encore de notifications"
   }
 }

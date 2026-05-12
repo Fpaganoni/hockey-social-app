@@ -76,7 +76,9 @@ export const GET_POST = gql`
       user {
         id
         name
+        username
         avatar
+        role
       }
       likes {
         id
